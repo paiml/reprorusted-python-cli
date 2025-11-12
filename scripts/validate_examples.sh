@@ -55,7 +55,7 @@ validate_example() {
         test_script="test_${python_script}"
         if [ -f "$test_script" ]; then
             echo "  🧪 Running tests..."
-            if python3 -m pytest "$test_script" -v -q 2>/dev/null; then
+            if uv run pytest "$test_script" -v -q 2>/dev/null; then
                 echo -e "  ${GREEN}✅ Tests passed!${NC}"
             else
                 echo -e "  ${RED}❌ Tests failed!${NC}"

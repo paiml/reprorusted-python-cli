@@ -117,7 +117,7 @@ class TestTrivialCLI:
 
     def test_invalid_flag(self):
         """Test error handling for invalid flags"""
-        result = run_cli("--invalid-flag")
+        result = run_cli("--name", "Alice", "--invalid-flag")
         assert result.returncode != 0, "Should fail for invalid flag"
         assert "unrecognized" in result.stderr.lower() or "invalid" in result.stderr.lower(), \
             "Error should mention unrecognized/invalid argument"

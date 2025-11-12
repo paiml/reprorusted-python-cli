@@ -99,9 +99,8 @@ benchmarks/visualizations/*.png
 benchmarks/reports/*.json
 !benchmarks/reports/*baseline*.json
 
-# Generated Makefiles (generated from Makefile.rs via bashrs)
-Makefile
-examples/*/Makefile
+# Makefile backups (created by bashrs make purify)
+*.bak
 
 # Test outputs
 tests/temp/
