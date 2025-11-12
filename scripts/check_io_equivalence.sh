@@ -160,6 +160,29 @@ case "$script_name" in
         run_test "Full command" --input data.txt --json --port 8080 --count 5 --email test@example.com
         ;;
 
+    stdlib_integration)
+        echo "Running stdlib_integration test cases..."
+
+        # Create temporary test file for stdlib tests
+        TEST_FILE=$(mktemp /tmp/test_stdlib_XXXXXX.txt)
+        echo "Hello World" > "$TEST_FILE"
+
+        run_test "Help flag" --help
+        run_test "Version flag" --version
+        run_test "Text format" --file "$TEST_FILE"
+        run_test "JSON format" --file "$TEST_FILE" --format json
+        run_test "Compact format" --file "$TEST_FILE" --format compact
+        run_test "MD5 hash" --file "$TEST_FILE" --hash md5
+        run_test "SHA256 hash" --file "$TEST_FILE" --hash sha256
+        run_test "Human time format" --file "$TEST_FILE" --time-format human
+        run_test "ISO time format" --file "$TEST_FILE" --time-format iso
+        run_test "JSON with hash" --file "$TEST_FILE" --format json --hash md5
+        run_test "All options" --file "$TEST_FILE" --format json --hash sha256 --time-format iso
+
+        # Clean up test file
+        rm -f "$TEST_FILE"
+        ;;
+
     *)
         echo -e "${YELLOW}⚠️  Unknown script, running basic tests only${NC}"
         run_test "Help flag" --help
