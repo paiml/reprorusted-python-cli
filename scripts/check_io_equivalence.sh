@@ -145,6 +145,21 @@ case "$script_name" in
         run_test "Verbose pull" --verbose pull upstream
         ;;
 
+    complex_cli)
+        echo "Running complex_cli test cases..."
+        run_test "Help flag" --help
+        run_test "Version flag" --version
+        run_test "Basic input" --input data.txt
+        run_test "JSON format" --json --input data.txt
+        run_test "XML format" --xml --input data.txt
+        run_test "YAML format" --yaml --input data.txt
+        run_test "With output file" --input data.txt --output result.txt
+        run_test "With port" --port 8080 --input data.txt
+        run_test "With count" --count 10 --input data.txt
+        run_test "With email" --email user@example.com --input data.txt
+        run_test "Full command" --input data.txt --json --port 8080 --count 5 --email test@example.com
+        ;;
+
     *)
         echo -e "${YELLOW}⚠️  Unknown script, running basic tests only${NC}"
         run_test "Help flag" --help
