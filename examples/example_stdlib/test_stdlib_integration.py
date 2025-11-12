@@ -19,8 +19,6 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-import pytest
-
 # Path to the script being tested
 SCRIPT_PATH = Path(__file__).parent / "stdlib_integration.py"
 
@@ -257,7 +255,7 @@ class TestOutputDestination:
             output_file = Path(output_path)
             assert output_file.exists()
 
-            with open(output_path, "r") as f:
+            with open(output_path) as f:
                 data = json.load(f)
                 assert "path" in data
                 assert "size" in data
@@ -296,7 +294,23 @@ class TestDateTimeFormatting:
             result = run_cli("--file", temp_path, "--time-format", "human")
             assert result.returncode == 0
             # Human format has month names or more readable format
-            assert any(month in result.stdout for month in ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
+            assert any(
+                month in result.stdout
+                for month in [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                ]
+            )
         finally:
             Path(temp_path).unlink()
 
@@ -367,15 +381,19 @@ class TestCombinedFeatures:
 
         try:
             result = run_cli(
-                "--file", input_path,
-                "--format", "json",
-                "--hash", "sha256",
-                "--output", output_path
+                "--file",
+                input_path,
+                "--format",
+                "json",
+                "--hash",
+                "sha256",
+                "--output",
+                output_path,
             )
             assert result.returncode == 0
 
             # Verify output file
-            with open(output_path, "r") as f:
+            with open(output_path) as f:
                 data = json.load(f)
                 assert "path" in data
                 assert "size" in data
@@ -440,7 +458,9 @@ class TestEdgeCases:
 
     def test_file_with_spaces_in_name(self):
         """Test file with spaces in filename."""
-        with tempfile.NamedTemporaryFile(mode="w", delete=False, prefix="test file ", suffix=".txt") as f:
+        with tempfile.NamedTemporaryFile(
+            mode="w", delete=False, prefix="test file ", suffix=".txt"
+        ) as f:
             f.write("Content")
             temp_path = f.name
 
@@ -507,11 +527,15 @@ class TestErrorHandling:
 
             result = run_cli("--file", temp_path)
             # Should handle permission error gracefully
-            assert result.returncode != 0 or "permission" in result.stderr.lower() or result.returncode == 0
+            assert (
+                result.returncode != 0
+                or "permission" in result.stderr.lower()
+                or result.returncode == 0
+            )
         finally:
             # Restore permissions and clean up
             try:
                 os.chmod(temp_path, 0o644)
                 Path(temp_path).unlink()
-            except:
+            except Exception:
                 pass

@@ -21,22 +21,12 @@ def main():
     Creates argument parser, parses arguments, and greets the user.
     """
     parser = argparse.ArgumentParser(
-        description="A trivial CLI example for argparse-to-Rust validation",
-        prog="trivial_cli.py"
+        description="A trivial CLI example for argparse-to-Rust validation", prog="trivial_cli.py"
     )
 
-    parser.add_argument(
-        "--name",
-        type=str,
-        required=True,
-        help="Name to greet"
-    )
+    parser.add_argument("--name", type=str, required=True, help="Name to greet")
 
-    parser.add_argument(
-        "--version",
-        action="version",
-        version="1.0.0"
-    )
+    parser.add_argument("--version", action="version", version="1.0.0")
 
     args = parser.parse_args()
 

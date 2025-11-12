@@ -27,8 +27,6 @@ Test Categories:
 
 import os
 import subprocess
-import sys
-import tempfile
 from pathlib import Path
 
 # Path to the script
@@ -94,7 +92,9 @@ class TestMutuallyExclusiveGroups:
         """Test that --json and --xml cannot be used together"""
         result = run_cli("--json", "--xml", "--input", "test.txt")
         assert result.returncode != 0, "Should fail when both --json and --xml specified"
-        assert "not allowed" in result.stderr.lower() or "mutually exclusive" in result.stderr.lower()
+        assert (
+            "not allowed" in result.stderr.lower() or "mutually exclusive" in result.stderr.lower()
+        )
 
     def test_json_and_yaml_mutually_exclusive(self):
         """Test that --json and --yaml cannot be used together"""
@@ -250,12 +250,17 @@ class TestCombinedFeatures:
     def test_full_command_json(self):
         """Test full command with JSON output"""
         result = run_cli(
-            "--input", "data.txt",
-            "--output", "result.txt",
+            "--input",
+            "data.txt",
+            "--output",
+            "result.txt",
             "--json",
-            "--port", "8080",
-            "--count", "10",
-            "--email", "user@example.com",
+            "--port",
+            "8080",
+            "--count",
+            "10",
+            "--email",
+            "user@example.com",
         )
         assert result.returncode == 0, "Full command should succeed"
         assert "json" in result.stdout.lower()
@@ -266,9 +271,11 @@ class TestCombinedFeatures:
     def test_full_command_xml(self):
         """Test full command with XML output"""
         result = run_cli(
-            "--input", "data.txt",
+            "--input",
+            "data.txt",
             "--xml",
-            "--count", "5",
+            "--count",
+            "5",
         )
         assert result.returncode == 0, "Full command should succeed"
         assert "xml" in result.stdout.lower()
@@ -342,6 +349,8 @@ class TestErrorMessages:
         result = run_cli("--json", "--xml", "--input", "test.txt")
         assert result.returncode != 0
         # Error should clearly indicate the conflict
-        assert ("not allowed" in result.stderr.lower() or
-                "mutually exclusive" in result.stderr.lower() or
-                "one of" in result.stderr.lower())
+        assert (
+            "not allowed" in result.stderr.lower()
+            or "mutually exclusive" in result.stderr.lower()
+            or "one of" in result.stderr.lower()
+        )

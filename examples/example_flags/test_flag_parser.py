@@ -6,19 +6,16 @@ Following extreme TDD methodology with comprehensive edge cases
 """
 
 import subprocess
-import pytest
 from pathlib import Path
+
+import pytest
 
 SCRIPT = Path(__file__).parent / "flag_parser.py"
 
 
 def run_cli(*args):
     """Helper to run CLI and capture output"""
-    result = subprocess.run(
-        ["python3", str(SCRIPT), *args],
-        capture_output=True,
-        text=True
-    )
+    result = subprocess.run(["python3", str(SCRIPT), *args], capture_output=True, text=True)
     return result
 
 
@@ -212,11 +209,14 @@ class TestFlagParser:
         first_output = results[0].stdout
         assert all(r.stdout == first_output for r in results)
 
-    @pytest.mark.parametrize("flag,short", [
-        ("--verbose", "-v"),
-        ("--debug", "-d"),
-        ("--quiet", "-q"),
-    ])
+    @pytest.mark.parametrize(
+        "flag,short",
+        [
+            ("--verbose", "-v"),
+            ("--debug", "-d"),
+            ("--quiet", "-q"),
+        ],
+    )
     def test_long_and_short_forms_equivalent(self, flag, short):
         """Test that long and short forms produce identical output"""
         result_long = run_cli(flag)

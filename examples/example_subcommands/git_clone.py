@@ -12,7 +12,6 @@ Features:
 """
 
 import argparse
-import sys
 
 
 def main():

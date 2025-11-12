@@ -6,19 +6,16 @@ Following extreme TDD methodology
 """
 
 import subprocess
-import pytest
 from pathlib import Path
+
+import pytest
 
 SCRIPT = Path(__file__).parent / "positional_args.py"
 
 
 def run_cli(*args):
     """Helper to run CLI and capture output"""
-    result = subprocess.run(
-        ["python3", str(SCRIPT), *args],
-        capture_output=True,
-        text=True
-    )
+    result = subprocess.run(["python3", str(SCRIPT), *args], capture_output=True, text=True)
     return result
 
 
@@ -101,7 +98,10 @@ class TestPositionalArgs:
         """Test error handling when command is missing"""
         result = run_cli()
         assert result.returncode != 0
-        assert "required" in result.stderr.lower() or "following arguments are required" in result.stderr.lower()
+        assert (
+            "required" in result.stderr.lower()
+            or "following arguments are required" in result.stderr.lower()
+        )
 
     @pytest.mark.parametrize("command", ["start", "stop", "restart"])
     def test_all_commands_valid(self, command):
@@ -192,4 +192,7 @@ class TestEdgeCases:
         assert "stop" in result.stdout
         assert "restart" in result.stdout
         # Should show choices in help
-        assert "{start,stop,restart}" in result.stdout or "start, stop, restart" in result.stdout.lower()
+        assert (
+            "{start,stop,restart}" in result.stdout
+            or "start, stop, restart" in result.stdout.lower()
+        )

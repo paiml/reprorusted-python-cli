@@ -13,7 +13,6 @@ This example showcases:
 import argparse
 import os
 import re
-import sys
 
 
 def port_number(value):
@@ -24,7 +23,7 @@ def port_number(value):
             raise argparse.ArgumentTypeError(f"Port must be between 1 and 65535, got {port}")
         return port
     except ValueError:
-        raise argparse.ArgumentTypeError(f"Port must be an integer, got '{value}'")
+        raise argparse.ArgumentTypeError(f"Port must be an integer, got '{value}'") from None
 
 
 def positive_int(value):
@@ -35,13 +34,13 @@ def positive_int(value):
             raise argparse.ArgumentTypeError(f"Value must be positive (>= 1), got {num}")
         return num
     except ValueError:
-        raise argparse.ArgumentTypeError(f"Value must be an integer, got '{value}'")
+        raise argparse.ArgumentTypeError(f"Value must be an integer, got '{value}'") from None
 
 
 def email_address(value):
     """Custom type for email address validation."""
     # Simple email validation pattern
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     if not re.match(pattern, value):
         raise argparse.ArgumentTypeError(f"Invalid email address: '{value}'")
     return value
@@ -53,7 +52,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Complex CLI example with advanced argparse features",
         prog="complex_cli.py",
-        epilog="Example: %(prog)s --input data.txt --json --port 8080"
+        epilog="Example: %(prog)s --input data.txt --json --port 8080",
     )
 
     # Version
@@ -64,10 +63,7 @@ def main():
     )
 
     # ===== INPUT GROUP =====
-    input_group = parser.add_argument_group(
-        "input options",
-        "Options for input file handling"
-    )
+    input_group = parser.add_argument_group("input options", "Options for input file handling")
 
     input_group.add_argument(
         "--input",
@@ -84,8 +80,7 @@ def main():
 
     # ===== OUTPUT GROUP =====
     output_group = parser.add_argument_group(
-        "output options",
-        "Options for output format and destination"
+        "output options", "Options for output format and destination"
     )
 
     output_group.add_argument(
@@ -117,8 +112,7 @@ def main():
 
     # ===== PROCESSING GROUP =====
     processing_group = parser.add_argument_group(
-        "processing options",
-        "Options for data processing"
+        "processing options", "Options for data processing"
     )
 
     processing_group.add_argument(

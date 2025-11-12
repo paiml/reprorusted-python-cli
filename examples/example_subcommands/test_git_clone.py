@@ -16,7 +16,6 @@ Test Categories:
 """
 
 import subprocess
-import sys
 from pathlib import Path
 
 # Path to the script
@@ -62,9 +61,9 @@ class TestHelpAndVersion:
         result = run_cli()
         assert result.returncode != 0, "No arguments should fail"
         # Should either show help or error message
-        assert (
-            "usage:" in result.stdout.lower() or "usage:" in result.stderr.lower()
-        ), "Should show usage information"
+        assert "usage:" in result.stdout.lower() or "usage:" in result.stderr.lower(), (
+            "Should show usage information"
+        )
 
 
 class TestGlobalFlags:
@@ -193,8 +192,7 @@ class TestErrorHandling:
         result = run_cli("invalid-command")
         assert result.returncode != 0, "Invalid subcommand should fail"
         assert (
-            "invalid choice" in result.stderr.lower()
-            or "unrecognized" in result.stderr.lower()
+            "invalid choice" in result.stderr.lower() or "unrecognized" in result.stderr.lower()
         ), "Should report invalid/unrecognized command"
 
     def test_clone_with_extra_args(self):

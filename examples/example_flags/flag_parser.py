@@ -22,32 +22,16 @@ def main():
     """
     parser = argparse.ArgumentParser(
         description="Boolean flag parsing example for argparse-to-Rust validation",
-        prog="flag_parser.py"
+        prog="flag_parser.py",
     )
 
-    parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Enable verbose output"
-    )
+    parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose output")
 
-    parser.add_argument(
-        "-d", "--debug",
-        action="store_true",
-        help="Enable debug mode"
-    )
+    parser.add_argument("-d", "--debug", action="store_true", help="Enable debug mode")
 
-    parser.add_argument(
-        "-q", "--quiet",
-        action="store_true",
-        help="Enable quiet mode"
-    )
+    parser.add_argument("-q", "--quiet", action="store_true", help="Enable quiet mode")
 
-    parser.add_argument(
-        "--version",
-        action="version",
-        version="1.0.0"
-    )
+    parser.add_argument("--version", action="version", version="1.0.0")
 
     args = parser.parse_args()
 

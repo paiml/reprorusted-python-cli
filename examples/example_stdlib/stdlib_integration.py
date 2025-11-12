@@ -37,7 +37,7 @@ def calculate_hash(file_path, algorithm):
     except PermissionError:
         raise
     except Exception as e:
-        raise RuntimeError(f"Failed to calculate hash: {e}")
+        raise RuntimeError(f"Failed to calculate hash: {e}") from e
 
 
 def format_timestamp(timestamp, time_format):
@@ -94,7 +94,7 @@ def format_output_text(info, include_hash):
     lines = []
     lines.append(f"Path: {info['path']}")
     lines.append(f"Filename: {info['filename']}")
-    if info['extension']:
+    if info["extension"]:
         lines.append(f"Extension: {info['extension']}")
     lines.append(f"Size: {info['size']} bytes")
     lines.append(f"Modified: {info['modified']}")
@@ -113,9 +113,9 @@ def format_output_json(info):
 def format_output_compact(info, include_hash):
     """Format file info as compact single-line output."""
     parts = [
-        info['filename'],
+        info["filename"],
         f"{info['size']}B",
-        info['modified'],
+        info["modified"],
     ]
 
     if include_hash and "hash" in info:
@@ -129,7 +129,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="File information tool demonstrating Python stdlib integration",
         prog="stdlib_integration.py",
-        epilog="Example: %(prog)s --file data.txt --format json --hash sha256"
+        epilog="Example: %(prog)s --file data.txt --format json --hash sha256",
     )
 
     # Version
@@ -205,8 +205,8 @@ def main():
     except FileNotFoundError as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
-    except PermissionError as e:
-        print(f"Error: Permission denied", file=sys.stderr)
+    except PermissionError:
+        print("Error: Permission denied", file=sys.stderr)
         sys.exit(1)
     except ValueError as e:
         print(f"Error: {e}", file=sys.stderr)

@@ -9,8 +9,9 @@ Following extreme TDD methodology:
 """
 
 import subprocess
-import pytest
 from pathlib import Path
+
+import pytest
 
 # Path to the CLI script
 SCRIPT = Path(__file__).parent / "trivial_cli.py"
@@ -26,11 +27,7 @@ def run_cli(*args):
     Returns:
         subprocess.CompletedProcess: Result with returncode, stdout, stderr
     """
-    result = subprocess.run(
-        ["python3", str(SCRIPT), *args],
-        capture_output=True,
-        text=True
-    )
+    result = subprocess.run(["python3", str(SCRIPT), *args], capture_output=True, text=True)
     return result
 
 
@@ -44,8 +41,9 @@ class TestTrivialCLI:
         assert "usage:" in result.stdout.lower(), "Help should show usage"
         assert "trivial_cli.py" in result.stdout, "Should show script name"
         assert "--name" in result.stdout, "--name argument should be documented"
-        assert "Name to greet" in result.stdout or "name to greet" in result.stdout.lower(), \
+        assert "Name to greet" in result.stdout or "name to greet" in result.stdout.lower(), (
             "Should describe --name argument"
+        )
 
     def test_version_flag(self):
         """Test --version displays version information"""
@@ -66,14 +64,17 @@ class TestTrivialCLI:
         assert "required" in result.stderr.lower(), "Error should mention 'required'"
         assert "--name" in result.stderr, "Error should mention --name"
 
-    @pytest.mark.parametrize("name,expected", [
-        ("Alice", "Hello, Alice!"),
-        ("Bob", "Hello, Bob!"),
-        ("Charlie", "Hello, Charlie!"),
-        ("Dr. Smith", "Hello, Dr. Smith!"),
-        ("123", "Hello, 123!"),
-        ("", "Hello, !"),  # Edge case: empty string
-    ])
+    @pytest.mark.parametrize(
+        "name,expected",
+        [
+            ("Alice", "Hello, Alice!"),
+            ("Bob", "Hello, Bob!"),
+            ("Charlie", "Hello, Charlie!"),
+            ("Dr. Smith", "Hello, Dr. Smith!"),
+            ("123", "Hello, 123!"),
+            ("", "Hello, !"),  # Edge case: empty string
+        ],
+    )
     def test_parametrized_names(self, name, expected):
         """
         Test various input names to ensure consistent behavior
@@ -119,16 +120,18 @@ class TestTrivialCLI:
         """Test error handling for invalid flags"""
         result = run_cli("--name", "Alice", "--invalid-flag")
         assert result.returncode != 0, "Should fail for invalid flag"
-        assert "unrecognized" in result.stderr.lower() or "invalid" in result.stderr.lower(), \
+        assert "unrecognized" in result.stderr.lower() or "invalid" in result.stderr.lower(), (
             "Error should mention unrecognized/invalid argument"
+        )
 
     def test_name_flag_without_value(self):
         """Test error handling when --name is provided without a value"""
         result = run_cli("--name")
         assert result.returncode != 0, "Should fail when --name has no value"
-        assert "expected one argument" in result.stderr.lower() or \
-               "argument --name" in result.stderr.lower(), \
-            "Error should mention missing value for --name"
+        assert (
+            "expected one argument" in result.stderr.lower()
+            or "argument --name" in result.stderr.lower()
+        ), "Error should mention missing value for --name"
 
     def test_duplicate_name_flag(self):
         """Test behavior when --name is specified multiple times"""
@@ -166,8 +169,7 @@ class TestTrivialCLI:
 
         # All should have identical output
         first_output = results[0].stdout
-        assert all(r.stdout == first_output for r in results), \
-            "Output should be deterministic"
+        assert all(r.stdout == first_output for r in results), "Output should be deterministic"
 
 
 class TestEdgeCases:

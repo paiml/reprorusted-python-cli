@@ -20,14 +20,14 @@ def main():
     """
     parser = argparse.ArgumentParser(
         description="Positional arguments example with command and targets",
-        prog="positional_args.py"
+        prog="positional_args.py",
     )
 
     # Required positional argument with choices
     parser.add_argument(
         "command",
         choices=["start", "stop", "restart"],
-        help="Command to execute (start, stop, or restart)"
+        help="Command to execute (start, stop, or restart)",
     )
 
     # Optional positional argument with nargs
@@ -35,14 +35,10 @@ def main():
         "targets",
         nargs="*",  # Zero or more arguments
         default=["all"],
-        help="Targets to apply command to (default: all)"
+        help="Targets to apply command to (default: all)",
     )
 
-    parser.add_argument(
-        "--version",
-        action="version",
-        version="1.0.0"
-    )
+    parser.add_argument("--version", action="version", version="1.0.0")
 
     args = parser.parse_args()
 
