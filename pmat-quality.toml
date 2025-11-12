@@ -1,0 +1,25 @@
+[thresholds]
+complexity = 10
+cognitive_complexity = 15
+lines_per_function = 50
+coverage_minimum = 100
+
+[analysis]
+enable_tdg = true
+enable_satd = true
+enable_complexity = true
+
+[gates]
+block_on_tdg_below = "B+"
+block_on_coverage_below = 100
+block_on_complexity_above = 10
+
+[mutation]
+minimum_score = 85
+enable = true
+
+[performance]
+minimum_speedup = 10.0              # Rust must be ≥10x faster than Python
+memory_reduction_minimum_pct = 75.0 # Rust must use ≤25% of Python memory
+binary_size_maximum_kb = 500        # Rust binary must be ≤500KB
+regression_threshold_pct = 5.0      # No >5% performance regressions

@@ -1,0 +1,46 @@
+[package]
+name = "reprorusted-python-cli"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.75"
+authors = ["PAIML <info@paiml.com>"]
+license = "MIT"
+description = "Argparse-to-Rust compilation validation examples using depyler"
+repository = "https://github.com/paiml/reprorusted-python-cli"
+keywords = ["cli", "transpiler", "depyler", "testing", "benchmarking"]
+categories = ["command-line-utilities", "development-tools::testing"]
+
+[dependencies]
+# No runtime dependencies - this is a test-only workspace
+
+[dev-dependencies]
+# I/O equivalence testing
+assert_cmd = "2.0"
+predicates = "3.0"
+
+# Test utilities
+tempfile = "3.8"
+walkdir = "2.4"
+
+# Statistical analysis for benchmarks
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+strip = true
+
+[profile.dev]
+opt-level = 0
+
+[[test]]
+name = "test_io_equivalence"
+path = "tests/test_io_equivalence.rs"
+harness = true
+
+[[test]]
+name = "test_transpilation"
+path = "tests/test_transpilation.rs"
+harness = true

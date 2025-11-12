@@ -1,0 +1,13 @@
+[project]
+name = "reprorusted-python-cli"
+version = "1.0.0"
+description = "Argparse-to-Rust compilation validation examples using depyler"
+
+[quality]
+enforce_tdd = true
+require_tests_before_code = true
+min_coverage = 100
+
+[roadmap]
+file = "roadmap.yaml"
+enforce_tickets = true
