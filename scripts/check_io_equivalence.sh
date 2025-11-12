@@ -130,6 +130,21 @@ case "$script_name" in
         run_test "Restart command" restart web api
         ;;
 
+    git_clone)
+        echo "Running git_clone test cases..."
+        run_test "Help flag" --help
+        run_test "Version flag" --version
+        run_test "Clone command" clone https://example.com/repo.git
+        run_test "Clone with SSH URL" clone git@github.com:user/repo.git
+        run_test "Push command" push origin
+        run_test "Push to upstream" push upstream
+        run_test "Pull command" pull origin
+        run_test "Pull from upstream" pull upstream
+        run_test "Verbose clone" --verbose clone https://example.com/repo.git
+        run_test "Verbose push" -v push origin
+        run_test "Verbose pull" --verbose pull upstream
+        ;;
+
     *)
         echo -e "${YELLOW}⚠️  Unknown script, running basic tests only${NC}"
         run_test "Help flag" --help
