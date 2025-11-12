@@ -4,7 +4,9 @@
 
 [![CI](https://github.com/paiml/reprorusted-python-cli/workflows/CI/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
 [![Quality Gates](https://github.com/paiml/reprorusted-python-cli/workflows/Quality%20Gates/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
+[![Benchmarks](https://github.com/paiml/reprorusted-python-cli/workflows/Benchmarks/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Progress](https://img.shields.io/badge/Progress-66.7%25-yellow)](https://github.com/paiml/reprorusted-python-cli/blob/main/STATUS.md)
 
 ## Overview
 
@@ -57,6 +59,23 @@ reprorusted-python-cli/
 ```
 
 ## Examples
+
+### Depyler Compatibility Status
+
+As of depyler v3.20.1, the `depyler compile` command works out-of-the-box for simple examples:
+
+| Example | `depyler compile` | Manual Rust | Test Count |
+|---------|-------------------|-------------|------------|
+| **example_simple** | ✅ Works | ✅ Available | 23 tests |
+| **example_flags** | ✅ Works | ✅ Available | 33 tests |
+| **example_positional** | ⚠️ Build fails* | ✅ Available | 27 tests |
+| **example_subcommands** | ❌ Not yet | ✅ Available | 37 tests |
+| **example_complex** | ❌ Not yet | ✅ Available | 43 tests |
+| **example_stdlib** | ❌ Not yet | ✅ Available | 29 tests |
+
+\* *Vec formatting issue - manual implementation provided*
+
+All examples include working Rust binaries with 100% I/O equivalence validation.
 
 ### Example 1: Simple CLI
 
@@ -120,11 +139,11 @@ This project follows **extreme TDD** with NASA-level quality standards:
 
 ## Testing Strategy
 
-Multi-layer testing approach:
+Multi-layer testing approach with **230 total tests** (192 Python + 38 Rust):
 
-1. **Layer 1: Python Unit Tests** (pytest + 100% coverage)
+1. **Layer 1: Python Unit Tests** (192 pytest cases + 100% coverage)
 2. **Layer 2: Transpilation Validation** (depyler compile success)
-3. **Layer 3: I/O Equivalence** (Python output == Rust output for ALL inputs)
+3. **Layer 3: I/O Equivalence** (38 Rust integration tests - Python output == Rust output)
 4. **Layer 4: Integration & Regression** (cross-example validation)
 
 ```bash
@@ -162,9 +181,10 @@ make bench-report
 
 - Python 3.11+
 - Rust 1.75+
-- depyler v3.20.0+
-- bashrs v6.32.0+ (for Makefile generation)
-- pmat (for quality enforcement)
+- depyler v3.20.1+ (v3.20.1 adds `depyler compile` command with auto-dependency detection)
+- bashrs v6.32.0+ (for Makefile generation - optional)
+- pmat (for quality enforcement - optional)
+- uv (fast Python package manager)
 
 ### Workflow
 
@@ -194,9 +214,12 @@ make quality-gate
 
 ## Documentation
 
-- [Specification](docs/specifications/argparse-depyler-compile-examples-spec.md) - Complete project specification
-- [Tutorial](docs/examples/tutorial.md) - Getting started guide
+- [Tutorial](docs/examples/tutorial.md) - Comprehensive getting started guide (750+ lines)
+- [Specification](docs/specifications/argparse-depyler-compile-examples-spec.md) - Complete project specification (2,000+ lines)
+- [CI/CD Pipeline](docs/ci-cd.md) - GitHub Actions workflow documentation (450+ lines)
+- [Rust I/O Tests](docs/rust-io-tests.md) - Integration testing methodology (550+ lines)
 - [Roadmap](roadmap.yaml) - Development roadmap with tickets
+- [Status](STATUS.md) - Current progress and metrics (12/18 tickets complete)
 
 ## Contributing
 

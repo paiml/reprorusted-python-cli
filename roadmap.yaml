@@ -7,7 +7,7 @@ phases:
     tickets:
       - id: "RC-001"
         title: "Setup repository structure and tooling"
-        status: "in_progress"
+        status: "done"
         priority: "critical"
         tasks:
           - "Initialize git repository with .gitignore"
@@ -18,7 +18,7 @@ phases:
 
       - id: "RC-002"
         title: "Implement Makefile generation with bashrs"
-        status: "todo"
+        status: "done"
         priority: "critical"
         tasks:
           - "Write Makefile.rs for root Makefile"
@@ -29,7 +29,7 @@ phases:
 
       - id: "RC-003"
         title: "Create example_simple with full TDD cycle"
-        status: "todo"
+        status: "done"
         priority: "high"
         tasks:
           - "Write test_trivial_cli.py with 100% coverage goals"
@@ -43,7 +43,7 @@ phases:
     tickets:
       - id: "RC-004"
         title: "Implement example_flags with boolean flags"
-        status: "todo"
+        status: "done"
         priority: "high"
         tasks:
           - "Write test_flag_parser.py"
@@ -53,7 +53,7 @@ phases:
 
       - id: "RC-005"
         title: "Implement example_positional with positional args"
-        status: "todo"
+        status: "done"
         priority: "high"
         tasks:
           - "Write test_positional_args.py"
@@ -63,7 +63,7 @@ phases:
 
       - id: "RC-006"
         title: "Implement example_subcommands with git-like CLI"
-        status: "todo"
+        status: "done"
         priority: "medium"
         tasks:
           - "Write test_git_clone.py"
@@ -76,7 +76,7 @@ phases:
     tickets:
       - id: "RC-007"
         title: "Implement example_complex with advanced argparse features"
-        status: "todo"
+        status: "done"
         priority: "medium"
         tasks:
           - "Write test_complex_cli.py"
@@ -86,7 +86,7 @@ phases:
 
       - id: "RC-008"
         title: "Implement example_stdlib with multiple stdlib modules"
-        status: "todo"
+        status: "done"
         priority: "low"
         tasks:
           - "Write test_stdlib_integration.py"
@@ -96,7 +96,7 @@ phases:
 
       - id: "RC-009"
         title: "Create comprehensive I/O equivalence test suite in Rust"
-        status: "todo"
+        status: "done"
         priority: "high"
         tasks:
           - "Implement tests/test_io_equivalence.rs"
@@ -109,7 +109,7 @@ phases:
     tickets:
       - id: "RC-010"
         title: "Setup GitHub Actions CI/CD pipeline"
-        status: "todo"
+        status: "done"
         priority: "high"
         tasks:
           - "Create .github/workflows/ci.yml"
@@ -119,7 +119,7 @@ phases:
 
       - id: "RC-011"
         title: "Write comprehensive README and tutorial"
-        status: "todo"
+        status: "done"
         priority: "medium"
         tasks:
           - "Write README.md with quickstart"

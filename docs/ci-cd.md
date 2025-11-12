@@ -240,9 +240,9 @@ Aggregates benchmark results and shows next steps.
 Add these badges to README.md:
 
 ```markdown
-![CI](https://github.com/YOUR_USERNAME/reprorusted-python-cli/workflows/CI/badge.svg)
-![Quality Gates](https://github.com/YOUR_USERNAME/reprorusted-python-cli/workflows/Quality%20Gates/badge.svg)
-![Benchmarks](https://github.com/YOUR_USERNAME/reprorusted-python-cli/workflows/Benchmarks/badge.svg)
+![CI](https://github.com/paiml/reprorusted-python-cli/workflows/CI/badge.svg)
+![Quality Gates](https://github.com/paiml/reprorusted-python-cli/workflows/Quality%20Gates/badge.svg)
+![Benchmarks](https://github.com/paiml/reprorusted-python-cli/workflows/Benchmarks/badge.svg)
 ```
 
 ## Local Testing
