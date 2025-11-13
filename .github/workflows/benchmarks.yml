@@ -38,6 +38,16 @@ jobs:
           source .venv/bin/activate
           uv pip install -e ".[dev]"
 
+      - name: Install depyler
+        run: |
+          # Check if depyler is available in parent directory
+          if [ -d "../depyler" ]; then
+            cargo install --path ../depyler/crates/depyler --force
+          else
+            # Fall back to crates.io if local version not available
+            cargo install depyler
+          fi
+
       - name: Compile all examples to Rust
         run: |
           source .venv/bin/activate
