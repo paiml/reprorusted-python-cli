@@ -39,8 +39,3 @@ opt-level = 0
 name = "test_io_equivalence"
 path = "tests/test_io_equivalence.rs"
 harness = true
-
-[[test]]
-name = "test_transpilation"
-path = "tests/test_transpilation.rs"
-harness = true

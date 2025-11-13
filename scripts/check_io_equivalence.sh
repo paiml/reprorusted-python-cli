@@ -54,11 +54,11 @@ test_case() {
     echo "     Args: ${args[*]}"
 
     # Run Python
-    python_out=$(python3 "$PYTHON_SCRIPT" "${args[@]}" 2>&1 || true)
+    python_out="$(python3 "$PYTHON_SCRIPT" "${args[@]}" 2>&1 || true)"
     python_exit=$?
 
     # Run Rust
-    rust_out=$("$RUST_BINARY" "${args[@]}" 2>&1 || true)
+    rust_out="$("$RUST_BINARY" "${args[@]}" 2>&1 || true)"
     rust_exit=$?
 
     # Compare exit codes
@@ -85,18 +85,18 @@ PASSED=0
 FAILED=0
 
 run_test() {
-    TOTAL=$((TOTAL + 1))
+    TOTAL="$((TOTAL + 1)")
     if test_case "$@"; then
-        PASSED=$((PASSED + 1))
+        PASSED="$((PASSED + 1)")
         return 0
     else
-        FAILED=$((FAILED + 1))
+        FAILED="$((FAILED + 1)")
         return 1
     fi
 }
 
 # Run default test cases based on script name
-script_name=$(basename "$PYTHON_SCRIPT" .py)
+script_name="$(basename "$PYTHON_SCRIPT" .py)"
 
 case "$script_name" in
     trivial_cli)
@@ -164,7 +164,7 @@ case "$script_name" in
         echo "Running stdlib_integration test cases..."
 
         # Create temporary test file for stdlib tests
-        TEST_FILE=$(mktemp /tmp/test_stdlib_XXXXXX.txt)
+        TEST_FILE="$(mktemp /tmp/test_stdlib_XXXXXX.txt)"
         echo "Hello World" > "$TEST_FILE"
 
         run_test "Help flag" --help
@@ -201,7 +201,7 @@ echo -e "  ${GREEN}Passed: $PASSED${NC}"
 echo -e "  ${RED}Failed: $FAILED${NC}"
 echo ""
 
-if [ $FAILED -gt 0 ]; then
+if [ "$FAILED" -gt 0 ]; then
     echo -e "${RED}❌ Some I/O equivalence tests failed!${NC}"
     exit 1
 else

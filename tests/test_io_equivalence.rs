@@ -193,43 +193,71 @@ fn test_flag_parser_combined() {
 
 #[test]
 fn test_positional_help() {
-    let example = Example::new("positional_args", "example_positional", "positional_args.py");
+    let example = Example::new(
+        "positional_args",
+        "example_positional",
+        "positional_args.py",
+    );
     example.assert_equivalence(&["--help"]);
 }
 
 #[test]
 fn test_positional_version() {
-    let example = Example::new("positional_args", "example_positional", "positional_args.py");
+    let example = Example::new(
+        "positional_args",
+        "example_positional",
+        "positional_args.py",
+    );
     example.assert_equivalence(&["--version"]);
 }
 
 #[test]
 fn test_positional_start_no_targets() {
-    let example = Example::new("positional_args", "example_positional", "positional_args.py");
+    let example = Example::new(
+        "positional_args",
+        "example_positional",
+        "positional_args.py",
+    );
     example.assert_equivalence(&["start"]);
 }
 
 #[test]
 fn test_positional_start_single_target() {
-    let example = Example::new("positional_args", "example_positional", "positional_args.py");
+    let example = Example::new(
+        "positional_args",
+        "example_positional",
+        "positional_args.py",
+    );
     example.assert_equivalence(&["start", "web"]);
 }
 
 #[test]
 fn test_positional_start_multiple_targets() {
-    let example = Example::new("positional_args", "example_positional", "positional_args.py");
+    let example = Example::new(
+        "positional_args",
+        "example_positional",
+        "positional_args.py",
+    );
     example.assert_equivalence(&["start", "web", "db", "cache"]);
 }
 
 #[test]
 fn test_positional_stop() {
-    let example = Example::new("positional_args", "example_positional", "positional_args.py");
+    let example = Example::new(
+        "positional_args",
+        "example_positional",
+        "positional_args.py",
+    );
     example.assert_equivalence(&["stop", "db"]);
 }
 
 #[test]
 fn test_positional_restart() {
-    let example = Example::new("positional_args", "example_positional", "positional_args.py");
+    let example = Example::new(
+        "positional_args",
+        "example_positional",
+        "positional_args.py",
+    );
     example.assert_equivalence(&["restart", "web", "api"]);
 }
 
@@ -325,13 +353,21 @@ fn test_complex_cli_with_email() {
 
 #[test]
 fn test_stdlib_help() {
-    let example = Example::new("stdlib_integration", "example_stdlib", "stdlib_integration.py");
+    let example = Example::new(
+        "stdlib_integration",
+        "example_stdlib",
+        "stdlib_integration.py",
+    );
     example.assert_equivalence(&["--help"]);
 }
 
 #[test]
 fn test_stdlib_version() {
-    let example = Example::new("stdlib_integration", "example_stdlib", "stdlib_integration.py");
+    let example = Example::new(
+        "stdlib_integration",
+        "example_stdlib",
+        "stdlib_integration.py",
+    );
     example.assert_equivalence(&["--version"]);
 }
 
@@ -342,7 +378,11 @@ fn test_stdlib_text_format() {
     let test_file = temp_dir.path().join("test.txt");
     std::fs::write(&test_file, "Hello World").unwrap();
 
-    let example = Example::new("stdlib_integration", "example_stdlib", "stdlib_integration.py");
+    let example = Example::new(
+        "stdlib_integration",
+        "example_stdlib",
+        "stdlib_integration.py",
+    );
     example.assert_equivalence(&["--file", test_file.to_str().unwrap()]);
 }
 
@@ -353,7 +393,11 @@ fn test_stdlib_json_format() {
     let test_file = temp_dir.path().join("test.txt");
     std::fs::write(&test_file, "Test content").unwrap();
 
-    let example = Example::new("stdlib_integration", "example_stdlib", "stdlib_integration.py");
+    let example = Example::new(
+        "stdlib_integration",
+        "example_stdlib",
+        "stdlib_integration.py",
+    );
     example.assert_equivalence(&["--file", test_file.to_str().unwrap(), "--format", "json"]);
 }
 
@@ -364,13 +408,12 @@ fn test_stdlib_with_hash() {
     let test_file = temp_dir.path().join("test.txt");
     std::fs::write(&test_file, "Hello").unwrap();
 
-    let example = Example::new("stdlib_integration", "example_stdlib", "stdlib_integration.py");
-    example.assert_equivalence(&[
-        "--file",
-        test_file.to_str().unwrap(),
-        "--hash",
-        "md5",
-    ]);
+    let example = Example::new(
+        "stdlib_integration",
+        "example_stdlib",
+        "stdlib_integration.py",
+    );
+    example.assert_equivalence(&["--file", test_file.to_str().unwrap(), "--hash", "md5"]);
 }
 
 #[test]
@@ -380,13 +423,12 @@ fn test_stdlib_compact_format() {
     let test_file = temp_dir.path().join("test.txt");
     std::fs::write(&test_file, "Data").unwrap();
 
-    let example = Example::new("stdlib_integration", "example_stdlib", "stdlib_integration.py");
-    example.assert_equivalence(&[
-        "--file",
-        test_file.to_str().unwrap(),
-        "--format",
-        "compact",
-    ]);
+    let example = Example::new(
+        "stdlib_integration",
+        "example_stdlib",
+        "stdlib_integration.py",
+    );
+    example.assert_equivalence(&["--file", test_file.to_str().unwrap(), "--format", "compact"]);
 }
 
 // ============================================================================
@@ -398,10 +440,18 @@ fn test_all_examples_have_help() {
     let examples = vec![
         Example::new("trivial_cli", "example_simple", "trivial_cli.py"),
         Example::new("flag_parser", "example_flags", "flag_parser.py"),
-        Example::new("positional_args", "example_positional", "positional_args.py"),
+        Example::new(
+            "positional_args",
+            "example_positional",
+            "positional_args.py",
+        ),
         Example::new("git_clone", "example_subcommands", "git_clone.py"),
         Example::new("complex_cli", "example_complex", "complex_cli.py"),
-        Example::new("stdlib_integration", "example_stdlib", "stdlib_integration.py"),
+        Example::new(
+            "stdlib_integration",
+            "example_stdlib",
+            "stdlib_integration.py",
+        ),
     ];
 
     for example in examples {
@@ -415,10 +465,18 @@ fn test_all_examples_have_version() {
     let examples = vec![
         Example::new("trivial_cli", "example_simple", "trivial_cli.py"),
         Example::new("flag_parser", "example_flags", "flag_parser.py"),
-        Example::new("positional_args", "example_positional", "positional_args.py"),
+        Example::new(
+            "positional_args",
+            "example_positional",
+            "positional_args.py",
+        ),
         Example::new("git_clone", "example_subcommands", "git_clone.py"),
         Example::new("complex_cli", "example_complex", "complex_cli.py"),
-        Example::new("stdlib_integration", "example_stdlib", "stdlib_integration.py"),
+        Example::new(
+            "stdlib_integration",
+            "example_stdlib",
+            "stdlib_integration.py",
+        ),
     ];
 
     for example in examples {

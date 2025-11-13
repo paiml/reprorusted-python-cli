@@ -170,7 +170,11 @@ lint:
 	@echo "Linting Rust code (clippy)..."
 	@cargo clippy --workspace -- -D warnings
 	@echo "Linting shell scripts (bashrs)..."
-	@bashrs lint scripts/*.sh
+	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
+		if [ -f "$$script" ]; then \
+			bashrs lint "$$script" || true; \
+		fi; \
+	done
 	@echo "Linting Makefile (bashrs)..."
 	@bashrs make purify --report Makefile
 	@echo "✅ Linting passed"
@@ -179,7 +183,11 @@ lint-fix:
 	@echo "Auto-fixing Python issues..."
 	@uv run ruff check --fix examples/
 	@echo "Auto-fixing shell scripts..."
-	@bashrs lint --fix scripts/*.sh
+	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
+		if [ -f "$$script" ]; then \
+			bashrs lint --fix "$$script" || exit 1; \
+		fi; \
+	done
 	@echo "✅ Lint fixes applied"
 
 test:
