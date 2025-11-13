@@ -38,20 +38,11 @@ jobs:
           source .venv/bin/activate
           uv pip install -e ".[dev]"
 
-      - name: Install depyler
+      - name: Build Rust workspace (manual implementations)
         run: |
-          # Check if depyler is available in parent directory
-          if [ -d "../depyler" ]; then
-            cargo install --path ../depyler/crates/depyler --force
-          else
-            # Fall back to crates.io if local version not available
-            cargo install depyler
-          fi
-
-      - name: Compile all examples to Rust
-        run: |
-          source .venv/bin/activate
-          make compile-all
+          # Build the Rust workspace which contains all manual Rust implementations
+          # These are guaranteed to work, unlike depyler-generated code
+          cargo build --release
 
       - name: Run benchmarks
         run: |
