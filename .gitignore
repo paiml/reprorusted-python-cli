@@ -78,13 +78,22 @@ venv.bak/
 examples/*/*.rs
 examples/*/Cargo.toml
 
-# Compiled binaries from examples
+# Generated Rust projects (entire directories)
+examples/*/rust_*/
+
+# Compiled binaries from examples (specific names)
 examples/*/trivial_cli
 examples/*/flag_parser
 examples/*/positional_args
 examples/*/git_clone
 examples/*/complex_cli
 examples/*/stdlib_integration
+
+# Compiled binaries with common patterns
+examples/*/*_compiled
+examples/*/test_*
+examples/*/*_test
+**/test_*_new/
 
 # Benchmark results and artifacts
 benchmarks/micro/*/results.json
@@ -119,3 +128,4 @@ tests/fixtures/temp/
 
 # pmat
 .pmat-cache/
+.pmat-context.md
