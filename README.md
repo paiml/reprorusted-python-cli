@@ -62,20 +62,20 @@ reprorusted-python-cli/
 
 ### Depyler Compatibility Status
 
-As of depyler v3.20.1, the `depyler compile` command works out-of-the-box for simple examples:
+As of depyler v3.20.2 (latest), the `depyler compile` command works out-of-the-box for basic argparse examples:
 
-| Example | `depyler compile` | Manual Rust | Test Count |
-|---------|-------------------|-------------|------------|
-| **example_simple** | ✅ Works | ✅ Available | 23 tests |
-| **example_flags** | ✅ Works | ✅ Available | 33 tests |
-| **example_positional** | ⚠️ Build fails* | ✅ Available | 27 tests |
-| **example_subcommands** | ❌ Not yet | ✅ Available | 37 tests |
-| **example_complex** | ❌ Not yet | ✅ Available | 43 tests |
-| **example_stdlib** | ❌ Not yet | ✅ Available | 29 tests |
+| Example | `depyler compile` | Manual Rust | Test Count | Status |
+|---------|-------------------|-------------|------------|--------|
+| **example_simple** | ✅ Works | ✅ Available | 23 tests | Full support |
+| **example_flags** | ✅ Works | ✅ Available | 33 tests | Full support |
+| **example_positional** | ✅ Works | ✅ Available | 27 tests | Full support |
+| **example_subcommands** | ❌ Build fails | ✅ Available | 37 tests | Subcommand enum issues |
+| **example_complex** | ❌ Build fails | ✅ Available | 43 tests | Option type issues |
+| **example_stdlib** | ❌ Transpile fails | ✅ Available | 29 tests | Expression type not supported |
 
-\* *Vec formatting issue - manual implementation provided*
+**Progress:** 3/6 examples compile successfully with `depyler compile` (50%)
 
-All examples include working Rust binaries with 100% I/O equivalence validation.
+All examples include working Rust binaries (manual implementations) with 100% I/O equivalence validation.
 
 ### Example 1: Simple CLI
 
@@ -223,7 +223,7 @@ See [BENCHMARKS.md](BENCHMARKS.md) for full methodology and results.
 
 - Python 3.11+
 - Rust 1.75+
-- depyler v3.20.1+ (v3.20.1 adds `depyler compile` command with auto-dependency detection)
+- depyler v3.20.2+ (latest - adds `depyler compile` command with auto-dependency detection)
 - bashrs v6.32.0+ (for Makefile generation - optional)
 - pmat (for quality enforcement - optional)
 - uv (fast Python package manager)
