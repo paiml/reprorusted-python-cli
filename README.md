@@ -15,7 +15,7 @@ This repository provides a **comprehensive validation framework** for Python-to-
 **Key Features:**
 - ✅ **100% I/O Equivalence**: Python and Rust binaries produce identical output
 - ✅ **100% Test Coverage**: Comprehensive pytest + Rust integration tests
-- ✅ **Scientific Benchmarking**: Proves 25-50x speedups with academic rigor
+- ✅ **Scientific Benchmarking**: Proves 9.6x average speedup with academic rigor
 - ✅ **Extreme TDD**: All code written test-first with pmat quality gates
 - ✅ **Zero Manual Makefiles**: All build files generated programmatically via bashrs
 
@@ -112,19 +112,21 @@ python3 trivial_cli.py --name Alice
 
 ## Performance Gains
 
-Based on scientific benchmarking with 10 iterations, 3 warmup runs:
+Based on scientific benchmarking with 10 iterations, 3 warmup runs (see [BENCHMARKS.md](BENCHMARKS.md) for full methodology):
 
-| Benchmark | Python (ms) | Rust (ms) | Speedup | Memory Reduction |
-|-----------|-------------|-----------|---------|------------------|
-| Fibonacci(35) | 687.23 | 13.45 | **51.1x** | 94.3% |
-| Prime Sieve | 234.56 | 8.92 | **26.3x** | 89.7% |
-| Argparse Overhead | 12.34 | 0.23 | **53.7x** | 98.2% |
-| File I/O (100MB) | 456.78 | 89.12 | **5.1x** | 67.4% |
-| **Geometric Mean** | - | - | **25.8x** | **85.5%** |
+| Example | Python (ms) | Rust (ms) | Speedup | Memory Reduction |
+|---------|-------------|-----------|---------|------------------|
+| example_simple | 22.34 | 2.49 | **8.98x** | 72.2% |
+| example_flags | 22.20 | 2.41 | **9.21x** | 72.0% |
+| example_positional | 22.10 | 2.42 | **9.12x** | 71.6% |
+| example_subcommands | 22.81 | 2.49 | **9.15x** | 71.4% |
+| example_complex | 23.24 | 2.59 | **8.96x** | 72.6% |
+| example_stdlib | 29.49 | 2.39 | **12.35x** | 81.1% |
+| **Average** | **23.70** | **2.47** | **9.63x** | **73.5%** |
 
 **Binary Size:**
-- Python: ~5MB (interpreter + script)
-- Rust: **352KB** (standalone binary)
+- Python: ~11-16MB (interpreter + script runtime memory)
+- Rust: **760KB - 3.4MB** (standalone binaries)
 
 ## Quality Standards
 
