@@ -40,7 +40,7 @@ def extract_benchmark_data(results: list[dict[str, Any]]) -> dict[str, list]:
         "python_stddev": [],
         "rust_stddev": [],
         "speedups": [],
-        "memory_reductions": []
+        "memory_reductions": [],
     }
 
     for result in results:
@@ -103,8 +103,12 @@ def generate_markdown_report(data: dict[str, list]) -> str:
         lines.append("")
         lines.append("| Metric | Python | Rust | Improvement |")
         lines.append("|--------|--------|------|-------------|")
-        lines.append(f"| **Avg Execution Time** | {avg_py_time:.2f}ms | {avg_rs_time:.2f}ms | **{avg_speedup:.2f}x faster** |")
-        lines.append(f"| **Avg Memory Usage** | {avg_py_mem/1024:.1f}MB | {avg_rs_mem/1024:.1f}MB | **{avg_mem_reduction:.1f}% less** |")
+        lines.append(
+            f"| **Avg Execution Time** | {avg_py_time:.2f}ms | {avg_rs_time:.2f}ms | **{avg_speedup:.2f}x faster** |"
+        )
+        lines.append(
+            f"| **Avg Memory Usage** | {avg_py_mem / 1024:.1f}MB | {avg_rs_mem / 1024:.1f}MB | **{avg_mem_reduction:.1f}% less** |"
+        )
         lines.append(f"| **Peak Speedup** | - | - | **{max(data['speedups']):.2f}x** |")
         lines.append(f"| **Min Speedup** | - | - | **{min(data['speedups']):.2f}x** |")
         lines.append("")
@@ -124,7 +128,9 @@ def generate_markdown_report(data: dict[str, list]) -> str:
         py_std = data["python_stddev"][i]
         rs_std = data["rust_stddev"][i]
 
-        lines.append(f"| {label} | {py_time:.2f} | {rs_time:.2f} | **{speedup:.2f}x** | ±{py_std:.2f} | ±{rs_std:.2f} |")
+        lines.append(
+            f"| {label} | {py_time:.2f} | {rs_time:.2f} | **{speedup:.2f}x** | ±{py_std:.2f} | ±{rs_std:.2f} |"
+        )
 
     # Average row
     if data["labels"]:
@@ -134,7 +140,9 @@ def generate_markdown_report(data: dict[str, list]) -> str:
         avg_py_std = sum(data["python_stddev"]) / len(data["python_stddev"])
         avg_rs_std = sum(data["rust_stddev"]) / len(data["rust_stddev"])
 
-        lines.append(f"| **Average** | **{avg_py_time:.2f}** | **{avg_rs_time:.2f}** | **{avg_speedup:.2f}x** | **±{avg_py_std:.2f}** | **±{avg_rs_std:.2f}** |")
+        lines.append(
+            f"| **Average** | **{avg_py_time:.2f}** | **{avg_rs_time:.2f}** | **{avg_speedup:.2f}x** | **±{avg_py_std:.2f}** | **±{avg_rs_std:.2f}** |"
+        )
 
     lines.append("")
 
@@ -157,7 +165,9 @@ def generate_markdown_report(data: dict[str, list]) -> str:
         avg_rs_mem = sum(data["rust_memory"]) / len(data["rust_memory"]) / 1024
         avg_reduction = sum(data["memory_reductions"]) / len(data["memory_reductions"])
 
-        lines.append(f"| **Average** | **{avg_py_mem:.1f}** | **{avg_rs_mem:.1f}** | **{avg_reduction:.1f}%** |")
+        lines.append(
+            f"| **Average** | **{avg_py_mem:.1f}** | **{avg_rs_mem:.1f}** | **{avg_reduction:.1f}%** |"
+        )
 
     lines.append("")
 
@@ -169,14 +179,22 @@ def generate_markdown_report(data: dict[str, list]) -> str:
         best_idx = data["speedups"].index(max(data["speedups"]))
         worst_idx = data["speedups"].index(min(data["speedups"]))
 
-        lines.append(f"- **Best performing example**: {data['labels'][best_idx]} ({data['speedups'][best_idx]:.2f}x speedup)")
-        lines.append(f"- **Slowest example**: {data['labels'][worst_idx]} ({data['speedups'][worst_idx]:.2f}x speedup)")
-        lines.append(f"- **Consistency**: Speedups range from {min(data['speedups']):.2f}x to {max(data['speedups']):.2f}x")
+        lines.append(
+            f"- **Best performing example**: {data['labels'][best_idx]} ({data['speedups'][best_idx]:.2f}x speedup)"
+        )
+        lines.append(
+            f"- **Slowest example**: {data['labels'][worst_idx]} ({data['speedups'][worst_idx]:.2f}x speedup)"
+        )
+        lines.append(
+            f"- **Consistency**: Speedups range from {min(data['speedups']):.2f}x to {max(data['speedups']):.2f}x"
+        )
         lines.append("")
 
     if data["memory_reductions"]:
         best_mem_idx = data["memory_reductions"].index(max(data["memory_reductions"]))
-        lines.append(f"- **Best memory optimization**: {data['labels'][best_mem_idx]} ({data['memory_reductions'][best_mem_idx]:.1f}% reduction)")
+        lines.append(
+            f"- **Best memory optimization**: {data['labels'][best_mem_idx]} ({data['memory_reductions'][best_mem_idx]:.1f}% reduction)"
+        )
         lines.append("")
 
     # Methodology
@@ -188,7 +206,9 @@ def generate_markdown_report(data: dict[str, list]) -> str:
     lines.append("- **Statistical analysis**: Mean, standard deviation, outlier detection via MAD")
     lines.append("- **Memory profiling**: Peak RSS via `/usr/bin/time`")
     lines.append("")
-    lines.append("See [BENCHMARKS.md](../BENCHMARKS.md) for full methodology and academic references.")
+    lines.append(
+        "See [BENCHMARKS.md](../BENCHMARKS.md) for full methodology and academic references."
+    )
     lines.append("")
 
     # Footer

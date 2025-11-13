@@ -100,9 +100,7 @@ class RegressionDetector:
 
         # Check execution time regression
         if baseline.mean_ms > 0:
-            time_change = (
-                (current.mean_ms - baseline.mean_ms) / baseline.mean_ms * 100
-            )
+            time_change = (current.mean_ms - baseline.mean_ms) / baseline.mean_ms * 100
             if time_change > self.time_threshold:
                 regressions.append(
                     Regression(
@@ -118,11 +116,7 @@ class RegressionDetector:
         # Check memory regression
         if baseline.memory_kb and current.memory_kb:
             if baseline.memory_kb > 0:
-                memory_change = (
-                    (current.memory_kb - baseline.memory_kb)
-                    / baseline.memory_kb
-                    * 100
-                )
+                memory_change = (current.memory_kb - baseline.memory_kb) / baseline.memory_kb * 100
                 if memory_change > self.memory_threshold:
                     regressions.append(
                         Regression(
@@ -158,9 +152,7 @@ class RegressionDetector:
         regressions = []
         for name in baseline_by_name.keys():
             if name in current_by_name:
-                found = self.compare_results(
-                    baseline_by_name[name], current_by_name[name]
-                )
+                found = self.compare_results(baseline_by_name[name], current_by_name[name])
                 for reg in found:
                     reg.example = example_name
                     regressions.append(reg)
@@ -181,9 +173,7 @@ class RegressionDetector:
             baseline_file = baseline_dir / result_file.name
 
             if baseline_file.exists():
-                regressions = self.check_example(
-                    example_name, baseline_file, result_file
-                )
+                regressions = self.check_example(example_name, baseline_file, result_file)
                 all_regressions.extend(regressions)
             else:
                 print(
@@ -228,9 +218,7 @@ def format_regression_report(regressions: list[Regression]) -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Detect performance regressions in benchmarks"
-    )
+    parser = argparse.ArgumentParser(description="Detect performance regressions in benchmarks")
     parser.add_argument(
         "--baseline-dir",
         type=Path,
@@ -266,7 +254,9 @@ def main():
     # Validate directories exist
     if not args.baseline_dir.exists():
         print(f"Error: Baseline directory not found: {args.baseline_dir}", file=sys.stderr)
-        print("Run benchmarks first and create baseline with: cp benchmarks/reports/*.json benchmarks/baseline/")
+        print(
+            "Run benchmarks first and create baseline with: cp benchmarks/reports/*.json benchmarks/baseline/"
+        )
         sys.exit(2)
 
     if not args.results_dir.exists():

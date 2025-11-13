@@ -29,10 +29,7 @@ def load_benchmark_results(results_dir: Path) -> list[dict[str, Any]]:
 
 
 def generate_ascii_chart(
-    labels: list[str],
-    python_times: list[float],
-    rust_times: list[float],
-    max_width: int = 60
+    labels: list[str], python_times: list[float], rust_times: list[float], max_width: int = 60
 ) -> str:
     """Generate ASCII bar chart comparing Python vs Rust execution times."""
     lines = []
@@ -60,10 +57,7 @@ def generate_ascii_chart(
 
 
 def generate_memory_chart(
-    labels: list[str],
-    python_mem: list[int],
-    rust_mem: list[int],
-    max_width: int = 60
+    labels: list[str], python_mem: list[int], rust_mem: list[int], max_width: int = 60
 ) -> str:
     """Generate ASCII bar chart comparing memory usage."""
     lines = []
@@ -94,11 +88,7 @@ def generate_memory_chart(
     return "\n".join(lines)
 
 
-def generate_speedup_chart(
-    labels: list[str],
-    speedups: list[float],
-    max_width: int = 60
-) -> str:
+def generate_speedup_chart(labels: list[str], speedups: list[float], max_width: int = 60) -> str:
     """Generate ASCII bar chart showing speedup factors."""
     lines = []
     lines.append("=" * 70)
@@ -128,7 +118,7 @@ def extract_benchmark_data(results: list[dict[str, Any]]) -> dict[str, list]:
         "rust_times": [],
         "python_memory": [],
         "rust_memory": [],
-        "speedups": []
+        "speedups": [],
     }
 
     for result in results:
@@ -186,8 +176,8 @@ def generate_summary_report(data: dict[str, list]) -> str:
     lines.append(f"  Average speedup:     {avg_speedup:6.2f}x")
     lines.append("")
     lines.append("MEMORY USAGE:")
-    lines.append(f"  Average Python memory: {avg_py_mem/1024:6.1f}MB")
-    lines.append(f"  Average Rust memory:   {avg_rs_mem/1024:6.1f}MB")
+    lines.append(f"  Average Python memory: {avg_py_mem / 1024:6.1f}MB")
+    lines.append(f"  Average Rust memory:   {avg_rs_mem / 1024:6.1f}MB")
     lines.append(f"  Average reduction:     {avg_mem_reduction:6.1f}%")
     lines.append("")
     lines.append("INDIVIDUAL RESULTS:")
