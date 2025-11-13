@@ -191,7 +191,7 @@ phases:
 
       - id: "RC-018"
         title: "Write academic-quality benchmarking documentation"
-        status: "todo"
+        status: "done"
         priority: "medium"
         tasks:
           - "Document methodology with citations"
