@@ -106,7 +106,7 @@ benchmarks/macro/*/rust_results.json
 benchmarks/macro/*/comparison.json
 benchmarks/visualizations/*.png
 benchmarks/reports/*.json
-!benchmarks/reports/*baseline*.json
+!benchmarks/baseline/*.json
 
 # Makefile backups (created by bashrs make purify)
 *.bak

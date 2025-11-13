@@ -1,4 +1,4 @@
-.PHONY: help test lint format clean quality validate build compile-all io-check dev bench bench-all bench-docker bench-docker-all build-docker-images
+.PHONY: help test lint format clean quality validate build compile-all io-check dev bench bench-all bench-docker bench-docker-all build-docker-images bench-regression
 
 help:
 	@echo "reprorusted-python-cli - Argparse-to-Rust Transpilation Examples"
@@ -17,6 +17,7 @@ help:
 	@echo "  make bench-all        - Benchmark all examples (native binaries)"
 	@echo "  make bench-docker     - Benchmark single example in Docker (EXAMPLE=example_simple)"
 	@echo "  make bench-docker-all - Benchmark all examples in Docker"
+	@echo "  make bench-regression - Check for performance regressions vs baseline"
 	@echo "  make build-docker-images - Build all Docker images for benchmarking"
 	@echo ""
 	@echo "Quality Gates:"
@@ -138,6 +139,11 @@ build-docker-images:
 	done
 	@echo ""
 	@echo "✅ All Docker images built successfully!"
+
+bench-regression:
+	@echo "Checking for performance regressions..."
+	@chmod +x benchmarks/framework/regression_check.py
+	@python3 benchmarks/framework/regression_check.py
 
 # Quality Gates
 quality: format lint test

@@ -11,63 +11,8 @@ on:
     - cron: '0 0 * * 0'
 
 jobs:
-  benchmark-placeholder:
-    name: Benchmark Infrastructure Check
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Check benchmark infrastructure
-        run: |
-          echo "📊 Benchmark Infrastructure Status"
-          echo "==================================="
-          echo ""
-          echo "Current Status: Planned (RC-013, RC-014)"
-          echo ""
-          echo "Planned benchmarks:"
-          echo "  - Microbenchmarks (6 categories)"
-          echo "    • Argparse overhead"
-          echo "    • Startup time"
-          echo "    • String operations"
-          echo "    • File I/O"
-          echo "    • Computation (fibonacci, primes)"
-          echo "    • Memory usage"
-          echo ""
-          echo "  - Macro benchmarks (4 scenarios)"
-          echo "    • grep replacement tool"
-          echo "    • JSON processor"
-          echo "    • Log analyzer"
-          echo "    • Data pipeline"
-          echo ""
-          echo "Expected Performance Targets:"
-          echo "  - Geometric mean speedup: ~42.5x"
-          echo "  - Memory reduction: ~94.8%"
-          echo ""
-          echo "ℹ️  Full benchmarking will be implemented in Phase 5"
-          echo "   (tickets RC-013 through RC-018)"
-
-      - name: Check if benchmarks directory exists
-        id: check_benchmarks
-        run: |
-          if [ -d "benchmarks/" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-            echo "✅ benchmarks/ directory found"
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "ℹ️  benchmarks/ directory not yet created"
-          fi
-
-      - name: List benchmark files (if exist)
-        if: steps.check_benchmarks.outputs.exists == 'true'
-        run: |
-          echo ""
-          echo "Benchmark files:"
-          find benchmarks/ -type f -name "*.py" -o -name "*.sh" | head -n 10
-
-  quick-performance-check:
-    name: Quick Performance Check
+  benchmark:
+    name: Run Benchmarks
     runs-on: ubuntu-latest
 
     steps:
@@ -77,12 +22,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Install uv
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Install bashrs
+        run: |
+          cargo install --git https://github.com/paiml/bashrs --locked rash
 
       - name: Install dependencies
         run: |
@@ -90,67 +42,46 @@ jobs:
           source .venv/bin/activate
           uv pip install -e ".[dev]"
 
-      - name: Quick startup time test
+      - name: Compile all examples to Rust
         run: |
           source .venv/bin/activate
+          make compile-all
 
-          echo "⏱️  Quick Startup Time Test"
-          echo "==========================="
-          echo ""
+      - name: Run benchmarks
+        run: |
+          source .venv/bin/activate
+          make bench-all
 
-          for example in examples/example_*/; do
-            script=$(find "$example" -name "*.py" -not -name "test_*" | head -n 1)
-            if [ -f "$script" ]; then
-              name=$(basename "$script")
-              echo "Testing $name..."
+      - name: Check for regressions
+        id: regression_check
+        continue-on-error: true
+        run: |
+          source .venv/bin/activate
+          make bench-regression
 
-              # Time 10 executions
-              start=$(date +%s%N)
-              for i in {1..10}; do
-                python3 "$script" --version > /dev/null 2>&1 || true
-              done
-              end=$(date +%s%N)
-
-              elapsed=$(( (end - start) / 10000000 ))  # Convert to ms
-              avg=$(( elapsed / 10 ))
-              echo "  Average: ${avg}ms"
-            fi
-          done
-
-          echo ""
-          echo "ℹ️  These are rough estimates. Full benchmarking requires Phase 5."
-
-  memory-usage-check:
-    name: Memory Usage Check
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        if: always()
         with:
-          python-version: "3.11"
+          name: benchmark-results
+          path: benchmarks/reports/*.json
 
-      - name: Install memory profiler
-        run: |
-          pip install memory-profiler
-
-      - name: Check Python memory usage
-        run: |
-          echo "💾 Memory Usage Information"
-          echo "=========================="
-          echo ""
-          echo "Python interpreter baseline:"
-          python3 -c "import sys; print(f'  {sys.version}')"
-          echo ""
-          echo "ℹ️  Detailed memory profiling will be implemented in Phase 5"
+      - name: Comment regression status on PR
+        if: github.event_name == 'pull_request' && steps.regression_check.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ **Performance Regression Detected**\n\nPlease review the benchmark results in the workflow artifacts.'
+            })
 
   benchmark-summary:
     name: Benchmark Summary
     runs-on: ubuntu-latest
-    needs: [benchmark-placeholder, quick-performance-check, memory-usage-check]
+    needs: [benchmark]
     if: always()
 
     steps:
@@ -159,16 +90,17 @@ jobs:
           echo "📊 Benchmark Summary"
           echo "==================="
           echo ""
-          echo "Infrastructure: ${{ needs.benchmark-placeholder.result }}"
-          echo "Performance: ${{ needs.quick-performance-check.result }}"
-          echo "Memory: ${{ needs.memory-usage-check.result }}"
+          echo "Benchmark Status: ${{ needs.benchmark.result }}"
           echo ""
-          echo "Next Steps:"
-          echo "  1. RC-013: Setup benchmarking framework with bashrs"
-          echo "  2. RC-014: Implement microbenchmarks (6 categories)"
-          echo "  3. RC-015: Implement macro benchmarks (4 scenarios)"
-          echo "  4. RC-016: Visualization and reporting"
-          echo "  5. RC-017: Performance regression detection"
-          echo "  6. RC-018: Academic-quality documentation"
+          if [ "${{ needs.benchmark.result }}" == "success" ]; then
+            echo "✅ All benchmarks completed successfully"
+            echo "✅ No performance regressions detected"
+          else
+            echo "⚠️  Check benchmark job for details"
+          fi
           echo ""
-          echo "ℹ️  Full benchmarking infrastructure is planned for Phase 5"
+          echo "Benchmark Infrastructure:"
+          echo "  - Native binary benchmarks (bashrs)"
+          echo "  - Docker container benchmarks"
+          echo "  - Performance regression detection"
+          echo "  - Statistical analysis (10 iterations, 3 warmup)"

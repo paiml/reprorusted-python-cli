@@ -1,0 +1,97 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2025-11-13T08:11:51.902916265+00:00",
+  "environment": {
+    "cpu": "AMD Ryzen Threadripper 7960X 24-Cores",
+    "ram": "125GB",
+    "os": "Ubuntu 22.04",
+    "hostname": "noah-Lambda-Vector",
+    "bashrs_version": "6.34.0"
+  },
+  "benchmarks": [
+    {
+      "script": "/tmp/tmp.UHWwp1Dajv/bench_python.sh",
+      "iterations": 10,
+      "warmup": 3,
+      "statistics": {
+        "mean_ms": 22.343497899999996,
+        "median_ms": 22.1801095,
+        "stddev_ms": 0.8717523745269,
+        "min_ms": 21.207703000000002,
+        "max_ms": 24.386905,
+        "variance_ms": 0.7599522024932887,
+        "mad_ms": 0.36748650000000005,
+        "geometric_mean_ms": 22.326949233170474,
+        "harmonic_mean_ms": 22.31084645917368,
+        "outlier_indices": [
+          6
+        ],
+        "memory": {
+          "mean_kb": 11059.2,
+          "median_kb": 10944.0,
+          "min_kb": 10752.0,
+          "max_kb": 11520.0,
+          "peak_kb": 11520.0
+        }
+      },
+      "raw_results_ms": [
+        22.309099999999997,
+        21.82013,
+        21.816544,
+        23.335243,
+        21.647618,
+        22.088646,
+        24.386905,
+        22.271573,
+        21.207703000000002,
+        22.551517
+      ],
+      "quality": {
+        "lint_passed": true,
+        "determinism_score": 1.0,
+        "output_identical": true
+      }
+    },
+    {
+      "script": "/tmp/tmp.UHWwp1Dajv/bench_rust.sh",
+      "iterations": 10,
+      "warmup": 3,
+      "statistics": {
+        "mean_ms": 2.4869958,
+        "median_ms": 2.3779195,
+        "stddev_ms": 0.28927307691065896,
+        "min_ms": 2.1854180000000003,
+        "max_ms": 3.064349,
+        "variance_ms": 0.08367891302536001,
+        "mad_ms": 0.17035250000000013,
+        "geometric_mean_ms": 2.470976395881811,
+        "harmonic_mean_ms": 2.4558029424275056,
+        "outlier_indices": [],
+        "memory": {
+          "mean_kb": 3072.0,
+          "median_kb": 3072.0,
+          "min_kb": 3072.0,
+          "max_kb": 3072.0,
+          "peak_kb": 3072.0
+        }
+      },
+      "raw_results_ms": [
+        2.251739,
+        3.064349,
+        2.440214,
+        2.726448,
+        2.315625,
+        2.269415,
+        2.1854180000000003,
+        2.548648,
+        2.2079429999999998,
+        2.8601590000000003
+      ],
+      "quality": {
+        "lint_passed": true,
+        "determinism_score": 1.0,
+        "output_identical": true
+      }
+    }
+  ]
+}
