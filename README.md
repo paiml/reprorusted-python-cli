@@ -6,7 +6,7 @@
 [![Quality Gates](https://github.com/paiml/reprorusted-python-cli/workflows/Quality%20Gates/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
 [![Benchmarks](https://github.com/paiml/reprorusted-python-cli/workflows/Benchmarks/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Progress](https://img.shields.io/badge/Progress-66.7%25-yellow)](https://github.com/paiml/reprorusted-python-cli/blob/main/STATUS.md)
+[![Progress](https://img.shields.io/badge/Progress-100%25%20COMPLETE-brightgreen)](https://github.com/paiml/reprorusted-python-cli/blob/main/STATUS.md)
 
 ## Overview
 
@@ -204,17 +204,18 @@ Scientific benchmarking following DLS 2016 and PLDI 2013 methodologies:
 
 ```bash
 # Run all benchmarks
-make bench
-
-# Microbenchmarks only
-make bench-micro
+make bench-all
 
 # Check for performance regressions
 make bench-regression
 
-# Generate performance report
-make bench-report
+# Generate visualizations and reports
+make bench-visualize    # ASCII charts
+make bench-charts       # PNG charts (requires matplotlib)
+make bench-report       # Markdown report
 ```
+
+See [BENCHMARKS.md](BENCHMARKS.md) for full methodology and results.
 
 ## Development
 

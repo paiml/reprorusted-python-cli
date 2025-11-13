@@ -105,7 +105,9 @@ benchmarks/macro/*/python_results.json
 benchmarks/macro/*/rust_results.json
 benchmarks/macro/*/comparison.json
 benchmarks/visualizations/*.png
+benchmarks/charts/*.png
 benchmarks/reports/*.json
+benchmarks/LATEST_RESULTS.md
 !benchmarks/baseline/*.json
 
 # Makefile backups (created by bashrs make purify)

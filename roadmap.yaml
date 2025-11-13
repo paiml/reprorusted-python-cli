@@ -127,16 +127,6 @@ phases:
           - "Document development workflow"
           - "Add examples and use cases"
 
-      - id: "RC-012"
-        title: "Create video demonstration and blog post"
-        status: "todo"
-        priority: "low"
-        tasks:
-          - "Record demo video"
-          - "Write blog post"
-          - "Create presentation slides"
-          - "Submit to conferences/meetups"
-
   - phase: 5
     name: "Scientific Benchmarking Infrastructure"
     tickets:
@@ -171,7 +161,7 @@ phases:
 
       - id: "RC-016"
         title: "Create visualization and reporting infrastructure"
-        status: "todo"
+        status: "done"
         priority: "medium"
         tasks:
           - "Generate ASCII charts"

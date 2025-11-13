@@ -1,4 +1,4 @@
-.PHONY: help test lint format clean quality validate build compile-all io-check dev bench bench-all bench-docker bench-docker-all build-docker-images bench-regression
+.PHONY: help test lint format clean quality validate build compile-all io-check dev bench bench-all bench-docker bench-docker-all build-docker-images bench-regression bench-visualize bench-report bench-charts
 
 help:
 	@echo "reprorusted-python-cli - Argparse-to-Rust Transpilation Examples"
@@ -19,6 +19,11 @@ help:
 	@echo "  make bench-docker-all - Benchmark all examples in Docker"
 	@echo "  make bench-regression - Check for performance regressions vs baseline"
 	@echo "  make build-docker-images - Build all Docker images for benchmarking"
+	@echo ""
+	@echo "Visualization & Reporting:"
+	@echo "  make bench-visualize  - Generate ASCII charts from benchmark results"
+	@echo "  make bench-charts     - Generate PNG charts (requires matplotlib)"
+	@echo "  make bench-report     - Generate markdown report"
 	@echo ""
 	@echo "Quality Gates:"
 	@echo "  make quality          - Run all quality gates (format → lint → test)"
@@ -147,6 +152,22 @@ bench-regression:
 	@echo "Checking for performance regressions..."
 	@chmod +x benchmarks/framework/regression_check.py
 	@python3 benchmarks/framework/regression_check.py
+
+# Visualization & Reporting
+bench-visualize:
+	@echo "Generating ASCII charts from benchmark results..."
+	@chmod +x benchmarks/framework/visualize.py
+	@python3 benchmarks/framework/visualize.py
+
+bench-charts:
+	@echo "Generating PNG charts from benchmark results..."
+	@chmod +x benchmarks/framework/visualize_png.py
+	@python3 benchmarks/framework/visualize_png.py || echo "⚠️  Install matplotlib: pip install matplotlib"
+
+bench-report:
+	@echo "Generating markdown report from benchmark results..."
+	@chmod +x benchmarks/framework/generate_report.py
+	@python3 benchmarks/framework/generate_report.py
 
 # Quality Gates
 quality: format lint test
