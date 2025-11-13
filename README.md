@@ -8,6 +8,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Progress](https://img.shields.io/badge/Progress-100%25%20COMPLETE-brightgreen)](https://github.com/paiml/reprorusted-python-cli/blob/main/STATUS.md)
 
+## Performance Overview
+
+![Performance Overview](performance-overview.png)
+
 ## Overview
 
 This repository provides a **comprehensive validation framework** for Python-to-Rust transpilation using [`depyler`](https://github.com/paiml/depyler). It focuses on testing "single-shot" compilation of Python argparse-based CLI scripts into standalone Rust binaries, with rigorous input/output validation to ensure semantic equivalence.
