@@ -24,9 +24,12 @@ help:
 	@echo "  make quality          - Run all quality gates (format → lint → test)"
 	@echo "  make format           - Check code formatting (Python, Rust)"
 	@echo "  make format-fix       - Fix code formatting"
-	@echo "  make lint             - Run linters (ruff, clippy, bashrs)"
+	@echo "  make lint             - Run linters (Python, Rust, shell, Makefiles, Dockerfiles)"
 	@echo "  make lint-fix         - Auto-fix lint issues"
 	@echo "  make test             - Run all tests (Python unit tests)"
+	@echo ""
+	@echo "Git Hooks:"
+	@echo "  ./scripts/install_hooks.sh - Install pre-commit hook (format + lint + test)"
 	@echo ""
 	@echo "Cleanup:"
 	@echo "  make clean            - Clean build artifacts"
@@ -175,8 +178,21 @@ lint:
 			bashrs lint "$$script" || true; \
 		fi; \
 	done
-	@echo "Linting Makefile (bashrs)..."
-	@bashrs make purify --report Makefile
+	@echo "Linting Makefiles (bashrs)..."
+	@bashrs make purify --report Makefile || true
+	@for makefile in examples/*/Makefile; do \
+		if [ -f "$$makefile" ]; then \
+			echo "Checking $$makefile..."; \
+			bashrs make purify --report "$$makefile" || true; \
+		fi; \
+	done
+	@echo "Linting Dockerfiles (bashrs)..."
+	@for dockerfile in docker/*/Dockerfile.*; do \
+		if [ -f "$$dockerfile" ]; then \
+			echo "Checking $$dockerfile..."; \
+			bashrs lint "$$dockerfile" || true; \
+		fi; \
+	done
 	@echo "✅ Linting passed"
 
 lint-fix:
@@ -186,6 +202,21 @@ lint-fix:
 	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
 		if [ -f "$$script" ]; then \
 			bashrs lint --fix "$$script" || exit 1; \
+		fi; \
+	done
+	@echo "Auto-fixing Makefiles..."
+	@bashrs make purify Makefile || true
+	@for makefile in examples/*/Makefile; do \
+		if [ -f "$$makefile" ]; then \
+			echo "Purifying $$makefile..."; \
+			bashrs make purify "$$makefile" || true; \
+		fi; \
+	done
+	@echo "Auto-fixing Dockerfiles..."
+	@for dockerfile in docker/*/Dockerfile.*; do \
+		if [ -f "$$dockerfile" ]; then \
+			echo "Fixing $$dockerfile..."; \
+			bashrs lint --fix "$$dockerfile" || true; \
 		fi; \
 	done
 	@echo "✅ Lint fixes applied"

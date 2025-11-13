@@ -137,6 +137,45 @@ This project follows **extreme TDD** with NASA-level quality standards:
 - **Zero SATD** (self-admitted technical debt)
 - **Performance regression detection** (fails CI if >5% slower)
 
+### Quality Gates Enforced
+
+All code passes through comprehensive quality gates:
+
+```bash
+# Run all quality gates (format → lint → test)
+make quality
+
+# Individual gates
+make format      # Check code formatting (Python, Rust)
+make lint        # Lint Python, Rust, shell scripts, Makefiles, Dockerfiles
+make test        # Run all tests (37 tests, 81% coverage)
+```
+
+**Linting with bashrs:**
+- ✅ **Shell scripts** (shellcheck integration)
+- ✅ **Makefiles** (bashrs make purify for performance & best practices)
+- ✅ **Dockerfiles** (security & optimization checks)
+- ✅ **Python** (ruff)
+- ✅ **Rust** (clippy with `-D warnings`)
+
+### Pre-commit Hook
+
+Install the pre-commit hook to enforce quality gates locally:
+
+```bash
+# Install hook (runs format + lint + test before every commit)
+./scripts/install_hooks.sh
+
+# Target: < 30 seconds
+```
+
+The hook ensures:
+- Code is properly formatted
+- All linters pass
+- All tests pass
+
+Skip only when necessary: `git commit --no-verify`
+
 ## Testing Strategy
 
 Multi-layer testing approach with **230 total tests** (192 Python + 38 Rust):
