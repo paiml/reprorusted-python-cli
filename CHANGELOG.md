@@ -11,15 +11,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive QA testing results for all 6 examples
 - depyler v3.20.1 compatibility testing and results documentation
 - depyler v3.20.2 compatibility testing and validation
+- depyler v3.20.0+47 (latest source) compatibility verification
 - GitHub issue #1 documenting depyler v3.20.2 compatibility improvements
+- GitHub issue #1 comment with latest depyler source test results
 - All examples now have working Rust binaries (manual implementations where needed)
 - Benchmark visualization and reporting infrastructure (RC-016)
+- Performance visualization with readable bold percentage text in circular indicators
 
 ### Changed
 - Updated README.md with current progress status (100% complete)
 - Updated README.md with depyler v3.20.2 compatibility matrix (3/6 examples compile)
 - Updated README.md with accurate test counts (230 total: 192 Python + 38 Rust)
 - Benchmarks workflow now uses manual Rust implementations for reliability
+- Verified depyler compatibility with latest source (v3.20.0+47): 3/6 examples compile (unchanged)
+  - Confirmed DEPYLER-0382 (subcommands), 0384 (argument_group), 0385 (mutually_exclusive_group), 0387 (enum comparison) don't improve compile success rate
+  - Advanced examples (subcommands, complex validators, stdlib) still require manual implementations
 
 ### Fixed
 - GitHub Actions CI workflow Python linting issues (67 violations fixed)
