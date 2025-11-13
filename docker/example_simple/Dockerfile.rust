@@ -1,0 +1,37 @@
+# Multi-stage Dockerfile for example_simple (Rust)
+# Target: Minimal image size with static binary
+
+# ============================================================================
+# Stage 1: Builder
+# ============================================================================
+FROM rust:1.83-slim AS builder
+
+WORKDIR /build
+
+# Copy the transpiled Rust code
+COPY examples/example_simple/rust_trivial_cli/ .
+
+# Build statically-linked binary with optimizations
+RUN rustup target add x86_64-unknown-linux-musl && \
+    apt-get update && \
+    apt-get install -y musl-tools && \
+    rm -rf /var/lib/apt/lists/* && \
+    cargo build --release --target x86_64-unknown-linux-musl && \
+    strip target/x86_64-unknown-linux-musl/release/trivial_cli || true
+
+# ============================================================================
+# Stage 2: Runtime (scratch - absolute minimum)
+# ============================================================================
+FROM scratch
+
+# Copy statically-linked binary from builder
+COPY --from=builder /build/target/x86_64-unknown-linux-musl/release/trivial_cli /cli
+
+# Set binary as entrypoint
+ENTRYPOINT ["/cli"]
+
+# Metadata
+LABEL org.opencontainers.image.title="example_simple (Rust)"
+LABEL org.opencontainers.image.description="Rust transpiled CLI benchmark"
+LABEL benchmark.name="example_simple"
+LABEL benchmark.language="rust"

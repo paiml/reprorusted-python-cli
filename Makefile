@@ -1,4 +1,4 @@
-.PHONY: help test lint format clean quality validate build compile-all io-check dev
+.PHONY: help test lint format clean quality validate build compile-all io-check dev bench bench-all bench-docker bench-docker-all build-docker-images
 
 help:
 	@echo "reprorusted-python-cli - Argparse-to-Rust Transpilation Examples"
@@ -11,6 +11,13 @@ help:
 	@echo "  make validate         - Validate all Python examples (tests only)"
 	@echo "  make compile-all      - Compile all examples to Rust"
 	@echo "  make io-check         - Check Python vs Rust I/O equivalence"
+	@echo ""
+	@echo "Benchmarking:"
+	@echo "  make bench            - Benchmark single example (EXAMPLE=example_simple)"
+	@echo "  make bench-all        - Benchmark all examples (native binaries)"
+	@echo "  make bench-docker     - Benchmark single example in Docker (EXAMPLE=example_simple)"
+	@echo "  make bench-docker-all - Benchmark all examples in Docker"
+	@echo "  make build-docker-images - Build all Docker images for benchmarking"
 	@echo ""
 	@echo "Quality Gates:"
 	@echo "  make quality          - Run all quality gates (format → lint → test)"
@@ -63,6 +70,74 @@ io-check:
 	done
 	@echo ""
 	@echo "✅ All I/O equivalence tests passed!"
+
+# Benchmarking
+bench:
+	@if [ -z "$(EXAMPLE)" ]; then \
+		echo "❌ Error: EXAMPLE variable required"; \
+		echo "Usage: make bench EXAMPLE=example_simple"; \
+		exit 1; \
+	fi
+	@if [ ! -d "examples/$(EXAMPLE)" ]; then \
+		echo "❌ Error: examples/$(EXAMPLE) not found"; \
+		exit 1; \
+	fi
+	@echo "Benchmarking $(EXAMPLE)..."
+	@chmod +x benchmarks/framework/bench_runner.sh
+	@./benchmarks/framework/bench_runner.sh examples/$(EXAMPLE)
+
+bench-all:
+	@echo "Benchmarking all examples..."
+	@chmod +x benchmarks/framework/bench_all.sh benchmarks/framework/bench_runner.sh
+	@./benchmarks/framework/bench_all.sh
+
+bench-docker:
+	@if [ -z "$(EXAMPLE)" ]; then \
+		echo "❌ Error: EXAMPLE variable required"; \
+		echo "Usage: make bench-docker EXAMPLE=example_simple"; \
+		exit 1; \
+	fi
+	@if [ ! -d "docker/$(EXAMPLE)" ]; then \
+		echo "❌ Error: docker/$(EXAMPLE) not found"; \
+		echo "Run: make build-docker-images"; \
+		exit 1; \
+	fi
+	@echo "Benchmarking $(EXAMPLE) in Docker..."
+	@chmod +x benchmarks/framework/bench_docker.sh
+	@./benchmarks/framework/bench_docker.sh $(EXAMPLE)
+
+bench-docker-all:
+	@echo "Benchmarking all examples in Docker..."
+	@for docker_dir in docker/*/; do \
+		if [ -d "$$docker_dir" ]; then \
+			example_name=$$(basename "$$docker_dir"); \
+			echo ""; \
+			echo "=== Docker benchmark: $$example_name ==="; \
+			$(MAKE) bench-docker EXAMPLE=$$example_name || exit 1; \
+		fi; \
+	done
+	@echo ""
+	@echo "✅ All Docker benchmarks complete!"
+
+build-docker-images:
+	@echo "Building Docker images for all examples..."
+	@for docker_dir in docker/*/; do \
+		if [ -d "$$docker_dir" ]; then \
+			example_name=$$(basename "$$docker_dir"); \
+			echo ""; \
+			echo "=== Building $$example_name ==="; \
+			if [ -f "$$docker_dir/Dockerfile.python" ]; then \
+				echo "Building Python image..."; \
+				docker build -f "$$docker_dir/Dockerfile.python" -t "reprorusted-python:$$example_name" . || exit 1; \
+			fi; \
+			if [ -f "$$docker_dir/Dockerfile.rust" ]; then \
+				echo "Building Rust image..."; \
+				docker build -f "$$docker_dir/Dockerfile.rust" -t "reprorusted-rust:$$example_name" . || exit 1; \
+			fi; \
+		fi; \
+	done
+	@echo ""
+	@echo "✅ All Docker images built successfully!"
 
 # Quality Gates
 quality: format lint test

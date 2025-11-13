@@ -1,0 +1,40 @@
+# Multi-stage Dockerfile for example_simple (Python)
+# Minimized image size with Python 3.12-slim
+
+# ============================================================================
+# Stage 1: Builder
+# ============================================================================
+FROM python:3.12-slim AS builder
+
+WORKDIR /build
+
+# Copy the Python CLI script
+COPY examples/example_simple/trivial_cli.py .
+
+# Make executable
+RUN chmod +x trivial_cli.py
+
+# ============================================================================
+# Stage 2: Runtime
+# ============================================================================
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Copy CLI script from builder
+COPY --from=builder /build/trivial_cli.py /app/cli.py
+
+# Run as non-root user for security
+RUN useradd -m -u 1000 benchmark && \
+    chown -R benchmark:benchmark /app
+
+USER benchmark
+
+# Set entrypoint
+ENTRYPOINT ["python3", "/app/cli.py"]
+
+# Metadata
+LABEL org.opencontainers.image.title="example_simple (Python)"
+LABEL org.opencontainers.image.description="Python argparse CLI benchmark"
+LABEL benchmark.name="example_simple"
+LABEL benchmark.language="python"

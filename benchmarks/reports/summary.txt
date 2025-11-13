@@ -1,0 +1,78 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Benchmark Summary Report
+  Generated: Thu Nov 13 09:11:52 AM CET 2025
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+╔═══════════════════════════════════════════════════════╗
+║  example_complex
+╚═══════════════════════════════════════════════════════╝
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+╔═══════════════════════════════════════════════════════╗
+║  example_flags
+╚═══════════════════════════════════════════════════════╝
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+╔═══════════════════════════════════════════════════════╗
+║  example_positional
+╚═══════════════════════════════════════════════════════╝
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+╔═══════════════════════════════════════════════════════╗
+║  example_simple
+╚═══════════════════════════════════════════════════════╝
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+╔═══════════════════════════════════════════════════════╗
+║  example_stdlib
+╚═══════════════════════════════════════════════════════╝
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+╔═══════════════════════════════════════════════════════╗
+║  example_subcommands
+╚═══════════════════════════════════════════════════════╝
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+  Implementation: null
+    Mean time:    null ms
+    Std dev:      null ms
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
