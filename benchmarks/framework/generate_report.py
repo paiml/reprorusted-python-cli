@@ -9,10 +9,10 @@ import json
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Any
 
 
-def load_benchmark_results(results_dir: Path) -> List[Dict[str, Any]]:
+def load_benchmark_results(results_dir: Path) -> list[dict[str, Any]]:
     """Load all benchmark result files from a directory."""
     results = []
     if not results_dir.exists():
@@ -23,13 +23,13 @@ def load_benchmark_results(results_dir: Path) -> List[Dict[str, Any]]:
             with open(json_file) as f:
                 data = json.load(f)
                 results.append(data)
-        except (json.JSONDecodeError, IOError) as e:
+        except (OSError, json.JSONDecodeError) as e:
             print(f"Warning: Could not load {json_file}: {e}", file=sys.stderr)
 
     return results
 
 
-def extract_benchmark_data(results: List[Dict[str, Any]]) -> Dict[str, List]:
+def extract_benchmark_data(results: list[dict[str, Any]]) -> dict[str, list]:
     """Extract benchmark data from results."""
     data = {
         "labels": [],
@@ -79,7 +79,7 @@ def extract_benchmark_data(results: List[Dict[str, Any]]) -> Dict[str, List]:
     return data
 
 
-def generate_markdown_report(data: Dict[str, List]) -> str:
+def generate_markdown_report(data: dict[str, list]) -> str:
     """Generate comprehensive markdown report."""
     lines = []
 
@@ -226,7 +226,7 @@ def main():
         sys.exit(1)
 
     # Generate report
-    print(f"Generating markdown report...")
+    print("Generating markdown report...")
     report = generate_markdown_report(data)
 
     # Write report

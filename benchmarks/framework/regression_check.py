@@ -18,8 +18,6 @@ import json
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional
-
 
 # Thresholds for regression detection
 DEFAULT_TIME_THRESHOLD = 5.0  # 5% slower is a regression
@@ -33,7 +31,7 @@ class BenchmarkResult:
     name: str
     mean_ms: float
     stddev_ms: float
-    memory_kb: Optional[float] = None
+    memory_kb: float | None = None
 
 
 @dataclass
@@ -59,7 +57,7 @@ class RegressionDetector:
         self.time_threshold = time_threshold
         self.memory_threshold = memory_threshold
 
-    def load_benchmark_file(self, filepath: Path) -> List[BenchmarkResult]:
+    def load_benchmark_file(self, filepath: Path) -> list[BenchmarkResult]:
         """Load benchmark results from JSON file."""
         try:
             with open(filepath) as f:
@@ -96,7 +94,7 @@ class RegressionDetector:
         self,
         baseline: BenchmarkResult,
         current: BenchmarkResult,
-    ) -> List[Regression]:
+    ) -> list[Regression]:
         """Compare two benchmark results and detect regressions."""
         regressions = []
 
@@ -144,7 +142,7 @@ class RegressionDetector:
         example_name: str,
         baseline_file: Path,
         current_file: Path,
-    ) -> List[Regression]:
+    ) -> list[Regression]:
         """Check a single example for regressions."""
         baseline_results = self.load_benchmark_file(baseline_file)
         current_results = self.load_benchmark_file(current_file)
@@ -173,7 +171,7 @@ class RegressionDetector:
         self,
         baseline_dir: Path,
         results_dir: Path,
-    ) -> List[Regression]:
+    ) -> list[Regression]:
         """Check all benchmark files for regressions."""
         all_regressions = []
 
@@ -196,7 +194,7 @@ class RegressionDetector:
         return all_regressions
 
 
-def format_regression_report(regressions: List[Regression]) -> str:
+def format_regression_report(regressions: list[Regression]) -> str:
     """Format regression report as readable text."""
     if not regressions:
         return "✅ No performance regressions detected!"
@@ -207,7 +205,7 @@ def format_regression_report(regressions: List[Regression]) -> str:
     ]
 
     # Group by example
-    by_example: Dict[str, List[Regression]] = {}
+    by_example: dict[str, list[Regression]] = {}
     for reg in regressions:
         if reg.example not in by_example:
             by_example[reg.example] = []

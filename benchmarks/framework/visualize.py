@@ -8,10 +8,10 @@ Generates ASCII and PNG charts from benchmark results.
 import json
 import sys
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Any
 
 
-def load_benchmark_results(results_dir: Path) -> List[Dict[str, Any]]:
+def load_benchmark_results(results_dir: Path) -> list[dict[str, Any]]:
     """Load all benchmark result files from a directory."""
     results = []
     if not results_dir.exists():
@@ -22,16 +22,16 @@ def load_benchmark_results(results_dir: Path) -> List[Dict[str, Any]]:
             with open(json_file) as f:
                 data = json.load(f)
                 results.append(data)
-        except (json.JSONDecodeError, IOError) as e:
+        except (OSError, json.JSONDecodeError) as e:
             print(f"Warning: Could not load {json_file}: {e}", file=sys.stderr)
 
     return results
 
 
 def generate_ascii_chart(
-    labels: List[str],
-    python_times: List[float],
-    rust_times: List[float],
+    labels: list[str],
+    python_times: list[float],
+    rust_times: list[float],
     max_width: int = 60
 ) -> str:
     """Generate ASCII bar chart comparing Python vs Rust execution times."""
@@ -43,7 +43,7 @@ def generate_ascii_chart(
 
     max_time = max(max(python_times), max(rust_times))
 
-    for label, py_time, rs_time in zip(labels, python_times, rust_times):
+    for label, py_time, rs_time in zip(labels, python_times, rust_times, strict=False):
         # Calculate bar lengths
         py_bar_len = int((py_time / max_time) * max_width)
         rs_bar_len = int((rs_time / max_time) * max_width)
@@ -60,9 +60,9 @@ def generate_ascii_chart(
 
 
 def generate_memory_chart(
-    labels: List[str],
-    python_mem: List[int],
-    rust_mem: List[int],
+    labels: list[str],
+    python_mem: list[int],
+    rust_mem: list[int],
     max_width: int = 60
 ) -> str:
     """Generate ASCII bar chart comparing memory usage."""
@@ -74,7 +74,7 @@ def generate_memory_chart(
 
     max_mem = max(max(python_mem), max(rust_mem))
 
-    for label, py_mem, rs_mem in zip(labels, python_mem, rust_mem):
+    for label, py_mem, rs_mem in zip(labels, python_mem, rust_mem, strict=False):
         # Calculate bar lengths
         py_bar_len = int((py_mem / max_mem) * max_width)
         rs_bar_len = int((rs_mem / max_mem) * max_width)
@@ -95,8 +95,8 @@ def generate_memory_chart(
 
 
 def generate_speedup_chart(
-    labels: List[str],
-    speedups: List[float],
+    labels: list[str],
+    speedups: list[float],
     max_width: int = 60
 ) -> str:
     """Generate ASCII bar chart showing speedup factors."""
@@ -109,7 +109,7 @@ def generate_speedup_chart(
     max_speedup = max(speedups)
     avg_speedup = sum(speedups) / len(speedups)
 
-    for label, speedup in zip(labels, speedups):
+    for label, speedup in zip(labels, speedups, strict=False):
         bar_len = int((speedup / max_speedup) * max_width)
         lines.append(f"{label:20s} {'█' * bar_len} {speedup:5.2f}x")
 
@@ -120,7 +120,7 @@ def generate_speedup_chart(
     return "\n".join(lines)
 
 
-def extract_benchmark_data(results: List[Dict[str, Any]]) -> Dict[str, List]:
+def extract_benchmark_data(results: list[dict[str, Any]]) -> dict[str, list]:
     """Extract benchmark data from results."""
     data = {
         "labels": [],
@@ -157,7 +157,7 @@ def extract_benchmark_data(results: List[Dict[str, Any]]) -> Dict[str, List]:
     return data
 
 
-def generate_summary_report(data: Dict[str, List]) -> str:
+def generate_summary_report(data: dict[str, list]) -> str:
     """Generate summary report with key statistics."""
     lines = []
     lines.append("=" * 70)

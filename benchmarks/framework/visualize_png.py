@@ -8,7 +8,7 @@ Generates professional-quality PNG charts for documentation.
 import json
 import sys
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Any
 
 try:
     import matplotlib
@@ -21,7 +21,7 @@ except ImportError:
     print("Warning: matplotlib not available. Install with: pip install matplotlib", file=sys.stderr)
 
 
-def load_benchmark_results(results_dir: Path) -> List[Dict[str, Any]]:
+def load_benchmark_results(results_dir: Path) -> list[dict[str, Any]]:
     """Load all benchmark result files from a directory."""
     results = []
     if not results_dir.exists():
@@ -32,13 +32,13 @@ def load_benchmark_results(results_dir: Path) -> List[Dict[str, Any]]:
             with open(json_file) as f:
                 data = json.load(f)
                 results.append(data)
-        except (json.JSONDecodeError, IOError) as e:
+        except (OSError, json.JSONDecodeError) as e:
             print(f"Warning: Could not load {json_file}: {e}", file=sys.stderr)
 
     return results
 
 
-def extract_benchmark_data(results: List[Dict[str, Any]]) -> Dict[str, List]:
+def extract_benchmark_data(results: list[dict[str, Any]]) -> dict[str, list]:
     """Extract benchmark data from results."""
     data = {
         "labels": [],
@@ -77,7 +77,7 @@ def extract_benchmark_data(results: List[Dict[str, Any]]) -> Dict[str, List]:
     return data
 
 
-def generate_execution_time_chart(data: Dict[str, List], output_path: Path):
+def generate_execution_time_chart(data: dict[str, list], output_path: Path):
     """Generate grouped bar chart for execution times."""
     if not MATPLOTLIB_AVAILABLE:
         return
@@ -112,7 +112,7 @@ def generate_execution_time_chart(data: Dict[str, List], output_path: Path):
     print(f"✅ Generated: {output_path}")
 
 
-def generate_speedup_chart(data: Dict[str, List], output_path: Path):
+def generate_speedup_chart(data: dict[str, list], output_path: Path):
     """Generate bar chart for speedup factors."""
     if not MATPLOTLIB_AVAILABLE:
         return
@@ -147,7 +147,7 @@ def generate_speedup_chart(data: Dict[str, List], output_path: Path):
     print(f"✅ Generated: {output_path}")
 
 
-def generate_memory_chart(data: Dict[str, List], output_path: Path):
+def generate_memory_chart(data: dict[str, list], output_path: Path):
     """Generate grouped bar chart for memory usage."""
     if not MATPLOTLIB_AVAILABLE:
         return
@@ -186,7 +186,7 @@ def generate_memory_chart(data: Dict[str, List], output_path: Path):
     print(f"✅ Generated: {output_path}")
 
 
-def generate_combined_chart(data: Dict[str, List], output_path: Path):
+def generate_combined_chart(data: dict[str, list], output_path: Path):
     """Generate combined chart with multiple subplots."""
     if not MATPLOTLIB_AVAILABLE:
         return
@@ -258,7 +258,7 @@ Peak Speedup: {max(data['speedups']):.2f}x
 Min Speedup:  {min(data['speedups']):.2f}x
     """
     ax4.text(0.1, 0.5, summary_text, fontsize=12, family='monospace',
-            verticalalignment='center', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+            verticalalignment='center', bbox={'boxstyle': 'round', 'facecolor': 'wheat', 'alpha': 0.5})
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches='tight')

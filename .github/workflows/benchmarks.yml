@@ -34,7 +34,7 @@ jobs:
 
       - name: Install bashrs
         run: |
-          cargo install --git https://github.com/paiml/bashrs --locked rash
+          cargo install --git https://github.com/paiml/bashrs rash
 
       - name: Install dependencies
         run: |
