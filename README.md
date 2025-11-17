@@ -43,6 +43,30 @@ make build
 make bench
 ```
 
+## Debugging Guide
+
+**For comprehensive debugging workflows, see [DEBUGGING.md](DEBUGGING.md)**
+
+This repository includes complete debugging documentation covering:
+
+- **Transpilation Debugging**: Using `depyler --trace` and `--explain` flags
+- **Compile-Time Analysis**: Understanding Rust compiler errors
+- **Runtime Tracing**: Using `renacer` for syscall and function profiling
+- **Reproducibility**: Creating minimal bug reports with complete trace information
+
+Quick debugging commands:
+```bash
+# Debug transpilation with full trace
+depyler transpile example.py --trace --explain > debug.log
+
+# Trace runtime syscalls with source correlation
+renacer --source -- ./binary args
+
+# Profile function execution and generate flamegraph
+renacer --function-time --source -- ./binary > profile.txt
+cat profile.txt | flamegraph.pl > flamegraph.svg
+```
+
 ## Project Structure
 
 ```
@@ -262,6 +286,7 @@ make quality-gate
 
 ## Documentation
 
+- **[Debugging Guide](DEBUGGING.md)** - Complete debugging workflow with depyler --trace/--explain and renacer (600+ lines)
 - [Tutorial](docs/examples/tutorial.md) - Comprehensive getting started guide (750+ lines)
 - [Specification](docs/specifications/argparse-depyler-compile-examples-spec.md) - Complete project specification (2,000+ lines)
 - [CI/CD Pipeline](docs/ci-cd.md) - GitHub Actions workflow documentation (450+ lines)
