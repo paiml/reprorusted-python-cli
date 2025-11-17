@@ -587,7 +587,70 @@ uv run pytest test_trivial_cli.py -v --cov
 
 ---
 
-**Last Updated:** 2025-11-13
+---
+
+## 🔬 Depyler Compatibility Tracking
+
+### Latest Validation: v3.20.2 commit 2e5d63a (2025-11-14)
+
+**Test Results:** 4/8 examples compile successfully (50.0% compatibility)
+
+#### Original Examples (6)
+
+| Example | Status | Notes |
+|---------|--------|-------|
+| example_simple | ✅ Works | Full support - compiles and runs correctly |
+| example_flags | ✅ Works | Full support - compiles and runs correctly |
+| example_positional | ✅ Works | Full support - compiles and runs correctly |
+| **example_subcommands** | ✅ **FIXED** | Full support - compiles and runs correctly (DEPYLER-0396) |
+| example_complex | ❌ Build fails | 26 compilation errors (type casting, Option handling, argparse module) |
+| example_stdlib | ❌ Transpile fails | Error: `Expression type not yet supported` |
+
+**Original Examples Result:** 4/6 working (66.7%)
+
+#### New Examples - Extended Validation (5)
+
+| Example | Status | Notes |
+|---------|--------|-------|
+| example_config | ❌ Build fails | 41 errors - global constants, subparser vars, Path conversions |
+| example_subprocess | ❌ Build fails | 6+ errors - subprocess module not implemented |
+| example_environment | ❌ Transpile fails | os, platform, sys modules not supported |
+| example_regex | ❌ Build fails | 6+ errors - re module not transpiled |
+| example_io_streams | ❌ Transpile fails | tempfile, context managers, stdin iteration |
+
+**New Examples Result:** 0/5 working (0%)
+
+**Overall:** 4/11 examples working (36.4%)
+
+See [NEW_EXAMPLES.md](NEW_EXAMPLES.md) and [STRESS_TEST_RESULTS.md](STRESS_TEST_RESULTS.md) for detailed analysis.
+
+**🎉 Major Progress - Subcommands Now Working!**
+
+Commit b3762a6 (DEPYLER-0396) successfully resolved all borrow checker issues:
+- ✅ **Fixed:** Args struct properly generated in scope (DEPYLER-0395)
+- ✅ **Fixed:** Handler functions now use borrowing: `args: &Args` instead of `args: Args`
+- ✅ **Fixed:** Pattern matches now borrow: `match &args.command` instead of `match args.command`
+- ✅ **Verified:** All subcommand scenarios (clone, push, pull) execute correctly
+
+**Known Issues in depyler v3.20.2 (latest):**
+1. ✅ ~~Subcommand enum generation doesn't create proper Args type definitions~~ **FIXED (DEPYLER-0395)**
+2. ✅ ~~Subcommand handlers have borrow/ownership issues~~ **FIXED (DEPYLER-0396)**
+3. ❌ Complex type inference fails for Option types and custom validators
+4. ❌ Limited expression type support prevents stdlib integration
+5. ❌ Custom type validators (port_number, email_address) generate invalid Rust code
+
+**GitHub Issue:** [#2](https://github.com/paiml/reprorusted-python-cli/issues/2) - Depyler v3.20.2 Compatibility Validation
+
+**Validation History:**
+- v3.20.0+47: 3/6 examples working (50% - documented in CHANGELOG)
+- v3.20.2 (commit 6dd02b9 - DEPYLER-0394): 3/6 working (50% - no improvement)
+- v3.20.2 (commit 61e988d - DEPYLER-0395): 3/6 working (50% - partial progress on subcommands)
+- v3.20.2 (commit b3762a6 - DEPYLER-0396): **4/6 working (66.7% - subcommands fully fixed!)** ✅
+- v3.20.2 (commit 2e5d63a - SATD cleanup): **4/6 working (66.7% - maintained)**
+
+---
+
+**Last Updated:** 2025-11-14
 **Status:** 🎉 **PROJECT COMPLETE**
 **All Phases:** ✅ Complete (100%)
 **All Tickets:** ✅ 17/17 (100%)

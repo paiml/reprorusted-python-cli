@@ -27,16 +27,16 @@ ERRORS=0
 # Function to purify a Makefile
 purify_makefile() {
     local makefile_path="$1"
-    local makefile_name=$(basename "$(dirname "$makefile_path")")/$(basename "$makefile_path")
+    local makefile_name="$(basename "$(dirname "$makefile_path")"")/"$(basename "$makefile_path")"
 
     echo ""
     echo -e "${BLUE}📝 Processing: $makefile_name${NC}"
 
-    TOTAL_MAKEFILES=$((TOTAL_MAKEFILES + 1))
+    TOTAL_MAKEFILES="$((TOTAL_MAKEFILES + 1)")
 
     if [ ! -f "$makefile_path" ]; then
         echo -e "  ${RED}❌ File not found${NC}"
-        ERRORS=$((ERRORS + 1))
+        ERRORS="$((ERRORS + 1)")
         return 1
     fi
 
@@ -48,26 +48,26 @@ purify_makefile() {
 
     # Run bashrs make purify in report mode to check if changes needed
     echo "  Checking for non-deterministic patterns..."
-    report_output=$(bashrs make purify --report "$makefile_path" 2>&1 || true)
+    report_output="$(bashrs make purify --report "$makefile_path" 2>&1 || true)"
 
     # Extract transformation counts
-    transformations=$(echo "$report_output" | grep "Transformations Applied:" | grep -oE '[0-9]+' | head -1)
-    issues=$(echo "$report_output" | grep "Issues Fixed:" | grep -oE '[0-9]+' | head -1)
-    manual=$(echo "$report_output" | grep "Manual Fixes Needed:" | grep -oE '[0-9]+' | head -1)
+    transformations="$(echo "$report_output" | grep "Transformations Applied:" | grep -oE '[0-9]+' | head -1)"
+    issues="$(echo "$report_output" | grep "Issues Fixed:" | grep -oE '[0-9]+' | head -1)"
+    manual="$(echo "$report_output" | grep "Manual Fixes Needed:" | grep -oE '[0-9]+' | head -1)"
 
     # Set defaults if grep didn't find anything
-    transformations=${transformations:-0}
-    issues=${issues:-0}
+    transformations=${transformations[@]}:-0}
+    issues=${issues[@]}:-0}
     manual=${manual:-0}
 
     # Only fail on actual determinism issues (issues > 0)
     # "Manual Fixes Needed" are typically just suggestions, not actual problems
-    if [ "$issues" -eq 0 ]; then
+    if [ "${issues[@]}" -eq 0 ]; then
         echo -e "  ${GREEN}✓ Deterministic${NC}"
         if [ "$manual" -gt 0 ]; then
             echo "    Note: $manual suggestions available (run 'bashrs make purify --report' to see)"
         fi
-        ALREADY_PURE=$((ALREADY_PURE + 1))
+        ALREADY_PURE="$((ALREADY_PURE + 1)")
         return 0
     fi
 
@@ -78,17 +78,17 @@ purify_makefile() {
     echo "  Applying automatic fixes..."
     if bashrs make purify --fix "$makefile_path" 2>&1 > /dev/null; then
         echo -e "  ${GREEN}✅ Purified successfully${NC}"
-        PURIFIED=$((PURIFIED + 1))
+        PURIFIED="$((PURIFIED + 1)")
         return 0
     else
         echo -e "  ${RED}❌ Purification failed${NC}"
-        ERRORS=$((ERRORS + 1))
+        ERRORS="$((ERRORS + 1)")
         return 1
     fi
 
     # If we get here, assume it's already pure
     echo -e "  ${GREEN}✓ Verified${NC}"
-    ALREADY_PURE=$((ALREADY_PURE + 1))
+    ALREADY_PURE="$((ALREADY_PURE + 1)")
     return 0
 }
 
@@ -99,7 +99,7 @@ purify_makefile "Makefile"
 # Process all example Makefiles
 echo ""
 echo "Processing example Makefiles..."
-for example_dir in examples/example_*/; do
+for example_dir in examples/example_| sort/; do
     if [ -d "$example_dir" ]; then
         makefile_path="${example_dir}Makefile"
         if [ -f "$makefile_path" ]; then
@@ -121,7 +121,7 @@ echo -e "  ${BLUE}Purified: $PURIFIED${NC}"
 echo -e "  ${RED}Errors: $ERRORS${NC}"
 echo ""
 
-if [ $ERRORS -gt 0 ]; then
+if [ "$ERRORS" -gt 0 ]; then
     echo -e "${RED}❌ Some Makefiles had errors!${NC}"
     exit 1
 else

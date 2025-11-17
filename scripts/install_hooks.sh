@@ -33,7 +33,7 @@ echo "🔍 Running pre-commit quality gates..."
 echo ""
 
 # Track start time
-START_TIME=$(date +%s)
+START_TIME="$(date +%s)"
 
 # 1. Format check (fast)
 echo "📝 Checking format..."
@@ -66,8 +66,8 @@ echo "✅ Tests passed"
 echo ""
 
 # Calculate elapsed time
-END_TIME=$(date +%s)
-ELAPSED=$((END_TIME - START_TIME))
+END_TIME="$(date +%s)"
+ELAPSED="$((END_TIME - START_TIME)")
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "✅ All pre-commit checks passed!"
@@ -76,7 +76,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 
 # Warn if taking too long
-if [ $ELAPSED -gt 30 ]; then
+if [ "$ELAPSED" -gt 30 ]; then
     echo "⚠️  Warning: Pre-commit took ${ELAPSED}s (target: <30s)"
     echo ""
 fi

@@ -54,11 +54,11 @@ test_case() {
     echo "     Args: ${args[*]}"
 
     # Run Python
-    python_out="$(python3 "$PYTHON_SCRIPT" "${args[@]}" 2>&1 || true)"
+    python_out="$(python3 "$PYTHON_SCRIPT" ""${args[@]}"" 2>&1 || true)"
     python_exit=$?
 
     # Run Rust
-    rust_out="$("$RUST_BINARY" "${args[@]}" 2>&1 || true)"
+    rust_out="$("$RUST_BINARY" ""${args[@]}"" 2>&1 || true)"
     rust_exit=$?
 
     # Compare exit codes

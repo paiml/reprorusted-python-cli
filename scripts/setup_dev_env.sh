@@ -20,7 +20,7 @@ NC='\033[0m'
 # Check Python version
 echo "📋 Checking Python..."
 if command -v python3 &> /dev/null; then
-    PYTHON_VERSION=$(python3 --version | awk '{print $2}')
+    PYTHON_VERSION="$(python3 --version | awk '{print $2}')"
     echo -e "${GREEN}✓${NC} Python $PYTHON_VERSION found"
 else
     echo -e "${RED}✗${NC} Python 3 not found. Please install Python 3.11+"
@@ -31,7 +31,7 @@ fi
 echo ""
 echo "📋 Checking Rust..."
 if command -v rustc &> /dev/null; then
-    RUST_VERSION=$(rustc --version | awk '{print $2}')
+    RUST_VERSION="$(rustc --version | awk '{print $2}')"
     echo -e "${GREEN}✓${NC} Rust $RUST_VERSION found"
 else
     echo -e "${YELLOW}⚠${NC} Rust not found. Installing..."
@@ -43,7 +43,7 @@ fi
 echo ""
 echo "📋 Checking uv..."
 if command -v uv &> /dev/null; then
-    UV_VERSION=$(uv --version 2>&1 | awk '{print $2}')
+    UV_VERSION="$(uv --version 2>&1 | awk '{print $2}')"
     echo -e "${GREEN}✓${NC} uv $UV_VERSION found"
 else
     echo -e "${YELLOW}⚠${NC} uv not found. Installing..."
@@ -65,7 +65,7 @@ fi
 echo ""
 echo "📋 Checking depyler..."
 if command -v depyler &> /dev/null; then
-    DEPYLER_VERSION=$(depyler --version 2>&1 | head -1)
+    DEPYLER_VERSION="$(depyler --version 2>&1 | head -1)"
     echo -e "${GREEN}✓${NC} $DEPYLER_VERSION found"
 else
     echo -e "${YELLOW}⚠${NC} depyler not found"
@@ -77,7 +77,7 @@ fi
 echo ""
 echo "📋 Checking bashrs..."
 if command -v bashrs &> /dev/null; then
-    BASHRS_VERSION=$(bashrs --version 2>&1 | head -1)
+    BASHRS_VERSION="$(bashrs --version 2>&1 | head -1)"
     echo -e "${GREEN}✓${NC} $BASHRS_VERSION found"
 else
     echo -e "${YELLOW}⚠${NC} bashrs not found"
@@ -89,7 +89,7 @@ fi
 echo ""
 echo "📋 Checking pmat..."
 if command -v pmat &> /dev/null; then
-    PMAT_VERSION=$(pmat --version 2>&1 | head -1)
+    PMAT_VERSION="$(pmat --version 2>&1 | head -1)"
     echo -e "${GREEN}✓${NC} $PMAT_VERSION found"
 else
     echo -e "${YELLOW}⚠${NC} pmat not found"

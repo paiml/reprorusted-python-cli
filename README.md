@@ -66,18 +66,20 @@ reprorusted-python-cli/
 
 ### Depyler Compatibility Status
 
-As of depyler v3.20.2 (latest), the `depyler compile` command works out-of-the-box for basic argparse examples:
+As of depyler v3.20.2 (latest - commit 2e5d63a), the `depyler compile` command works for most argparse patterns:
 
 | Example | `depyler compile` | Manual Rust | Test Count | Status |
 |---------|-------------------|-------------|------------|--------|
 | **example_simple** | ✅ Works | ✅ Available | 23 tests | Full support |
 | **example_flags** | ✅ Works | ✅ Available | 33 tests | Full support |
 | **example_positional** | ✅ Works | ✅ Available | 27 tests | Full support |
-| **example_subcommands** | ❌ Build fails | ✅ Available | 37 tests | Subcommand enum issues |
+| **example_subcommands** | ✅ **Works** | ✅ Available | 37 tests | **Full support (FIXED!)** |
 | **example_complex** | ❌ Build fails | ✅ Available | 43 tests | Option type issues |
 | **example_stdlib** | ❌ Transpile fails | ✅ Available | 29 tests | Expression type not supported |
 
-**Progress:** 3/6 examples compile successfully with `depyler compile` (50%)
+**Progress:** 4/6 examples compile successfully with `depyler compile` (66.7%) 🎉
+
+**Recent Fix (DEPYLER-0396):** Subcommands example now fully working - all borrow checker issues resolved!
 
 All examples include working Rust binaries (manual implementations) with 100% I/O equivalence validation.
 
