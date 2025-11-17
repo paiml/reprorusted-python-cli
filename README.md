@@ -71,13 +71,18 @@ cat profile.txt | flamegraph.pl > flamegraph.svg
 
 ```
 reprorusted-python-cli/
-├── examples/              # 6 argparse CLI examples (simple → complex)
-│   ├── example_simple/   # Trivial CLI with basic argparse
-│   ├── example_flags/    # Boolean flags and combinations
-│   ├── example_positional/  # Positional arguments
+├── examples/              # 11 argparse CLI examples (simple → complex)
+│   ├── example_simple/      # Trivial CLI with basic argparse
+│   ├── example_flags/       # Boolean flags and combinations
+│   ├── example_positional/  # Positional arguments (nargs)
 │   ├── example_subcommands/ # Git-like subcommand pattern
-│   ├── example_complex/  # Advanced argparse features
-│   └── example_stdlib/   # Integration with stdlib modules
+│   ├── example_complex/     # Advanced argparse features (validators, types)
+│   ├── example_config/      # Configuration files and defaults
+│   ├── example_subprocess/  # subprocess.run() integration
+│   ├── example_environment/ # os.environ, os.path, sys.platform
+│   ├── example_io_streams/  # File I/O, stdin/stdout, tempfile
+│   ├── example_regex/       # re module pattern matching
+│   └── example_stdlib/      # hashlib, json, pathlib integration
 ├── benchmarks/           # Scientific performance benchmarking
 │   ├── micro/           # Microbenchmarks (argparse overhead, startup, etc.)
 │   └── macro/           # Real-world CLI scenarios
@@ -88,22 +93,36 @@ reprorusted-python-cli/
 
 ## Examples
 
-### Depyler Compatibility Status
+### Depyler Single-Shot Compile Status
 
-As of depyler v3.20.2 (latest - commit 2e5d63a), the `depyler compile` command works for most argparse patterns:
+**Latest Testing**: depyler v3.20.0+47 (with DEPYLER-0381, 0383, 0384 integration)
 
-| Example | `depyler compile` | Manual Rust | Test Count | Status |
-|---------|-------------------|-------------|------------|--------|
-| **example_simple** | ✅ Works | ✅ Available | 23 tests | Full support |
-| **example_flags** | ✅ Works | ✅ Available | 33 tests | Full support |
-| **example_positional** | ✅ Works | ✅ Available | 27 tests | Full support |
-| **example_subcommands** | ✅ **Works** | ✅ Available | 37 tests | **Full support (FIXED!)** |
-| **example_complex** | ❌ Build fails | ✅ Available | 43 tests | Option type issues |
-| **example_stdlib** | ❌ Transpile fails | ✅ Available | 29 tests | Expression type not supported |
+**Single-Shot Compile**: Python → Rust binary in one command (`depyler compile example.py -o binary`)
 
-**Progress:** 4/6 examples compile successfully with `depyler compile` (66.7%) 🎉
+| Example | Transpile | Build | Run | Blocker | Details |
+|---------|-----------|-------|-----|---------|---------|
+| **example_simple** | ✅ | ✅ | ✅ | None | **Full single-shot support** |
+| **example_flags** | ✅ | ✅ | ✅ | None | **Full single-shot support** |
+| **example_positional** | ✅ | ❌ | ❌ | Vec Display | 1 error: `Vec<String>` lacks Display trait |
+| **example_subcommands** | ✅ | ❌ | ❌ | Field access | 7 errors: struct field access issues |
+| **example_complex** | ✅ | ❌ | ❌ | Exception handling | 28 errors: Exception type not found |
+| **example_config** | ✅ | ❓ | ❓ | Not tested | Global constants, Path conversions |
+| **example_subprocess** | ✅ | ❓ | ❓ | Not tested | subprocess.run() transpilation |
+| **example_environment** | ✅ | ❌ | ❌ | Missing imports | 27 errors: serde_json not imported |
+| **example_io_streams** | ✅ | ❌ | ❌ | Missing imports | 47 errors: serde_json not imported |
+| **example_regex** | ✅ | ❌ | ❌ | Type inference | 50 errors: regex type mismatches |
+| **example_stdlib** | ✅ | ❌ | ❌ | Type system | 41 errors: function pointer issues |
 
-**Recent Fix (DEPYLER-0396):** Subcommands example now fully working - all borrow checker issues resolved!
+**Progress:**
+- **Transpilation**: 11/11 (100%) ✅ - All examples generate Rust code
+- **Dependency Generation**: 11/11 (100%) ✅ - Automatic Cargo.toml with crate detection
+- **Single-Shot Compile**: 2/11 (18.2%) 🎯 - From Python source to working binary
+- **Detailed Tracking**: [GitHub Issue #3](https://github.com/paiml/reprorusted-python-cli/issues/3)
+
+**Recent Achievements:**
+- ✅ **DEPYLER-0381**: sys.stdin/stdout/stderr support
+- ✅ **DEPYLER-0383**: Walrus operator (PEP 572), hashlib, pathlib fixes
+- ✅ **DEPYLER-0384**: Automatic Cargo.toml generation with 20+ crate detection
 
 All examples include working Rust binaries (manual implementations) with 100% I/O equivalence validation.
 
