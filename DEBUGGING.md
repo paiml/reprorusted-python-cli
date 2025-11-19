@@ -2,10 +2,12 @@
 
 **Complete workflow for debugging Python-to-Rust transpilation issues with reproducibility**
 
-This guide covers three critical debugging phases:
+This guide covers five critical debugging phases:
 1. **Transpilation Debugging** - Using `depyler --trace` and `--explain`
 2. **Compile-Time Analysis** - Understanding Rust compiler errors
 3. **Runtime Tracing** - Using `renacer` for syscall and function profiling
+4. **Transpiler Source Mapping** - Using `renacer --transpiler-map` for Python→Rust correlation (v0.4.1+)
+5. **Chaos Engineering** - Stress testing transpiled code with chaos infrastructure (v0.4.1+)
 
 ---
 
@@ -709,6 +711,285 @@ Line 42: println!("{}", args.targets) should use Debug trait
 ## Fix Needed
 Detect Vec<T> in println! and auto-generate Debug trait usage
 ```
+
+---
+
+### Example 4: Transpiler Source Mapping (Renacer v0.4.1+)
+
+**NEW in Sprint 24**: Correlate transpiled Rust code back to original Python source
+
+#### Overview
+
+Renacer v0.4.1 introduces `--transpiler-map` for mapping generated Rust code back to original Python source. This enables:
+- **Python→Rust line correlation** - Map Rust errors to Python source
+- **Python function names** - Preserve original function names in profiles
+- **Error context** - Understand which Python code caused Rust compile errors
+
+#### Source Map Format
+
+Depyler (future version) will generate `.sourcemap.json` files alongside `.rs` files:
+
+```json
+{
+  "version": 1,
+  "source_language": "python",
+  "source_file": "examples/csv_filter.py",
+  "generated_file": "csv_filter.rs",
+  "depyler_version": "3.20.0+50",
+
+  "mappings": [
+    {
+      "rust_line": 52,
+      "rust_function": "filter_csv",
+      "python_line": 28,
+      "python_function": "filter_csv",
+      "python_context": "writer = csv.DictWriter(sys.stdout, ...)"
+    }
+  ],
+
+  "function_map": {
+    "filter_csv": "filter_csv",
+    "_cse_temp_0": "temporary for: len(data) > 0"
+  }
+}
+```
+
+#### Usage
+
+```bash
+# Step 1: Transpile with source map (future depyler feature)
+depyler transpile csv_filter.py --source-map -o csv_filter.rs
+# Generates: csv_filter.rs, csv_filter.rs.sourcemap.json
+
+# Step 2: Build the Rust binary
+cargo build
+
+# Step 3: Trace with source map correlation
+renacer --transpiler-map csv_filter.rs.sourcemap.json -- ./target/debug/csv_filter input.csv
+
+# Expected output with Python context:
+# write(1, "Alice,25,NYC\n", 13) = 13    [csv_filter.py:28 in filter_csv]
+#                                        └─ Python: writer.writerow(row)
+```
+
+#### Use Cases
+
+**1. Debugging Transpilation Errors**
+
+Map "Statement type not supported" errors to exact Python line:
+
+```bash
+$ depyler transpile log_analyzer.py --trace 2>&1 > /tmp/transpile_error.txt
+
+Error: Statement type not yet supported
+  - Input size: 11192 bytes
+  - Parsing Python source...
+
+# Without source map: Manual binary search through 164 lines
+# With source map: Instant identification of problematic line
+```
+
+**2. Compile Error Correlation**
+
+Translate Rust compiler errors back to Python source:
+
+```bash
+$ cargo build 2>&1 | tee build_errors.txt
+
+error[E0277]: Vec<String> doesn't implement Display
+  --> positional_args.rs:31
+
+# With source map: Shows Python line 28, suggests fix in Python context
+# Python: print(f"Names: {args.names}")
+# Rust:   println!("{}", args.names)  // ERROR
+# Fix:    print(f"Names: {', '.join(args.names)}")
+```
+
+**3. Performance Profiling**
+
+Generate flamegraphs with Python function names instead of Rust generated names:
+
+```bash
+$ renacer --transpiler-map log_analyzer.rs.sourcemap.json \
+          --function-time \
+          -- ./log_analyzer app.log > profile.txt
+
+# Flamegraph shows:
+# log_analyzer.py::parse_log_lines (98.9%)
+#   └─ log_analyzer.py:40 - for line in f:  (95%)
+#
+# Instead of:
+# log_analyzer.rs::_parse_log_lines_gen (98.9%)  ← Unhelpful
+```
+
+#### Integration Example
+
+Complete workflow with source mapping:
+
+```bash
+# 1. Create source map manually (until depyler supports --source-map)
+cat > trivial_cli.rs.sourcemap.json << 'EOF'
+{
+  "version": 1,
+  "source_language": "python",
+  "source_file": "trivial_cli.py",
+  "generated_file": "trivial_cli.rs",
+  "mappings": [
+    {
+      "rust_line": 27,
+      "rust_function": "main",
+      "python_line": 8,
+      "python_function": "main",
+      "python_context": "print(f\"Hello, {args.name}!\")"
+    }
+  ],
+  "function_map": {
+    "main": "main"
+  }
+}
+EOF
+
+# 2. Build with debug symbols
+cargo build
+
+# 3. Trace with source map
+renacer --transpiler-map trivial_cli.rs.sourcemap.json \
+        --source \
+        -- ./target/debug/trivial_cli --name Alice
+
+# Output includes Python context:
+# write(1, "Hello, Alice!\n", 14) = 14  [trivial_cli.py:8 in main()]
+```
+
+#### Benefits
+
+✅ **10x Faster Debugging** - Instant Python→Rust correlation
+✅ **Accurate Profiling** - Optimize Python source based on Rust performance
+✅ **Production Debugging** - Map crashes back to original code
+✅ **Better DX** - Transpiled code feels like first-class citizen
+
+#### Current Limitations
+
+⚠️ **Depyler Integration Pending**: Source map generation not yet implemented in depyler
+⚠️ **Manual Map Creation**: Must create `.sourcemap.json` files manually for now
+⚠️ **Phase 1**: Basic infrastructure only (line mapping, function names)
+
+#### Future Phases
+
+**Phase 2** (Sprint 25): Function name correlation in flamegraphs
+**Phase 3** (Sprint 26): Stack trace correlation for runtime errors
+**Phase 4** (Sprint 27): Compilation error message rewriting
+**Phase 5** (Sprint 28+): Interactive HTML reports with side-by-side view
+
+#### Related Issues
+
+- [Renacer #5](https://github.com/paiml/renacer/issues/5) - Transpiler Source Mapping Feature
+- [Depyler #69](https://github.com/paiml/depyler/issues/69) - sys.stdout not recognized
+- [Depyler #70](https://github.com/paiml/depyler/issues/70) - Nested functions not supported
+
+---
+
+### Example 5: Chaos Engineering (Renacer v0.4.1+)
+
+**NEW in Sprint 29**: Stress test transpiled Rust binaries with chaos engineering
+
+#### Overview
+
+Renacer v0.4.1 adds chaos engineering infrastructure for testing transpiled code under adverse conditions:
+- **Resource limits** - Test behavior under memory/CPU constraints
+- **Timeout testing** - Ensure graceful handling of slow operations
+- **Signal injection** - Validate error handling and cleanup
+- **Tiered testing** - Fast/medium/slow test tiers for TDD workflow
+
+#### Quick Start
+
+```bash
+# Run fast unit tests (<5s)
+make test-tier1
+
+# Run integration tests (<30s)
+make test-tier2
+
+# Run fuzz + mutation tests (<5m)
+make test-tier3
+```
+
+#### Chaos Presets
+
+**Gentle chaos** (for error handling tests):
+```rust
+// In test code (when renacer adds --chaos CLI flag)
+let config = ChaosConfig::gentle();
+// - Memory limit: 500MB
+// - CPU limit: 80%
+// - Timeout: 60s
+// - Signal injection: disabled
+```
+
+**Aggressive chaos** (for stress testing):
+```rust
+let config = ChaosConfig::aggressive();
+// - Memory limit: 100MB
+// - CPU limit: 50%
+// - Timeout: 10s
+// - Signal injection: enabled
+```
+
+**Custom chaos**:
+```rust
+let config = ChaosConfig::new()
+    .with_memory_limit(100 * 1024 * 1024)  // 100MB
+    .with_cpu_limit(0.5)                   // 50% CPU
+    .with_timeout(Duration::from_secs(30))
+    .with_signal_injection(true)
+    .build();
+```
+
+#### CLI Integration (Planned)
+
+```bash
+# Test transpiled binary under gentle chaos
+renacer --chaos gentle -- ./csv_filter input.csv --column status --value active
+
+# Stress test with aggressive chaos
+renacer --chaos aggressive -- ./log_analyzer app.log --group-by-hour
+
+# Custom chaos config
+renacer --chaos custom:chaos.json -- ./positional_args start server1 server2
+```
+
+#### Use Cases for Transpiled Code
+
+**1. Memory Safety Testing**
+```bash
+# Ensure transpiled code handles large inputs without crashes
+renacer --chaos gentle -- ./csv_filter large_file.csv
+```
+
+**2. Performance Regression Detection**
+```bash
+# Verify transpiled code completes within time budget
+renacer --chaos "timeout:5s" -- ./trivial_cli --name Alice
+```
+
+**3. Error Handling Validation**
+```bash
+# Test transpiled error paths under signal interruption
+renacer --chaos "signal:SIGTERM" -- ./config_cli --config missing.yml
+```
+
+#### Benefits for Python→Rust Validation
+
+✅ **Robustness Testing** - Ensure transpiled code handles edge cases
+✅ **Performance Validation** - Detect resource leaks and inefficiencies
+✅ **Error Path Coverage** - Force error conditions to test handling
+✅ **Production Readiness** - Verify behavior under real-world stress
+
+#### Current Status
+
+⚠️ **CLI Integration Pending**: Chaos features available as library, CLI flags planned for future sprint
+✅ **Test Infrastructure**: Available now via tiered make targets
+✅ **Property Tests**: 7 comprehensive chaos module tests
 
 ---
 

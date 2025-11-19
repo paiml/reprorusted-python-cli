@@ -36,7 +36,7 @@ def filter_csv(input_file, column, value, output_file=None):
 
     Depyler: proven to terminate
     """
-    with open(input_file, "r") as f:
+    with open(input_file) as f:
         reader = csv.DictReader(f)
 
         # Store fieldnames before consuming reader
@@ -77,7 +77,7 @@ def filter_csv_advanced(input_file, filters, output_file=None):
         """Check if row matches all filter criteria"""
         return all(row.get(col) == val for col, val in filters.items())
 
-    with open(input_file, "r") as f:
+    with open(input_file) as f:
         reader = csv.DictReader(f)
 
         # Store fieldnames
@@ -112,9 +112,7 @@ def main():
     parser.add_argument("input", help="Input CSV file")
     parser.add_argument("--column", "-c", required=True, help="Column to filter")
     parser.add_argument("--value", "-v", required=True, help="Value to match")
-    parser.add_argument(
-        "--output", "-o", help="Output CSV file (default: stdout)"
-    )
+    parser.add_argument("--output", "-o", help="Output CSV file (default: stdout)")
     parser.add_argument("--version", action="version", version="1.0.0")
 
     args = parser.parse_args()

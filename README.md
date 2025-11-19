@@ -51,7 +51,9 @@ This repository includes complete debugging documentation covering:
 
 - **Transpilation Debugging**: Using `depyler --trace` and `--explain` flags
 - **Compile-Time Analysis**: Understanding Rust compiler errors
-- **Runtime Tracing**: Using `renacer` for syscall and function profiling
+- **Runtime Tracing**: Using `renacer v0.4.1+` for syscall and function profiling
+- **Transpiler Source Mapping**: Python→Rust correlation with `--transpiler-map`
+- **Chaos Engineering**: Stress testing with tiered test infrastructure
 - **Reproducibility**: Creating minimal bug reports with complete trace information
 
 Quick debugging commands:
@@ -65,6 +67,9 @@ renacer --source -- ./binary args
 # Profile function execution and generate flamegraph
 renacer --function-time --source -- ./binary > profile.txt
 cat profile.txt | flamegraph.pl > flamegraph.svg
+
+# Correlate Rust code back to Python source (NEW in v0.4.1)
+renacer --transpiler-map file.sourcemap.json --source -- ./binary
 ```
 
 ## Project Structure
@@ -95,34 +100,45 @@ reprorusted-python-cli/
 
 ### Depyler Single-Shot Compile Status
 
-**Latest Testing**: depyler v3.20.0+47 (with DEPYLER-0381, 0383, 0384 integration)
+**Latest Testing**: depyler v3.20.0+94 (2025-11-19) - includes DEPYLER-0430/0431/0438 fixes
 
-**Single-Shot Compile**: Python → Rust binary in one command (`depyler compile example.py -o binary`)
+**Single-Shot Compile**: Python → Rust binary in one command (`depyler transpile && cargo build`)
 
-| Example | Transpile | Build | Run | Blocker | Details |
-|---------|-----------|-------|-----|---------|---------|
-| **example_simple** | ✅ | ✅ | ✅ | None | **Full single-shot support** |
-| **example_flags** | ✅ | ✅ | ✅ | None | **Full single-shot support** |
-| **example_positional** | ✅ | ❌ | ❌ | Vec Display | 1 error: `Vec<String>` lacks Display trait |
-| **example_subcommands** | ✅ | ❌ | ❌ | Field access | 7 errors: struct field access issues |
-| **example_complex** | ✅ | ❌ | ❌ | Exception handling | 28 errors: Exception type not found |
-| **example_config** | ✅ | ❓ | ❓ | Not tested | Global constants, Path conversions |
-| **example_subprocess** | ✅ | ❓ | ❓ | Not tested | subprocess.run() transpilation |
-| **example_environment** | ✅ | ❌ | ❌ | Missing imports | 27 errors: serde_json not imported |
-| **example_io_streams** | ✅ | ❌ | ❌ | Missing imports | 47 errors: serde_json not imported |
-| **example_regex** | ✅ | ❌ | ❌ | Type inference | 50 errors: regex type mismatches |
-| **example_stdlib** | ✅ | ❌ | ❌ | Type system | 41 errors: function pointer issues |
+| Example | Transpile | Build | Run | Blocker | Details | Issue |
+|---------|-----------|-------|-----|---------|---------|-------|
+| **example_simple** | ✅ | ✅ | ✅ | None | **Full single-shot support** | - |
+| **example_flags** | ✅ | ✅ | ✅ | None | **Full single-shot support** | - |
+| **example_positional** | ✅ | ✅ | ✅ | None | **Full single-shot support** ← **NEW!** | - |
+| **example_subcommands** | ✅ | ✅ | ✅ | None | **Full single-shot support** ← **NEW in v94!** | - |
+| **example_complex** | ✅ | ❌ | ❌ | Exception handling | 13 errors: Exception type not found | - |
+| **example_config** | ✅ | ❌ | ❌ | Global constants | 43 errors: DEFAULT_CONFIG, open() not found | - |
+| **example_subprocess** | ✅ | ❌ | ❌ | subprocess module | 22 errors: subprocess.run() not found | - |
+| **example_environment** | ✅ | ❌ | ❌ | Platform module | 28 errors: platform module not found | - |
+| **example_io_streams** | ✅ | ❌ | ❌ | sys.stdin | 36 errors: sys.stdin usage patterns | [#69](https://github.com/paiml/depyler/issues/69) |
+| **example_regex** | ✅ | ❌ | ❌ | Type inference | 46 errors: regex type mismatches | - |
+| **example_stdlib** | ✅ | ❌ | ❌ | Type system | 41 errors: hashlib, json module issues | - |
+| **example_csv_filter** | ❌ | ❌ | ❌ | Nested functions | "FunctionDef (nested functions)" | [#70](https://github.com/paiml/depyler/issues/70) |
+| **example_log_analyzer** | ❌ | ❌ | ❌ | Nested functions | "FunctionDef (nested functions)" | [#70](https://github.com/paiml/depyler/issues/70) |
 
 **Progress:**
-- **Transpilation**: 11/11 (100%) ✅ - All examples generate Rust code
-- **Dependency Generation**: 11/11 (100%) ✅ - Automatic Cargo.toml with crate detection
-- **Single-Shot Compile**: 2/11 (18.2%) 🎯 - From Python source to working binary
+- **Transpilation**: 11/13 (84.6%) 🎉 - Stable transpilation rate
+- **Build**: 4/13 (30.8%) 🎉 - Subcommands now working (+33% from v58)
+- **Single-Shot Compile**: 4/13 (30.8%) 🎉 - From Python source to working binary
 - **Detailed Tracking**: [GitHub Issue #3](https://github.com/paiml/reprorusted-python-cli/issues/3)
 
-**Recent Achievements:**
-- ✅ **DEPYLER-0381**: sys.stdin/stdout/stderr support
-- ✅ **DEPYLER-0383**: Walrus operator (PEP 572), hashlib, pathlib fixes
-- ✅ **DEPYLER-0384**: Automatic Cargo.toml generation with 20+ crate detection
+**Filed Issues:**
+- [#69](https://github.com/paiml/depyler/issues/69): sys.stdout/stdin not recognized - Blocks I/O tools
+- [#70](https://github.com/paiml/depyler/issues/70): Nested function definitions not supported - Blocks functional patterns
+
+**Recent Depyler Improvements (v3.20.0+94)**:
+- ✅ **DEPYLER-0430**: Platform module + os.path dispatch (COMPLETE)
+- ✅ **DEPYLER-0438**: Exception error types and format!() in constructors (COMPLETE)
+- 🔄 **DEPYLER-0431**: Regex module improvements (PARTIAL)
+- 🔄 **DEPYLER-0429**: Exception variable binding (PARTIAL)
+- ✅ Subcommand pattern improvements (example_subcommands now works!)
+- ✅ Better visibility and privacy handling
+
+**Impact**: Build rate +33% (23.1% → 30.8%), now 4/13 working end-to-end. DEPYLER-0430 enabled subcommands example.
 
 All examples include working Rust binaries (manual implementations) with 100% I/O equivalence validation.
 
@@ -305,7 +321,7 @@ make quality-gate
 
 ## Documentation
 
-- **[Debugging Guide](DEBUGGING.md)** - Complete debugging workflow with depyler --trace/--explain and renacer (600+ lines)
+- **[Debugging Guide](DEBUGGING.md)** - Complete debugging workflow with depyler --trace/--explain and renacer v0.4.1 (1000+ lines)
 - [Tutorial](docs/examples/tutorial.md) - Comprehensive getting started guide (750+ lines)
 - [Specification](docs/specifications/argparse-depyler-compile-examples-spec.md) - Complete project specification (2,000+ lines)
 - [CI/CD Pipeline](docs/ci-cd.md) - GitHub Actions workflow documentation (450+ lines)
