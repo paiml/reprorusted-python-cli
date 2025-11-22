@@ -100,45 +100,49 @@ reprorusted-python-cli/
 
 ### Depyler Single-Shot Compile Status
 
-**Latest Testing**: depyler v3.20.0+94 (2025-11-19) - includes DEPYLER-0430/0431/0438 fixes
+**Latest Testing**: depyler v3.20.0 trunk (2025-11-21 commit: `37daefa`) - **MAJOR BREAKTHROUGH: -38% error reduction!**
 
 **Single-Shot Compile**: Python → Rust binary in one command (`depyler transpile && cargo build`)
 
-| Example | Transpile | Build | Run | Blocker | Details | Issue |
-|---------|-----------|-------|-----|---------|---------|-------|
-| **example_simple** | ✅ | ✅ | ✅ | None | **Full single-shot support** | - |
-| **example_flags** | ✅ | ✅ | ✅ | None | **Full single-shot support** | - |
-| **example_positional** | ✅ | ✅ | ✅ | None | **Full single-shot support** ← **NEW!** | - |
-| **example_subcommands** | ✅ | ✅ | ✅ | None | **Full single-shot support** ← **NEW in v94!** | - |
-| **example_complex** | ✅ | ❌ | ❌ | Exception handling | 13 errors: Exception type not found | - |
-| **example_config** | ✅ | ❌ | ❌ | Global constants | 43 errors: DEFAULT_CONFIG, open() not found | - |
-| **example_subprocess** | ✅ | ❌ | ❌ | subprocess module | 22 errors: subprocess.run() not found | - |
-| **example_environment** | ✅ | ❌ | ❌ | Platform module | 28 errors: platform module not found | - |
-| **example_io_streams** | ✅ | ❌ | ❌ | sys.stdin | 36 errors: sys.stdin usage patterns | [#69](https://github.com/paiml/depyler/issues/69) |
-| **example_regex** | ✅ | ❌ | ❌ | Type inference | 46 errors: regex type mismatches | - |
-| **example_stdlib** | ✅ | ❌ | ❌ | Type system | 41 errors: hashlib, json module issues | - |
-| **example_csv_filter** | ❌ | ❌ | ❌ | Nested functions | "FunctionDef (nested functions)" | [#70](https://github.com/paiml/depyler/issues/70) |
-| **example_log_analyzer** | ❌ | ❌ | ❌ | Nested functions | "FunctionDef (nested functions)" | [#70](https://github.com/paiml/depyler/issues/70) |
+| Example | Transpile | Build | Run | Errors | Details | Issue |
+|---------|-----------|-------|-----|--------|---------|-------|
+| **example_simple** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_flags** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_positional** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_subcommands** | ✅ | ❌ | ❌ | 3 | ⚠️ **REGRESSION**: Borrow checker (was passing) | [#95](https://github.com/paiml/depyler/issues/95) |
+| **example_complex** | ✅ | ✅ | ✅ | 0 | 🎉 **NEW PASS!** (was 7 errors, -100%) | - |
+| **example_config** | ✅ | ❌ | ❌ | 2 | 🔥 **98% done!** (was 42, -95%) Type mismatches | [#95](https://github.com/paiml/depyler/issues/95) |
+| **example_subprocess** | ✅ | ❌ | ❌ | 20 | Improving (was 23, -13%) subprocess APIs | [#95](https://github.com/paiml/depyler/issues/95) |
+| **example_environment** | ✅ | ❌ | ❌ | 17 | Improving (was 19, -11%) env vars | [#95](https://github.com/paiml/depyler/issues/95) |
+| **example_io_streams** | ✅ | ❌ | ❌ | 18 | 🟢 Major progress (was 33, -45%) I/O streams | [#95](https://github.com/paiml/depyler/issues/95) |
+| **example_regex** | ✅ | ❌ | ❌ | 33 | Improving (was 45, -27%) regex codegen | [#95](https://github.com/paiml/depyler/issues/95) |
+| **example_stdlib** | ✅ | ❌ | ❌ | 33 | Improving (was 46, -28%) stdlib APIs | [#95](https://github.com/paiml/depyler/issues/95) |
+| **example_csv_filter** | ✅ | ❌ | ❌ | 14 | 🟢 Major progress (was 20, -30%) CSV APIs | [#95](https://github.com/paiml/depyler/issues/95) |
+| **example_log_analyzer** | ✅ | ❌ | ❌ | 26 | ✅ Now transpiles! (was fail, -16% errors) Generators | [#95](https://github.com/paiml/depyler/issues/95) |
 
 **Progress:**
-- **Transpilation**: 11/13 (84.6%) 🎉 - Stable transpilation rate
-- **Build**: 4/13 (30.8%) 🎉 - Subcommands now working (+33% from v58)
-- **Single-Shot Compile**: 4/13 (30.8%) 🎉 - From Python source to working binary
-- **Detailed Tracking**: [GitHub Issue #3](https://github.com/paiml/reprorusted-python-cli/issues/3)
+- **Transpilation**: 13/13 (**100%**) 🎉 - ALL examples transpile!
+- **Build**: 4/13 (30.8%) - Same count but massive quality gains
+- **Total Errors**: **166** (was 266, **-100 errors / -38%**) 🚀
+- **Quality Leap**: 8/9 failing examples improved, 1 new pass, 1 regression
+- **Detailed Tracking**: [depyler #95](https://github.com/paiml/depyler/issues/95)
 
-**Filed Issues:**
-- [#69](https://github.com/paiml/depyler/issues/69): sys.stdout/stdin not recognized - Blocks I/O tools
-- [#70](https://github.com/paiml/depyler/issues/70): Nested function definitions not supported - Blocks functional patterns
+**Recent Depyler Improvements (v3.20.0 trunk - commit 37daefa)**:
+- 🎉 **complex_cli NOW PASSES** - Display trait for Option types fixed (-100%)
+- 🎉 **100% Transpilation Success** - All 13 examples transpile (log_analyzer sort() fixed)
+- 🟢 **Major Error Reductions** - 5 examples with >25% improvements
+  - config_manager: -95% (42 → 2 errors) 🔥 **ALMOST PASSING**
+  - stream_processor: -45% (33 → 18 errors)
+  - csv_filter: -30% (20 → 14 errors)
+  - stdlib_integration: -28% (46 → 33 errors)
+  - pattern_matcher: -27% (45 → 33 errors)
+- ✅ **Type inference improvements** - Massive gains across all examples
+- ✅ **CSV API mapping** - DictReader patterns working better
+- ✅ **I/O stream handling** - Major improvements in file operations
+- ⚠️ **DEPYLER-0456 Bug #2** - Subcommand regression (git_clone 0 → 3 errors)
 
-**Recent Depyler Improvements (v3.20.0+94)**:
-- ✅ **DEPYLER-0430**: Platform module + os.path dispatch (COMPLETE)
-- ✅ **DEPYLER-0438**: Exception error types and format!() in constructors (COMPLETE)
-- 🔄 **DEPYLER-0431**: Regex module improvements (PARTIAL)
-- 🔄 **DEPYLER-0429**: Exception variable binding (PARTIAL)
-- ✅ Subcommand pattern improvements (example_subcommands now works!)
-- ✅ Better visibility and privacy handling
-
-**Impact**: Build rate +33% (23.1% → 30.8%), now 4/13 working end-to-end. DEPYLER-0430 enabled subcommands example.
+**Impact**: -100 total errors (-38% reduction!), complex_cli passes, config_manager 98% complete.
+**Next Target**: Fix config_manager (2 errors) → **5/13 passing (38.5%)**
 
 All examples include working Rust binaries (manual implementations) with 100% I/O equivalence validation.
 
