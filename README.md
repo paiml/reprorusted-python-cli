@@ -100,7 +100,7 @@ reprorusted-python-cli/
 
 ### Depyler Single-Shot Compile Status
 
-**Latest Testing**: depyler v3.20.0 trunk (2025-11-21 commit: `37daefa`) - **MAJOR BREAKTHROUGH: -38% error reduction!**
+**Latest Testing**: depyler v3.20.0 trunk (2025-11-25) - **7/13 PASSING (53.8%)!**
 
 **Single-Shot Compile**: Python → Rust binary in one command (`depyler transpile && cargo build`)
 
@@ -109,40 +109,33 @@ reprorusted-python-cli/
 | **example_simple** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
 | **example_flags** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
 | **example_positional** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_subcommands** | ✅ | ❌ | ❌ | 3 | ⚠️ **REGRESSION**: Borrow checker (was passing) | [#95](https://github.com/paiml/depyler/issues/95) |
-| **example_complex** | ✅ | ✅ | ✅ | 0 | 🎉 **NEW PASS!** (was 7 errors, -100%) | - |
-| **example_config** | ✅ | ❌ | ❌ | 2 | 🔥 **98% done!** (was 42, -95%) Type mismatches | [#95](https://github.com/paiml/depyler/issues/95) |
-| **example_subprocess** | ✅ | ❌ | ❌ | 20 | Improving (was 23, -13%) subprocess APIs | [#95](https://github.com/paiml/depyler/issues/95) |
-| **example_environment** | ✅ | ❌ | ❌ | 17 | Improving (was 19, -11%) env vars | [#95](https://github.com/paiml/depyler/issues/95) |
-| **example_io_streams** | ✅ | ❌ | ❌ | 18 | 🟢 Major progress (was 33, -45%) I/O streams | [#95](https://github.com/paiml/depyler/issues/95) |
-| **example_regex** | ✅ | ❌ | ❌ | 33 | Improving (was 45, -27%) regex codegen | [#95](https://github.com/paiml/depyler/issues/95) |
-| **example_stdlib** | ✅ | ❌ | ❌ | 33 | Improving (was 46, -28%) stdlib APIs | [#95](https://github.com/paiml/depyler/issues/95) |
-| **example_csv_filter** | ✅ | ❌ | ❌ | 14 | 🟢 Major progress (was 20, -30%) CSV APIs | [#95](https://github.com/paiml/depyler/issues/95) |
-| **example_log_analyzer** | ✅ | ❌ | ❌ | 26 | ✅ Now transpiles! (was fail, -16% errors) Generators | [#95](https://github.com/paiml/depyler/issues/95) |
+| **example_subcommands** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_complex** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_config** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_environment** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_subprocess** | ✅ | ❌ | ❌ | 13 | Type mismatches, subprocess APIs | [#104](https://github.com/paiml/depyler/issues/104) |
+| **example_io_streams** | ✅ | ❌ | ❌ | 14 | File iteration, type errors | [#104](https://github.com/paiml/depyler/issues/104) |
+| **example_regex** | ✅ | ❌ | ❌ | 25 | regex Option<Match> handling | [#104](https://github.com/paiml/depyler/issues/104) |
+| **example_stdlib** | ✅ | ❌ | ❌ | 37 | JSON indexing, pathlib APIs | [#104](https://github.com/paiml/depyler/issues/104) |
+| **example_csv_filter** | ✅ | ❌ | ❌ | 12 | Iterator chaining, types | [#104](https://github.com/paiml/depyler/issues/104) |
+| **example_log_analyzer** | ✅ | ❌ | ❌ | 27 | Generators (yield), itertools | [#104](https://github.com/paiml/depyler/issues/104) |
 
 **Progress:**
-- **Transpilation**: 13/13 (**100%**) 🎉 - ALL examples transpile!
-- **Build**: 4/13 (30.8%) - Same count but massive quality gains
-- **Total Errors**: **166** (was 266, **-100 errors / -38%**) 🚀
-- **Quality Leap**: 8/9 failing examples improved, 1 new pass, 1 regression
-- **Detailed Tracking**: [depyler #95](https://github.com/paiml/depyler/issues/95)
+- **Transpilation**: 13/13 (**100%**) - ALL examples transpile!
+- **Build**: 7/13 (**53.8%**) 🎉 - Up from 38.5%!
+- **Total Errors**: **128** (down from 152)
+- **Detailed Tracking**: [depyler #104](https://github.com/paiml/depyler/issues/104)
 
-**Recent Depyler Improvements (v3.20.0 trunk - commit 37daefa)**:
-- 🎉 **complex_cli NOW PASSES** - Display trait for Option types fixed (-100%)
-- 🎉 **100% Transpilation Success** - All 13 examples transpile (log_analyzer sort() fixed)
-- 🟢 **Major Error Reductions** - 5 examples with >25% improvements
-  - config_manager: -95% (42 → 2 errors) 🔥 **ALMOST PASSING**
-  - stream_processor: -45% (33 → 18 errors)
-  - csv_filter: -30% (20 → 14 errors)
-  - stdlib_integration: -28% (46 → 33 errors)
-  - pattern_matcher: -27% (45 → 33 errors)
-- ✅ **Type inference improvements** - Massive gains across all examples
-- ✅ **CSV API mapping** - DictReader patterns working better
-- ✅ **I/O stream handling** - Major improvements in file operations
-- ⚠️ **DEPYLER-0456 Bug #2** - Subcommand regression (git_clone 0 → 3 errors)
+**Remaining Error Categories (128 total):**
+| Error Type | Count | Description |
+|------------|-------|-------------|
+| E0308 | 42 | Type mismatches |
+| E0277 | 22 | Trait bounds (JSON, Option) |
+| E0599 | 15 | Method not found |
+| E0425 | 6 | Cannot find value |
+| Other | 43 | Various (annotations, imports, yield) |
 
-**Impact**: -100 total errors (-38% reduction!), complex_cli passes, config_manager 98% complete.
-**Next Target**: Fix config_manager (2 errors) → **5/13 passing (38.5%)**
+**Next Targets**: Fix type inference (42 errors) and JSON indexing (15 errors)
 
 All examples include working Rust binaries (manual implementations) with 100% I/O equivalence validation.
 
