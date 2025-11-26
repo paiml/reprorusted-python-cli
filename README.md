@@ -100,7 +100,7 @@ reprorusted-python-cli/
 
 ### Depyler Single-Shot Compile Status
 
-**Latest Testing**: depyler v3.20.0 trunk (2025-11-25) - **7/13 PASSING (53.8%)!**
+**Latest Testing**: depyler v3.21.0 trunk (2025-11-27) - **10/13 PASSING (76.9%)!** 🎉
 
 **Single-Shot Compile**: Python → Rust binary in one command (`depyler transpile && cargo build`)
 
@@ -111,31 +111,33 @@ reprorusted-python-cli/
 | **example_positional** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
 | **example_subcommands** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
 | **example_complex** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_config** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_config** | ✅ | ❌ | ❌ | 1 | HashMap vs Value type mismatch | [#104](https://github.com/paiml/depyler/issues/104) |
 | **example_environment** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_subprocess** | ✅ | ❌ | ❌ | 13 | Type mismatches, subprocess APIs | [#104](https://github.com/paiml/depyler/issues/104) |
-| **example_io_streams** | ✅ | ❌ | ❌ | 14 | File iteration, type errors | [#104](https://github.com/paiml/depyler/issues/104) |
-| **example_regex** | ✅ | ❌ | ❌ | 25 | regex Option<Match> handling | [#104](https://github.com/paiml/depyler/issues/104) |
-| **example_stdlib** | ✅ | ❌ | ❌ | 37 | JSON indexing, pathlib APIs | [#104](https://github.com/paiml/depyler/issues/104) |
-| **example_csv_filter** | ✅ | ❌ | ❌ | 12 | Iterator chaining, types | [#104](https://github.com/paiml/depyler/issues/104) |
-| **example_log_analyzer** | ✅ | ❌ | ❌ | 27 | Generators (yield), itertools | [#104](https://github.com/paiml/depyler/issues/104) |
+| **example_subprocess** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** ⬅️ NEW | - |
+| **example_io_streams** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** ⬅️ NEW | - |
+| **example_regex** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** ⬅️ NEW | - |
+| **example_stdlib** | ✅ | ❌ | ❌ | 1 | Borrow checker (args.hash moved) | [#104](https://github.com/paiml/depyler/issues/104) |
+| **example_csv_filter** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** ⬅️ NEW | - |
+| **example_log_analyzer** | ✅ | ❌ | ❌ | 28 | regex &str, parser scope, types | [#104](https://github.com/paiml/depyler/issues/104) |
 
 **Progress:**
 - **Transpilation**: 13/13 (**100%**) - ALL examples transpile!
-- **Build**: 7/13 (**53.8%**) 🎉 - Up from 38.5%!
-- **Total Errors**: **128** (down from 152)
+- **Build**: 10/13 (**76.9%**) 🎉🎉 - Up from 53.8%!
+- **Total Errors**: **30** (down from 128!)
 - **Detailed Tracking**: [depyler #104](https://github.com/paiml/depyler/issues/104)
 
-**Remaining Error Categories (128 total):**
-| Error Type | Count | Description |
-|------------|-------|-------------|
-| E0308 | 42 | Type mismatches |
-| E0277 | 22 | Trait bounds (JSON, Option) |
-| E0599 | 15 | Method not found |
-| E0425 | 6 | Cannot find value |
-| Other | 43 | Various (annotations, imports, yield) |
+**Remaining Errors (30 total in 3 examples):**
+| Example | Errors | Root Cause |
+|---------|--------|------------|
+| config_manager | 1 | HashMap→Value type inference |
+| stdlib_integration | 1 | Borrow checker (moved value) |
+| log_analyzer | 28 | Multiple codegen issues |
 
-**Next Targets**: Fix type inference (42 errors) and JSON indexing (15 errors)
+**Recent Wins (v3.21.0):**
+- ✅ Subprocess tuple field access fixed (`.returncode` → `.0`)
+- ✅ CalledProcessError.returncode exception handling
+- ✅ Regex Option<Match> handling improved
+- ✅ Iterator chaining and type inference improved
 
 All examples include working Rust binaries (manual implementations) with 100% I/O equivalence validation.
 

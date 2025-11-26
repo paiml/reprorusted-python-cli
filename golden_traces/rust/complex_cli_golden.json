@@ -1,0 +1,636 @@
+"Input: input.txt"
+"Output: stdout"
+"Format: json"
+"Encoding: utf-8"
+"Port: 8080"
+{
+  "version": "0.6.2",
+  "format": "renacer-json-v1",
+  "syscalls": [
+    {
+      "name": "brk",
+      "args": [
+        "0x0",
+        "0x7ffe3d78a49c",
+        "0x0"
+      ],
+      "result": 107309968666624
+    },
+    {
+      "name": "arch_prctl",
+      "args": [
+        "0x3001",
+        "0x7ffe3d78a450",
+        "0x7dee436aa3c0"
+      ],
+      "result": -22
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x2000",
+        "0x3"
+      ],
+      "result": 138462286614528
+    },
+    {
+      "name": "access",
+      "args": [
+        "0x7dee436bad90",
+        "0x4",
+        "0x619906189a40"
+      ],
+      "result": -2
+    },
+    {
+      "name": "openat",
+      "args": [
+        "0xffffff9c",
+        "\"/etc/ld.so.cache\"",
+        "0x80000"
+      ],
+      "result": 3
+    },
+    {
+      "name": "newfstatat",
+      "args": [
+        "0x3",
+        "0x7dee436b9ee9",
+        "0x7ffe3d7895a0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x1c21c",
+        "0x1"
+      ],
+      "result": 138462286495744
+    },
+    {
+      "name": "close",
+      "args": [
+        "0x3",
+        "0x1c21c",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "openat",
+      "args": [
+        "0xffffff9c",
+        "\"/lib/x86_64-linux-gnu/libgcc_s.so.1\"",
+        "0x80000"
+      ],
+      "result": 3
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x7ffe3d7897d8",
+        "0x340"
+      ],
+      "result": 832
+    },
+    {
+      "name": "newfstatat",
+      "args": [
+        "0x3",
+        "0x7dee436b9ee9",
+        "0x7ffe3d789670"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x1f2e8",
+        "0x1"
+      ],
+      "result": 138462286364672
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dee4364f000",
+        "0x17000",
+        "0x5"
+      ],
+      "result": 138462286376960
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dee43666000",
+        "0x4000",
+        "0x1"
+      ],
+      "result": 138462286471168
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dee4366a000",
+        "0x2000",
+        "0x3"
+      ],
+      "result": 138462286487552
+    },
+    {
+      "name": "close",
+      "args": [
+        "0x3",
+        "0x0",
+        "0x7dee4364c2c8"
+      ],
+      "result": 0
+    },
+    {
+      "name": "openat",
+      "args": [
+        "0xffffff9c",
+        "\"/lib/x86_64-linux-gnu/libc.so.6\"",
+        "0x80000"
+      ],
+      "result": 3
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x7ffe3d7897b8",
+        "0x340"
+      ],
+      "result": 832
+    },
+    {
+      "name": "pread64",
+      "args": [
+        "0x3",
+        "0x7ffe3d7893c0",
+        "0x310"
+      ],
+      "result": 784
+    },
+    {
+      "name": "pread64",
+      "args": [
+        "0x3",
+        "0x7ffe3d789380",
+        "0x30"
+      ],
+      "result": 48
+    },
+    {
+      "name": "pread64",
+      "args": [
+        "0x3",
+        "0x7ffe3d789330",
+        "0x44"
+      ],
+      "result": 68
+    },
+    {
+      "name": "newfstatat",
+      "args": [
+        "0x3",
+        "0x7dee436b9ee9",
+        "0x7ffe3d789650"
+      ],
+      "result": 0
+    },
+    {
+      "name": "pread64",
+      "args": [
+        "0x3",
+        "0x7ffe3d789290",
+        "0x310"
+      ],
+      "result": 784
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x228e50",
+        "0x1"
+      ],
+      "result": 138462283956224
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dee43428000",
+        "0x1ee000",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dee43428000",
+        "0x195000",
+        "0x5"
+      ],
+      "result": 138462284120064
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dee435bd000",
+        "0x58000",
+        "0x1"
+      ],
+      "result": 138462285778944
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dee43616000",
+        "0x6000",
+        "0x3"
+      ],
+      "result": 138462286143488
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dee4361c000",
+        "0xce50",
+        "0x3"
+      ],
+      "result": 138462286168064
+    },
+    {
+      "name": "close",
+      "args": [
+        "0x3",
+        "0x4",
+        "0x7dee43400380"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x3000",
+        "0x3"
+      ],
+      "result": 138462286352384
+    },
+    {
+      "name": "arch_prctl",
+      "args": [
+        "0x1002",
+        "0x7dee43649780",
+        "0xffff8211bc9b5e70"
+      ],
+      "result": 0
+    },
+    {
+      "name": "set_tid_address",
+      "args": [
+        "0x7dee43649a50",
+        "0x7dee43649780",
+        "0x7dee436c60d8"
+      ],
+      "result": 121553
+    },
+    {
+      "name": "set_robust_list",
+      "args": [
+        "0x7dee43649a60",
+        "0x18",
+        "0x7dee436c60d8"
+      ],
+      "result": 0
+    },
+    {
+      "name": "unknown",
+      "args": [
+        "0x7dee4364a120",
+        "0x20",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dee43616000",
+        "0x4000",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dee4366a000",
+        "0x1000",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x619906184000",
+        "0x7000",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dee436c3000",
+        "0x2000",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "unknown",
+      "args": [
+        "0x0",
+        "0x3",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "munmap",
+      "args": [
+        "0x7dee4366c000",
+        "0x1c21c",
+        "0x7dee43490c10"
+      ],
+      "result": 0
+    },
+    {
+      "name": "poll",
+      "args": [
+        "0x7ffe3d78a410",
+        "0x3",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0xd",
+        "0x7ffe3d78a120",
+        "0x7ffe3d78a1c0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "getrandom",
+      "args": [
+        "0x7dee436214d8",
+        "0x8",
+        "0x1"
+      ],
+      "result": 8
+    },
+    {
+      "name": "brk",
+      "args": [
+        "0x0",
+        "0x7dee4361ac80",
+        "0x0"
+      ],
+      "result": 107309968666624
+    },
+    {
+      "name": "brk",
+      "args": [
+        "0x61990c924000",
+        "0x7dee4361ac80",
+        "0x7dee43622218"
+      ],
+      "result": 107309968801792
+    },
+    {
+      "name": "openat",
+      "args": [
+        "0xffffff9c",
+        "\"/proc/self/maps\"",
+        "0x80000"
+      ],
+      "result": 3
+    },
+    {
+      "name": "unknown",
+      "args": [
+        "0x0",
+        "0x3",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "newfstatat",
+      "args": [
+        "0x3",
+        "0x7dee435d844f",
+        "0x7ffe3d78a190"
+      ],
+      "result": 0
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x61990c903500",
+        "0x400"
+      ],
+      "result": 1024
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x61990c903500",
+        "0x400"
+      ],
+      "result": 1024
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x61990c903500",
+        "0x400"
+      ],
+      "result": 975
+    },
+    {
+      "name": "close",
+      "args": [
+        "0x3",
+        "0xfbada408",
+        "0x7dee43616a00"
+      ],
+      "result": 0
+    },
+    {
+      "name": "unknown",
+      "args": [
+        "0x1dad1",
+        "0x20",
+        "0x61990c903a10"
+      ],
+      "result": 8
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0xb",
+        "0x0",
+        "0x7ffe3d78a310"
+      ],
+      "result": 0
+    },
+    {
+      "name": "sigaltstack",
+      "args": [
+        "0x0",
+        "0x7ffe3d78a2e0",
+        "0x7ffe3d78a310"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x3000",
+        "0x3"
+      ],
+      "result": 138462286602240
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dee43686000",
+        "0x1000",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "sigaltstack",
+      "args": [
+        "0x7ffe3d78a2e0",
+        "0x0",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0xb",
+        "0x7ffe3d78a270",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0x7",
+        "0x0",
+        "0x7ffe3d78a310"
+      ],
+      "result": 0
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0x7",
+        "0x7ffe3d78a270",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "write",
+      "args": [
+        "0x1",
+        "0x61990c903500",
+        "0x13"
+      ],
+      "result": 19
+    },
+    {
+      "name": "write",
+      "args": [
+        "0x1",
+        "0x61990c903500",
+        "0x11"
+      ],
+      "result": 17
+    },
+    {
+      "name": "write",
+      "args": [
+        "0x1",
+        "0x61990c903500",
+        "0xf"
+      ],
+      "result": 15
+    },
+    {
+      "name": "write",
+      "args": [
+        "0x1",
+        "0x61990c903500",
+        "0x12"
+      ],
+      "result": 18
+    },
+    {
+      "name": "write",
+      "args": [
+        "0x1",
+        "0x61990c903500",
+        "0xd"
+      ],
+      "result": 13
+    },
+    {
+      "name": "sigaltstack",
+      "args": [
+        "0x7ffe3d78a268",
+        "0x0",
+        "0x33"
+      ],
+      "result": 0
+    },
+    {
+      "name": "munmap",
+      "args": [
+        "0x7dee43686000",
+        "0x3000",
+        "0x33"
+      ],
+      "result": 0
+    }
+  ],
+  "summary": {
+    "total_syscalls": 69,
+    "exit_code": 0
+  }
+}

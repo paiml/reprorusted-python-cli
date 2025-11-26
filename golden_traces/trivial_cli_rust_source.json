@@ -1,0 +1,596 @@
+[renacer: DWARF debug info loaded from /home/noah/src/reprorusted-python-cli/examples/example_simple/trivial_cli]
+{
+  "version": "0.6.2",
+  "format": "renacer-json-v1",
+  "syscalls": [
+    {
+      "name": "brk",
+      "args": [
+        "0x0",
+        "0x7ffd73e369ac",
+        "0x0"
+      ],
+      "result": 107960140955648
+    },
+    {
+      "name": "arch_prctl",
+      "args": [
+        "0x3001",
+        "0x7ffd73e36960",
+        "0x7dd5cee2a3c0"
+      ],
+      "result": -22
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x2000",
+        "0x3"
+      ],
+      "result": 138357252329472
+    },
+    {
+      "name": "access",
+      "args": [
+        "0x7dd5cee3ad90",
+        "0x4",
+        "0x62303b88baf0"
+      ],
+      "result": -2
+    },
+    {
+      "name": "openat",
+      "args": [
+        "0xffffff9c",
+        "\"/etc/ld.so.cache\"",
+        "0x80000"
+      ],
+      "result": 3
+    },
+    {
+      "name": "newfstatat",
+      "args": [
+        "0x3",
+        "0x7dd5cee39ee9",
+        "0x7ffd73e35ab0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x1c21c",
+        "0x1"
+      ],
+      "result": 138357252210688
+    },
+    {
+      "name": "close",
+      "args": [
+        "0x3",
+        "0x1c21c",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "openat",
+      "args": [
+        "0xffffff9c",
+        "\"/lib/x86_64-linux-gnu/libgcc_s.so.1\"",
+        "0x80000"
+      ],
+      "result": 3
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x7ffd73e35ce8",
+        "0x340"
+      ],
+      "result": 832
+    },
+    {
+      "name": "newfstatat",
+      "args": [
+        "0x3",
+        "0x7dd5cee39ee9",
+        "0x7ffd73e35b80"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x1f2e8",
+        "0x1"
+      ],
+      "result": 138357252079616
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dd5cedcf000",
+        "0x17000",
+        "0x5"
+      ],
+      "result": 138357252091904
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dd5cede6000",
+        "0x4000",
+        "0x1"
+      ],
+      "result": 138357252186112
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dd5cedea000",
+        "0x2000",
+        "0x3"
+      ],
+      "result": 138357252202496
+    },
+    {
+      "name": "close",
+      "args": [
+        "0x3",
+        "0x0",
+        "0x7dd5cedcc2c8"
+      ],
+      "result": 0
+    },
+    {
+      "name": "openat",
+      "args": [
+        "0xffffff9c",
+        "\"/lib/x86_64-linux-gnu/libc.so.6\"",
+        "0x80000"
+      ],
+      "result": 3
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x7ffd73e35cc8",
+        "0x340"
+      ],
+      "result": 832
+    },
+    {
+      "name": "pread64",
+      "args": [
+        "0x3",
+        "0x7ffd73e358d0",
+        "0x310"
+      ],
+      "result": 784
+    },
+    {
+      "name": "pread64",
+      "args": [
+        "0x3",
+        "0x7ffd73e35890",
+        "0x30"
+      ],
+      "result": 48
+    },
+    {
+      "name": "pread64",
+      "args": [
+        "0x3",
+        "0x7ffd73e35840",
+        "0x44"
+      ],
+      "result": 68
+    },
+    {
+      "name": "newfstatat",
+      "args": [
+        "0x3",
+        "0x7dd5cee39ee9",
+        "0x7ffd73e35b60"
+      ],
+      "result": 0
+    },
+    {
+      "name": "pread64",
+      "args": [
+        "0x3",
+        "0x7ffd73e357a0",
+        "0x310"
+      ],
+      "result": 784
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x228e50",
+        "0x1"
+      ],
+      "result": 138357248098304
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dd5cea28000",
+        "0x1ee000",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dd5cea28000",
+        "0x195000",
+        "0x5"
+      ],
+      "result": 138357248262144
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dd5cebbd000",
+        "0x58000",
+        "0x1"
+      ],
+      "result": 138357249921024
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dd5cec16000",
+        "0x6000",
+        "0x3"
+      ],
+      "result": 138357250285568
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x7dd5cec1c000",
+        "0xce50",
+        "0x3"
+      ],
+      "result": 138357250310144
+    },
+    {
+      "name": "close",
+      "args": [
+        "0x3",
+        "0x4",
+        "0x7dd5cea00380"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x3000",
+        "0x3"
+      ],
+      "result": 138357252067328
+    },
+    {
+      "name": "arch_prctl",
+      "args": [
+        "0x1002",
+        "0x7dd5cedc9780",
+        "0xffff822a31235e70"
+      ],
+      "result": 0
+    },
+    {
+      "name": "set_tid_address",
+      "args": [
+        "0x7dd5cedc9a50",
+        "0x7dd5cedc9780",
+        "0x7dd5cee460d8"
+      ],
+      "result": 4130529
+    },
+    {
+      "name": "set_robust_list",
+      "args": [
+        "0x7dd5cedc9a60",
+        "0x18",
+        "0x7dd5cee460d8"
+      ],
+      "result": 0
+    },
+    {
+      "name": "unknown",
+      "args": [
+        "0x7dd5cedca120",
+        "0x20",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dd5cec16000",
+        "0x4000",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dd5cedea000",
+        "0x1000",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x62303b88b000",
+        "0x5000",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dd5cee43000",
+        "0x2000",
+        "0x1"
+      ],
+      "result": 0
+    },
+    {
+      "name": "unknown",
+      "args": [
+        "0x0",
+        "0x3",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "munmap",
+      "args": [
+        "0x7dd5cedec000",
+        "0x1c21c",
+        "0x7dd5cea90c10"
+      ],
+      "result": 0
+    },
+    {
+      "name": "poll",
+      "args": [
+        "0x7ffd73e36900",
+        "0x3",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0xd",
+        "0x7ffd73e36630",
+        "0x7ffd73e366d0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "getrandom",
+      "args": [
+        "0x7dd5cec214d8",
+        "0x8",
+        "0x1"
+      ],
+      "result": 8
+    },
+    {
+      "name": "brk",
+      "args": [
+        "0x0",
+        "0x7dd5cec1ac80",
+        "0x0"
+      ],
+      "result": 107960140955648
+    },
+    {
+      "name": "brk",
+      "args": [
+        "0x62306ddc1000",
+        "0x7dd5cec1ac80",
+        "0x7dd5cec22218"
+      ],
+      "result": 107960141090816
+    },
+    {
+      "name": "openat",
+      "args": [
+        "0xffffff9c",
+        "\"/proc/self/maps\"",
+        "0x80000"
+      ],
+      "result": 3
+    },
+    {
+      "name": "unknown",
+      "args": [
+        "0x0",
+        "0x3",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "newfstatat",
+      "args": [
+        "0x3",
+        "0x7dd5cebd844f",
+        "0x7ffd73e366a0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x62306dda0500",
+        "0x400"
+      ],
+      "result": 1024
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x62306dda0500",
+        "0x400"
+      ],
+      "result": 1024
+    },
+    {
+      "name": "read",
+      "args": [
+        "0x3",
+        "0x62306dda0500",
+        "0x400"
+      ],
+      "result": 911
+    },
+    {
+      "name": "close",
+      "args": [
+        "0x3",
+        "0xfbada408",
+        "0x7dd5cec16a00"
+      ],
+      "result": 0
+    },
+    {
+      "name": "unknown",
+      "args": [
+        "0x3f06e1",
+        "0x20",
+        "0x62306dda0a10"
+      ],
+      "result": 8
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0xb",
+        "0x0",
+        "0x7ffd73e36820"
+      ],
+      "result": 0
+    },
+    {
+      "name": "sigaltstack",
+      "args": [
+        "0x0",
+        "0x7ffd73e367f0",
+        "0x7ffd73e36820"
+      ],
+      "result": 0
+    },
+    {
+      "name": "mmap",
+      "args": [
+        "0x0",
+        "0x3000",
+        "0x3"
+      ],
+      "result": 138357252317184
+    },
+    {
+      "name": "mprotect",
+      "args": [
+        "0x7dd5cee06000",
+        "0x1000",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "sigaltstack",
+      "args": [
+        "0x7ffd73e367f0",
+        "0x0",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0xb",
+        "0x7ffd73e36780",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0x7",
+        "0x0",
+        "0x7ffd73e36820"
+      ],
+      "result": 0
+    },
+    {
+      "name": "rt_sigaction",
+      "args": [
+        "0x7",
+        "0x7ffd73e36780",
+        "0x0"
+      ],
+      "result": 0
+    },
+    {
+      "name": "write",
+      "args": [
+        "0x1",
+        "0x62306dda0500",
+        "0x13"
+      ],
+      "result": 19
+    },
+    {
+      "name": "sigaltstack",
+      "args": [
+        "0x7ffd73e367b8",
+        "0x0",
+        "0x33"
+      ],
+      "result": 0
+    },
+    {
+      "name": "munmap",
+      "args": [
+        "0x7dd5cee06000",
+        "0x3000",
+        "0x33"
+      ],
+      "result": 0
+    }
+  ],
+  "summary": {
+    "total_syscalls": 65,
+    "exit_code": 0
+  }
+}

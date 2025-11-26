@@ -1,0 +1,45 @@
+   Compiling complex_cli v0.1.0 (/home/noah/src/reprorusted-python-cli/examples/example_complex)
+warning: unused import: `regex as re`
+ --> complex_cli.rs:2:5
+  |
+2 | use regex as re;
+  |     ^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std as os`
+ --> complex_cli.rs:3:5
+  |
+3 | use std as os;
+  |     ^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> complex_cli.rs:130:8
+    |
+130 |     Ok(value)
+    |     -- ^^^^^ expected `()`, found `&str`
+    |     |
+    |     arguments to this enum variant are incorrect
+    |
+help: the type constructed contains `&str` due to the type of the argument passed
+   --> complex_cli.rs:130:5
+    |
+130 |     Ok(value)
+    |     ^^^-----^
+    |        |
+    |        this argument influences the type of `Ok`
+note: tuple variant defined here
+   --> /home/noah/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs:554:5
+    |
+554 |     Ok(#[stable(feature = "rust1", since = "1.0.0")] T),
+    |     ^^
+
+error[E0308]: mismatched types
+   --> complex_cli.rs:166:8
+    |
+166 |     if args.encoding {
+    |        ^^^^^^^^^^^^^ expected `bool`, found `String`
+
+For more information about this error, try `rustc --explain E0308`.
+warning: `complex_cli` (bin "complex_cli") generated 2 warnings
+error: could not compile `complex_cli` (bin "complex_cli") due to 2 previous errors; 2 warnings emitted
