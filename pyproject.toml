@@ -28,6 +28,7 @@ dependencies = [
     "ruff>=0.1.0",           # Linting and formatting
     "pyyaml>=6.0",           # For test case definitions
     "psutil>=5.9.0",         # Memory measurement
+    "numpy>=1.24.0",         # NumPy examples
 ]
 
 [project.optional-dependencies]

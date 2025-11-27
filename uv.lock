@@ -1043,6 +1043,7 @@ name = "reprorusted-python-cli"
 version = "1.0.0"
 source = { editable = "." }
 dependencies = [
+    { name = "numpy" },
     { name = "psutil" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -1067,6 +1068,7 @@ requires-dist = [
     { name = "black", marker = "extra == 'dev'", specifier = ">=23.7.0" },
     { name = "ipython", marker = "extra == 'dev'", specifier = ">=8.14.0" },
     { name = "matplotlib", marker = "extra == 'benchmark'", specifier = ">=3.7.0" },
+    { name = "numpy", specifier = ">=1.24.0" },
     { name = "numpy", marker = "extra == 'benchmark'", specifier = ">=1.24.0" },
     { name = "pandas", marker = "extra == 'benchmark'", specifier = ">=2.0.0" },
     { name = "psutil", specifier = ">=5.9.0" },
