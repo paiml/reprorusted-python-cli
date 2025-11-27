@@ -100,7 +100,7 @@ reprorusted-python-cli/
 
 ### Depyler Single-Shot Compile Status
 
-**Latest Testing**: depyler v3.21.0 trunk (2025-11-27) - **33/57 COMPILING (57.9%)** | 69 total examples 🎉
+**Latest Testing**: depyler v3.21.0 trunk (2025-11-27) - **33/57 COMPILING (57%)** | 69 total examples 🎉
 
 **Single-Shot Compile**: Python → Rust binary in one command (`depyler transpile && cargo build`)
 
@@ -122,8 +122,8 @@ reprorusted-python-cli/
 
 **Progress (Expanded Test Suite):**
 - **Total Examples**: 69 (expanded from 13 with EXTREME TDD)
-- **Transpiled**: 57/69 (**82.6%**) - Have Cargo.toml
-- **Compiling**: 33/57 (**57.9%**) - Pass `cargo build`
+- **Transpiled**: 57/69 (**82%**) - Have Cargo.toml
+- **Compiling**: 33/57 (**57%**) - Pass `cargo build`
 - **Original 13**: 10/13 (**76.9%**) - Core examples
 - **Detailed Tracking**: [depyler #104](https://github.com/paiml/depyler/issues/104)
 
