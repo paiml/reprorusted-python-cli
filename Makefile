@@ -210,10 +210,10 @@ lint:
 	@echo "Linting Rust code (clippy)..."
 	@cargo clippy --workspace -- -D warnings
 	@echo "Linting shell scripts (bashrs)..."
-	@# Note: || true until bashrs #82 (--ignore flag) is implemented for SEC010 false positives
+	@# Note: || true because bashrs exits 1 on warnings (not just errors)
 	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
 		if [ -f "$$script" ]; then \
-			bashrs lint "$$script" || true; \
+			bashrs lint --ignore SEC010 "$$script" || true; \
 		fi; \
 	done
 	@echo "Linting Makefiles (bashrs)..."
@@ -228,7 +228,7 @@ lint:
 	@for dockerfile in docker/*/Dockerfile.*; do \
 		if [ -f "$$dockerfile" ]; then \
 			echo "Checking $$dockerfile..."; \
-			bashrs lint "$$dockerfile" || true; \
+			bashrs lint --ignore SEC010 "$$dockerfile" || true; \
 		fi; \
 	done
 	@echo "✅ Linting passed"
@@ -239,7 +239,7 @@ lint-fix:
 	@echo "Auto-fixing shell scripts..."
 	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
 		if [ -f "$$script" ]; then \
-			bashrs lint --fix "$$script" || exit 1; \
+			bashrs lint --fix --ignore SEC010 "$$script" || true; \
 		fi; \
 	done
 	@echo "Auto-fixing Makefiles..."
@@ -254,7 +254,7 @@ lint-fix:
 	@for dockerfile in docker/*/Dockerfile.*; do \
 		if [ -f "$$dockerfile" ]; then \
 			echo "Fixing $$dockerfile..."; \
-			bashrs lint --fix "$$dockerfile" || true; \
+			bashrs lint --fix --ignore SEC010 "$$dockerfile" || true; \
 		fi; \
 	done
 	@echo "✅ Lint fixes applied"
