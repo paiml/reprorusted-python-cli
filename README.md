@@ -100,7 +100,7 @@ reprorusted-python-cli/
 
 ### Depyler Single-Shot Compile Status
 
-**Latest Testing**: depyler v3.21.0 trunk (2025-11-27) - **10/13 PASSING (76.9%)!** 🎉
+**Latest Testing**: depyler v3.21.0 trunk (2025-11-27) - **33/57 COMPILING (57.9%)** | 69 total examples 🎉
 
 **Single-Shot Compile**: Python → Rust binary in one command (`depyler transpile && cargo build`)
 
@@ -120,10 +120,11 @@ reprorusted-python-cli/
 | **example_csv_filter** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** ⬅️ NEW | - |
 | **example_log_analyzer** | ✅ | ❌ | ❌ | 28 | regex &str, parser scope, types | [#104](https://github.com/paiml/depyler/issues/104) |
 
-**Progress:**
-- **Transpilation**: 13/13 (**100%**) - ALL examples transpile!
-- **Build**: 10/13 (**76.9%**) 🎉🎉 - Up from 53.8%!
-- **Total Errors**: **30** (down from 128!)
+**Progress (Expanded Test Suite):**
+- **Total Examples**: 69 (expanded from 13 with EXTREME TDD)
+- **Transpiled**: 57/69 (**82.6%**) - Have Cargo.toml
+- **Compiling**: 33/57 (**57.9%**) - Pass `cargo build`
+- **Original 13**: 10/13 (**76.9%**) - Core examples
 - **Detailed Tracking**: [depyler #104](https://github.com/paiml/depyler/issues/104)
 
 **Remaining Errors (30 total in 3 examples):**
