@@ -188,3 +188,206 @@ phases:
           - "Create reproducibility checklist"
           - "Write BENCHMARKS.md report"
           - "Publish results to repository"
+
+  - phase: 6
+    name: "ML Framework Examples (sklearn/PyTorch → aprender)"
+    tickets:
+      - id: "ML-001"
+        title: "Implement example_sklearn_linreg (LinearRegression)"
+        status: "done"  # linreg_flat.py compiles with depyler
+        priority: "high"
+        tasks:
+          - "Write test_linreg_tool.py with EXTREME TDD"
+          - "Implement linreg_tool.py with sklearn LinearRegression"
+          - "Test fit/predict/score pattern"
+          - "Create linreg_flat.py (depyler-compatible CLI-args version)"
+
+      - id: "ML-002"
+        title: "Implement example_sklearn_logreg (LogisticRegression)"
+        status: "done"  # logreg_flat.py compiles with depyler
+        priority: "high"
+        tasks:
+          - "Write test_logreg_tool.py"
+          - "Implement logreg_tool.py with binary classification"
+          - "Test accuracy metrics"
+          - "Create logreg_flat.py (depyler-compatible)"
+
+      - id: "ML-003"
+        title: "Implement example_sklearn_kmeans (KMeans clustering)"
+        status: "done"  # kmeans_flat.py compiles with depyler
+        priority: "high"
+        tasks:
+          - "Write test_kmeans_tool.py"
+          - "Implement kmeans_tool.py with n_clusters parameter"
+          - "Test cluster assignment and centroids"
+          - "Create kmeans_flat.py (depyler-compatible)"
+
+      - id: "ML-004"
+        title: "Implement example_sklearn_pca (PCA dimensionality reduction)"
+        status: "done"  # pca_flat.py compiles with depyler
+        priority: "medium"
+        tasks:
+          - "Write test_pca_tool.py"
+          - "Implement pca_tool.py with n_components"
+          - "Test explained variance ratio"
+          - "Create pca_flat.py (depyler-compatible)"
+
+      - id: "ML-005"
+        title: "Implement example_sklearn_dtree (DecisionTreeClassifier)"
+        status: "blocked"  # Complex tree structure not suitable for flat CLI
+        priority: "medium"
+        tasks:
+          - "Write test_dtree_tool.py"
+          - "Implement dtree_tool.py with max_depth"
+          - "Test GINI-based classification"
+          - "Transpile and validate"
+
+      - id: "ML-006"
+        title: "Implement example_sklearn_rf (RandomForestClassifier)"
+        status: "blocked"  # Ensemble requires arrays, blocked by depyler
+        priority: "medium"
+        tasks:
+          - "Write test_rf_tool.py"
+          - "Implement rf_tool.py with n_estimators"
+          - "Test ensemble voting"
+          - "Transpile and validate"
+
+      - id: "ML-007"
+        title: "Implement example_sklearn_scaler (StandardScaler)"
+        status: "done"  # scaler_flat.py compiles with depyler
+        priority: "high"
+        tasks:
+          - "Write test_scaler_tool.py"
+          - "Implement scaler_tool.py with fit_transform"
+          - "Test zero mean, unit variance"
+          - "Create scaler_flat.py (depyler-compatible)"
+
+      - id: "ML-008"
+        title: "Implement example_sklearn_kfold (cross_val_score)"
+        status: "blocked"  # Cross-validation requires arrays, blocked
+        priority: "medium"
+        tasks:
+          - "Write test_kfold_tool.py"
+          - "Implement kfold_tool.py with KFold CV"
+          - "Test k-fold validation scores"
+          - "Transpile and validate"
+
+      - id: "ML-009"
+        title: "Implement example_sklearn_metrics (accuracy/F1)"
+        status: "blocked"  # Metrics require arrays, blocked
+        priority: "high"
+        tasks:
+          - "Write test_metrics_tool.py"
+          - "Implement metrics_tool.py with classification metrics"
+          - "Test confusion matrix, precision, recall"
+          - "Transpile and validate"
+
+      - id: "ML-010"
+        title: "Implement example_sklearn_tsne (t-SNE visualization)"
+        status: "blocked"  # t-SNE requires arrays, blocked
+        priority: "low"
+        tasks:
+          - "Write test_tsne_tool.py"
+          - "Implement tsne_tool.py with 2D embedding"
+          - "Test dimensionality reduction"
+          - "Transpile and validate"
+
+      - id: "ML-011"
+        title: "Implement example_pytorch_tensor (Tensor ops)"
+        status: "done"  # tensor_flat.py compiles with depyler
+        priority: "high"
+        tasks:
+          - "Write test_tensor_tool.py"
+          - "Implement tensor_tool.py with torch.tensor"
+          - "Test add, mul, matmul operations"
+          - "Transpile and validate"
+
+      - id: "ML-012"
+        title: "Implement example_pytorch_autograd (backward/gradients)"
+        status: "done"  # autograd_flat.py compiles with depyler
+        priority: "high"
+        tasks:
+          - "Write test_autograd_tool.py"
+          - "Implement autograd_tool.py with requires_grad"
+          - "Test backward pass and grad access"
+          - "Create autograd_flat.py (depyler-compatible)"
+
+      - id: "ML-013"
+        title: "Implement example_pytorch_linear (nn.Linear)"
+        status: "done"  # linear_flat.py compiles with depyler
+        priority: "high"
+        tasks:
+          - "Write test_linear_tool.py"
+          - "Implement linear_tool.py with dense layer"
+          - "Test forward pass"
+          - "Create linear_flat.py (depyler-compatible)"
+
+      - id: "ML-014"
+        title: "Implement example_pytorch_sequential (nn.Sequential)"
+        status: "blocked"  # Layer chaining requires arrays, blocked
+        priority: "medium"
+        tasks:
+          - "Write test_sequential_tool.py"
+          - "Implement sequential_tool.py with layer chaining"
+          - "Test MLP forward pass"
+          - "Transpile and validate"
+
+      - id: "ML-015"
+        title: "Implement example_pytorch_relu (activations)"
+        status: "done"  # relu_flat.py compiles with depyler
+        priority: "medium"
+        tasks:
+          - "Write test_relu_tool.py"
+          - "Implement relu_tool.py with ReLU, Sigmoid, Tanh"
+          - "Test activation functions"
+          - "Create relu_flat.py (depyler-compatible)"
+
+      - id: "ML-016"
+        title: "Implement example_pytorch_conv (nn.Conv2d)"
+        status: "blocked"  # 2D conv requires arrays, blocked
+        priority: "medium"
+        tasks:
+          - "Write test_conv_tool.py"
+          - "Implement conv_tool.py with 2D convolution"
+          - "Test kernel application"
+          - "Transpile and validate"
+
+      - id: "ML-017"
+        title: "Implement example_pytorch_batchnorm (BatchNorm1d)"
+        status: "blocked"  # Batch normalization requires arrays, blocked
+        priority: "medium"
+        tasks:
+          - "Write test_batchnorm_tool.py"
+          - "Implement batchnorm_tool.py with normalization"
+          - "Test running mean/variance"
+          - "Transpile and validate"
+
+      - id: "ML-018"
+        title: "Implement example_pytorch_dropout (Dropout)"
+        status: "blocked"  # Dropout requires arrays, blocked
+        priority: "low"
+        tasks:
+          - "Write test_dropout_tool.py"
+          - "Implement dropout_tool.py with p parameter"
+          - "Test training vs eval mode"
+          - "Transpile and validate"
+
+      - id: "ML-019"
+        title: "Implement example_pytorch_adam (Adam optimizer)"
+        status: "blocked"  # Adam optimizer requires arrays, blocked
+        priority: "high"
+        tasks:
+          - "Write test_adam_tool.py"
+          - "Implement adam_tool.py with optim.Adam"
+          - "Test optimizer step"
+          - "Transpile and validate"
+
+      - id: "ML-020"
+        title: "Implement example_pytorch_mseloss (MSELoss)"
+        status: "done"  # mseloss_flat.py compiles with depyler
+        priority: "high"
+        tasks:
+          - "Write test_mseloss_tool.py"
+          - "Implement mseloss_tool.py with loss computation"
+          - "Test mean squared error"
+          - "Create mseloss_flat.py (depyler-compatible)"
