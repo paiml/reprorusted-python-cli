@@ -2,6 +2,7 @@
 """NumPy Std Example - Std reduction CLI."""
 
 import argparse
+
 import numpy as np
 
 

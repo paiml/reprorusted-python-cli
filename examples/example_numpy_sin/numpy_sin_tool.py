@@ -2,6 +2,7 @@
 """NumPy Sin Example - Trigonometric sin CLI."""
 
 import argparse
+
 import numpy as np
 
 

@@ -177,6 +177,14 @@ bench-report:
 	@chmod +x benchmarks/framework/generate_report.py
 	@python3 benchmarks/framework/generate_report.py
 
+bench-scientific:
+	@echo "Scientific benchmarking with bashrs bench..."
+	@chmod +x scripts/bench_all_bashrs.sh
+	@./scripts/bench_all_bashrs.sh
+	@echo ""
+	@echo "Results: benchmarks/reports/timing.csv"
+	@cat benchmarks/reports/timing.csv | column -t -s,
+
 # Quality Gates
 quality: format lint test
 	@echo ""

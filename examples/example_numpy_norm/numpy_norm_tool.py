@@ -2,6 +2,7 @@
 """NumPy Norm Example - Vector norm CLI."""
 
 import argparse
+
 import numpy as np
 
 

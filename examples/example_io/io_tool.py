@@ -10,8 +10,8 @@ def main():
 
     w = subs.add_parser("words")
     w.add_argument("text")
-    l = subs.add_parser("lines")
-    l.add_argument("text")
+    lp = subs.add_parser("lines")
+    lp.add_argument("text")
     c = subs.add_parser("chars")
     c.add_argument("text")
 

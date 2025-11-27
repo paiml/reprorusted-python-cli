@@ -180,21 +180,26 @@ python3 trivial_cli.py --name Alice
 
 ## Performance Gains
 
-Based on scientific benchmarking with 10 iterations, 3 warmup runs (see [BENCHMARKS.md](BENCHMARKS.md) for full methodology):
+Based on scientific benchmarking with `bashrs bench` (10 iterations, 3 warmup runs):
 
-| Example | Python (ms) | Rust (ms) | Speedup | Memory Reduction |
-|---------|-------------|-----------|---------|------------------|
-| example_simple | 22.34 | 2.49 | **8.98x** | 72.2% |
-| example_flags | 22.20 | 2.41 | **9.21x** | 72.0% |
-| example_positional | 22.10 | 2.42 | **9.12x** | 71.6% |
-| example_subcommands | 22.81 | 2.49 | **9.15x** | 71.4% |
-| example_complex | 23.24 | 2.59 | **8.96x** | 72.6% |
-| example_stdlib | 29.49 | 2.39 | **12.35x** | 81.1% |
-| **Average** | **23.70** | **2.47** | **9.63x** | **73.5%** |
+| Example | Python (ms) | Rust (ms) | Speedup | Py Memory (KB) | Rs Memory (KB) |
+|---------|-------------|-----------|---------|----------------|----------------|
+| example_simple | 23.22 | 2.34 | **9.92x** | 10,982 | 3,072 |
+| example_ascii | 23.18 | 2.69 | **8.61x** | 11,020 | 2,995 |
+| example_join | 23.04 | 2.50 | **9.21x** | 10,828 | 3,072 |
+| example_minmax | 23.89 | 2.33 | **10.25x** | 10,828 | 3,072 |
+| example_round | 23.26 | 2.38 | **9.77x** | 10,944 | 3,033 |
+| example_strip | 23.73 | 2.28 | **10.40x** | 10,790 | 3,072 |
+| example_sum | 23.17 | 2.51 | **9.23x** | 10,675 | 3,033 |
+| **Average** | **23.36** | **2.43** | **9.62x** | **10,867** | **3,050** |
 
-**Binary Size:**
-- Python: ~11-16MB (interpreter + script runtime memory)
-- Rust: **760KB - 3.4MB** (standalone binaries)
+**Run benchmarks:**
+```bash
+make bench-scientific    # Scientific benchmarking with bashrs bench
+make bench-all           # Full benchmark suite
+```
+
+**Memory Reduction:** ~72% average (10.8MB Python → 3.0MB Rust)
 
 ## Quality Standards
 

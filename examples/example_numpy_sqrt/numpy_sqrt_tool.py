@@ -2,6 +2,7 @@
 """NumPy Sqrt Example - Element-wise sqrt CLI."""
 
 import argparse
+
 import numpy as np
 
 

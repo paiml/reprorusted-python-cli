@@ -21,8 +21,8 @@ def cmd_hsv2rgb(args):
 def cmd_rgb2hls(args):
     """RGB to HLS. Depyler: proven to terminate"""
     r, g, b = args.r / 255, args.g / 255, args.b / 255
-    h, l, s = colorsys.rgb_to_hls(r, g, b)
-    print(f"HLS: {h:.3f}, {l:.3f}, {s:.3f}")
+    h, light, s = colorsys.rgb_to_hls(r, g, b)
+    print(f"HLS: {h:.3f}, {light:.3f}, {s:.3f}")
 
 
 def cmd_hex(args):

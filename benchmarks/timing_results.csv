@@ -1,0 +1,13 @@
+Example,Python (ms),Py StdDev,Rust (ms),Rs StdDev,Speedup,Py Size,Rs Size
+[0;34mBenchmarking example_ascii...[0m
+example_ascii,35.04,.79,2.11,1.22,16.60,695,776512
+[0;34mBenchmarking example_join...[0m
+example_join,34.19,1.87,1.99,.28,17.10,872,780608
+[0;34mBenchmarking example_minmax...[0m
+example_minmax,35.81,1.11,1.79,.14,19.90,1632,796992
+[0;34mBenchmarking example_round...[0m
+example_round,35.01,1.02,1.92,.33,18.20,705,788800
+[0;34mBenchmarking example_strip...[0m
+example_strip,34.43,1.56,1.68,.09,20.45,684,760128
+[0;34mBenchmarking example_sum...[0m
+example_sum,34.50,1.27,1.90,.17,18.10,1027,796992

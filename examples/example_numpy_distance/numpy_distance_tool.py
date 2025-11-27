@@ -2,6 +2,7 @@
 """NumPy Distance Example - Euclidean distance CLI."""
 
 import argparse
+
 import numpy as np
 
 

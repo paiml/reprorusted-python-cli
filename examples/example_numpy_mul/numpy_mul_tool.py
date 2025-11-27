@@ -2,6 +2,7 @@
 """NumPy Mul Example - Element-wise mul CLI."""
 
 import argparse
+
 import numpy as np
 
 

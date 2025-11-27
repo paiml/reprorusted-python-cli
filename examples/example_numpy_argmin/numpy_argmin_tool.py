@@ -2,6 +2,7 @@
 """NumPy Argmin Example - Argmin index CLI."""
 
 import argparse
+
 import numpy as np
 
 

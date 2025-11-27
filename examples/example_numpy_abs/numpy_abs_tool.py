@@ -2,6 +2,7 @@
 """NumPy Abs Example - Element-wise abs CLI."""
 
 import argparse
+
 import numpy as np
 
 

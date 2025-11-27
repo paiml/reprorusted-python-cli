@@ -23,7 +23,7 @@ def cmd_square(args):
     numbers = [int(n) for n in args.numbers]
     with ThreadPoolExecutor(max_workers=4) as executor:
         results = list(executor.map(square, numbers))
-    for n, r in zip(numbers, results):
+    for n, r in zip(numbers, results, strict=True):
         print(f"{n}^2 = {r}")
 
 

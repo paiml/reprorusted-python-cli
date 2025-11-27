@@ -2,6 +2,7 @@
 """NumPy Max Example - Max reduction CLI."""
 
 import argparse
+
 import numpy as np
 
 

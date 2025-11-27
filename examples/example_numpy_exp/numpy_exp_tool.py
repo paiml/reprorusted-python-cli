@@ -2,6 +2,7 @@
 """NumPy Exp Example - Element-wise exp CLI."""
 
 import argparse
+
 import numpy as np
 
 

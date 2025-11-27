@@ -2,6 +2,7 @@
 """NumPy Log Example - Element-wise log CLI."""
 
 import argparse
+
 import numpy as np
 
 

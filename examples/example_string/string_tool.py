@@ -10,8 +10,8 @@ def main():
 
     u = subs.add_parser("upper")
     u.add_argument("text")
-    l = subs.add_parser("lower")
-    l.add_argument("text")
+    lp = subs.add_parser("lower")
+    lp.add_argument("text")
     t = subs.add_parser("title")
     t.add_argument("text")
     le = subs.add_parser("length")

@@ -2,6 +2,7 @@
 """NumPy Cos Example - Trigonometric cos CLI."""
 
 import argparse
+
 import numpy as np
 
 

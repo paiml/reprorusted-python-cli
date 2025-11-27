@@ -2,6 +2,7 @@
 """NumPy Normalize Example - Unit vector normalization CLI."""
 
 import argparse
+
 import numpy as np
 
 

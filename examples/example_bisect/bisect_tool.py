@@ -9,8 +9,8 @@ def main():
     parser = argparse.ArgumentParser(description="Binary search tool")
     subs = parser.add_subparsers(dest="cmd", required=True)
 
-    l = subs.add_parser("left")
-    l.add_argument("x", type=int)
+    lp = subs.add_parser("left")
+    lp.add_argument("x", type=int)
 
     r = subs.add_parser("right")
     r.add_argument("x", type=int)

@@ -11,8 +11,8 @@ def main():
     f = subs.add_parser("first")
     f.add_argument("items", nargs="+")
 
-    l = subs.add_parser("last")
-    l.add_argument("items", nargs="+")
+    lp = subs.add_parser("last")
+    lp.add_argument("items", nargs="+")
 
     args = parser.parse_args()
     if args.cmd == "first":

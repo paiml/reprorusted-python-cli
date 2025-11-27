@@ -2,6 +2,7 @@
 """NumPy Min Example - Min reduction CLI."""
 
 import argparse
+
 import numpy as np
 
 

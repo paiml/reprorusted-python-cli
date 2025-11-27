@@ -2,6 +2,7 @@
 """NumPy Add Example - Element-wise add CLI."""
 
 import argparse
+
 import numpy as np
 
 

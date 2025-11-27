@@ -2,6 +2,7 @@
 """NumPy Mean Example - Mean reduction CLI."""
 
 import argparse
+
 import numpy as np
 
 

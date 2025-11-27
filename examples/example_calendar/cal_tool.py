@@ -40,8 +40,8 @@ def main():
     w.add_argument("year", type=int)
     w.add_argument("month", type=int)
     w.add_argument("day", type=int)
-    l = subs.add_parser("leap")
-    l.add_argument("year", type=int)
+    lp = subs.add_parser("leap")
+    lp.add_argument("year", type=int)
     args = parser.parse_args()
     {"month": cmd_month, "year": cmd_year, "weekday": cmd_weekday, "leap": cmd_leap}[args.command](
         args

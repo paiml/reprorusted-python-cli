@@ -2,6 +2,7 @@
 """NumPy Dot Example - Dot product operations CLI."""
 
 import argparse
+
 import numpy as np
 
 

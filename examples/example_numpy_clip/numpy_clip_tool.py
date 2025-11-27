@@ -2,6 +2,7 @@
 """NumPy Clip Example - Clip/clamp CLI."""
 
 import argparse
+
 import numpy as np
 
 

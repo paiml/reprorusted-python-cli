@@ -2,6 +2,7 @@
 """NumPy Argmax Example - Argmax index CLI."""
 
 import argparse
+
 import numpy as np
 
 

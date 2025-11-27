@@ -2,6 +2,7 @@
 """NumPy Scale Example - Scalar multiplication CLI."""
 
 import argparse
+
 import numpy as np
 
 

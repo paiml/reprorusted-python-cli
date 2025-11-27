@@ -2,6 +2,7 @@
 """NumPy Var Example - Var reduction CLI."""
 
 import argparse
+
 import numpy as np
 
 
