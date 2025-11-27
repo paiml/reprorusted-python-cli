@@ -67,6 +67,9 @@ compile-all:
 	@echo ""
 	@echo "✅ All examples compiled successfully!"
 
+compile-status:
+	@./scripts/update_compile_status.sh
+
 io-check:
 	@echo "Checking Python vs Rust I/O equivalence..."
 	@for example_dir in examples/example_*/; do \
