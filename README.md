@@ -41,6 +41,9 @@ make build
 
 # Run benchmarks
 make bench
+
+# Update compile status (parallel, ~21s for 125 examples)
+make compile-status-fast
 ```
 
 ## Debugging Guide

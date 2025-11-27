@@ -336,6 +336,27 @@ if __name__ == "__main__":
 
 ---
 
+## Testing & Validation
+
+### Run All Tests
+```bash
+# Test all examples (parallel, ~21s for 125 examples)
+make compile-status-fast
+
+# Sequential version
+make compile-status
+```
+
+### Current Status (NumPy Examples)
+- **25 NumPy examples** in `examples/example_numpy_*`
+- **18/25 transpile** (7 crash depyler: exp, log, sin, cos, zscore, minmax, normalize)
+- **0/18 compile** - depyler emits literal `np.array()`, `np.sum()` etc.
+- **Error**: `E0425: cannot find value 'np' in this scope`
+
+This is expected - depyler doesn't have numpy→trueno codegen yet. These examples serve as training data for the oracle.
+
+---
+
 ## References
 
 - [Trueno Repository](https://github.com/paiml/trueno)
