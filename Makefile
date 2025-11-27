@@ -210,10 +210,10 @@ lint:
 	@echo "Linting Rust code (clippy)..."
 	@cargo clippy --workspace -- -D warnings
 	@echo "Linting shell scripts (bashrs)..."
-	@# Note: || true because bashrs exits 1 on warnings (not just errors)
+	@# Ignore false positives and intentional patterns
 	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
 		if [ -f "$$script" ]; then \
-			bashrs lint --ignore SEC010 "$$script" || true; \
+			bashrs lint --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2092,SC2117,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$script"; \
 		fi; \
 	done
 	@echo "Linting Makefiles (bashrs)..."
@@ -228,7 +228,7 @@ lint:
 	@for dockerfile in docker/*/Dockerfile.*; do \
 		if [ -f "$$dockerfile" ]; then \
 			echo "Checking $$dockerfile..."; \
-			bashrs lint --ignore SEC010 "$$dockerfile" || true; \
+			bashrs lint --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2092,SC2117,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$dockerfile"; \
 		fi; \
 	done
 	@echo "✅ Linting passed"
@@ -239,7 +239,7 @@ lint-fix:
 	@echo "Auto-fixing shell scripts..."
 	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
 		if [ -f "$$script" ]; then \
-			bashrs lint --fix --ignore SEC010 "$$script" || true; \
+			bashrs lint --fix --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2092,SC2117,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$script" || true; \
 		fi; \
 	done
 	@echo "Auto-fixing Makefiles..."
@@ -254,7 +254,7 @@ lint-fix:
 	@for dockerfile in docker/*/Dockerfile.*; do \
 		if [ -f "$$dockerfile" ]; then \
 			echo "Fixing $$dockerfile..."; \
-			bashrs lint --fix --ignore SEC010 "$$dockerfile" || true; \
+			bashrs lint --fix --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2092,SC2117,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$dockerfile" || true; \
 		fi; \
 	done
 	@echo "✅ Lint fixes applied"

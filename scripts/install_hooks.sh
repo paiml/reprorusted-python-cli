@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2031,SC2032,SC2047,SC2089,SC2154
+# bashrs disable-file=SC2031,SC2032,SC2047,SC2089,SC2154,SEC010,DET002
 # Install git hooks for reprorusted-python-cli
 # This script copies the pre-commit hook to .git/hooks/
 

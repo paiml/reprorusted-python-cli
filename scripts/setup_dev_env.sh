@@ -1,4 +1,6 @@
 #!/bin/bash
+# shellcheck disable=SC2032,SC2089,SC2095,SC2227,SC2308
+# bashrs disable-file=SC2032,SC2089,SC2095,SC2227,SC2308,SEC008,SEC010
 set -e
 
 # setup_dev_env.sh

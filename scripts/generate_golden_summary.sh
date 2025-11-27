@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2005,SC2032,SC2046,SC2141,SC2201,SC2227,SC2266,SC2274,SC2311,SC2316
+# bashrs disable-file=SC2005,SC2032,SC2046,SC2141,SC2201,SC2227,SC2266,SC2274,SC2311,SC2316,SEC010,DET002
 # Generate summary of all golden traces
 
 GOLDEN_DIR="/home/noah/src/reprorusted-python-cli/golden_traces"

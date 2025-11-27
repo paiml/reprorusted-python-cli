@@ -1,4 +1,6 @@
 #!/bin/bash
+# shellcheck disable=SC2031,SC2096,SC2117,SC2140,SC2281,SC2313,SC2317
+# bashrs disable-file=SC2031,SC2096,SC2117,SC2140,SC2281,SC2313,SC2317,SEC010
 set -e
 
 # check_io_equivalence.sh

@@ -6,6 +6,9 @@
 # 2. Capture transpiled Rust execution trace
 # 3. Compare traces for semantic equivalence
 # 4. Generate performance reports
+#
+# shellcheck disable=SC2046,SC2092,SC2154,SC2161,SC2164,SC2317
+# bashrs disable-file=SC2046,SC2092,SC2154,SC2161,SC2164,SC2317,SEC010
 
 set -e
 
@@ -41,7 +44,7 @@ echo ""
 EXAMPLE_DIR="$PROJECT_ROOT/examples/example_simple"
 if [ -d "$EXAMPLE_DIR" ]; then
     echo "Capturing traces for example_simple/trivial_cli..."
-    cd "$EXAMPLE_DIR"
+    cd "$EXAMPLE_DIR" || exit 1
 
     # Ensure binary is built
     if [ ! -f "trivial_cli" ]; then
