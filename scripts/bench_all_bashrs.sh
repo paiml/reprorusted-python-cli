@@ -3,10 +3,11 @@
 # Benchmarks all compiling examples: Python vs Rust
 set -uo pipefail
 
+# shellcheck disable=SEC010 -- Intentional: navigate to project root
 cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit 1
 
 RESULTS_DIR="benchmarks/reports"
-mkdir -p "$RESULTS_DIR"
+mkdir -p benchmarks/reports
 
 echo "🔬 Scientific Benchmark Suite (bashrs bench)"
 echo "============================================="

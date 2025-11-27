@@ -10,7 +10,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 TRACES_DIR="$PROJECT_ROOT/golden_traces"
 
 # Colors for output
@@ -178,7 +178,7 @@ Add to `.github/workflows/ci.yml`:
 3. **Integrate with CI** to prevent regressions
 4. **Compare Python vs Rust** traces for semantic equivalence
 
-Generated: $(date)
+Generated: [run capture_golden_traces.sh to update]
 EOF
 
 echo -e "${GREEN}✓ Analysis report saved to $TRACES_DIR/ANALYSIS.md${NC}"

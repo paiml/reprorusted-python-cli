@@ -210,6 +210,7 @@ lint:
 	@echo "Linting Rust code (clippy)..."
 	@cargo clippy --workspace -- -D warnings
 	@echo "Linting shell scripts (bashrs)..."
+	@# Note: || true until bashrs #82 (--ignore flag) is implemented for SEC010 false positives
 	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
 		if [ -f "$$script" ]; then \
 			bashrs lint "$$script" || true; \
