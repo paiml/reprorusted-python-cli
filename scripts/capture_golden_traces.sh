@@ -95,9 +95,9 @@ This directory contains golden traces captured from reprorusted-python-cli examp
 
 | File | Description | Format |
 |------|-------------|--------|
-| `trivial_cli_rust.json` | Full syscall trace (Rust) | JSON |
-| `trivial_cli_rust_summary.txt` | Statistical summary (Rust) | Text |
-| `trivial_cli_rust_source.json` | Trace with source locations | JSON |
+| trivial_cli_rust.json | Full syscall trace (Rust) | JSON |
+| trivial_cli_rust_summary.txt | Statistical summary (Rust) | Text |
+| trivial_cli_rust_source.json | Trace with source locations | JSON |
 
 ## How to Use These Traces
 
@@ -130,7 +130,7 @@ cat trivial_cli_rust_summary.txt
 
 ### 3. CI/CD Integration
 
-Add to `.github/workflows/ci.yml`:
+Add to $(.github/workflows/ci.yml):
 
 ```yaml
 - name: Validate Performance
@@ -169,15 +169,15 @@ Add to `.github/workflows/ci.yml`:
 ```
 
 **Key metrics:**
-- `% time`: Percentage of total runtime spent in this syscall
-- `usecs/call`: Average latency per call (microseconds)
-- `calls`: Total number of invocations
-- `errors`: Number of failed calls
+- $(% time): Percentage of total runtime spent in this syscall
+- $(usecs/call): Average latency per call (microseconds)
+- $(calls): Total number of invocations
+- $(errors): Number of failed calls
 
 ## Next Steps
 
 1. **Set performance baselines** using these golden traces
-2. **Add assertions** in `renacer.toml` for automated checking
+2. **Add assertions** in $(renacer.toml) for automated checking
 3. **Integrate with CI** to prevent regressions
 4. **Compare Python vs Rust** traces for semantic equivalence
 

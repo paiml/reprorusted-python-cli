@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Docker benchmark runner - compares Dockerized Python vs Rust binaries
+# shellcheck disable=IDEM002
 
 set -euo pipefail
 
@@ -117,18 +118,19 @@ run_docker_benchmark() {
 
     # Measure image sizes
     local python_size rust_size
-    python_size=$(get_image_size "reprorusted-python:$example_name")
-    rust_size=$(get_image_size "reprorusted-rust:$example_name")
+    python_size="$(get_image_size "reprorusted-python:$example_name")"
+    rust_size="$(get_image_size "reprorusted-rust:$example_name")"
 
     log_info "Docker image sizes:"
-    printf "  Python: %'d bytes (%.2f MB)\n" "$python_size" "$(echo "scale=2; $python_size / 1048576" | bc)"
-    printf "  Rust:   %'d bytes (%.2f MB)\n" "$rust_size" "$(echo "scale=2; $rust_size / 1048576" | bc)"
+    printf "  Python: %'d bytes (%.2f MB)\n" "$python_size" "$(echo "scale=2; "$python_size" / 1048576" | bc)"
+    printf "  Rust:   %'d bytes (%.2f MB)\n" "$rust_size" "$(echo "scale=2; "$rust_size" / 1048576" | bc)"
     echo ""
 
     # Create temporary directory for wrapper scripts
     local temp_dir
-    temp_dir=$(mktemp -d)
-    trap "rm -rf '$temp_dir'" EXIT
+    temp_dir="$(mktemp -d)"
+    # shellcheck disable=SEC011
+    trap 'rm -rf "${temp_dir:?}"' EXIT
 
     benchmark_docker_image "reprorusted-python:$example_name" "python" "$temp_dir"
     benchmark_docker_image "reprorusted-rust:$example_name" "rust" "$temp_dir"
@@ -155,7 +157,7 @@ run_docker_benchmark() {
         if command -v jq >/dev/null 2>&1; then
             # Create temp file with sizes
             jq --arg py_size "$python_size" --arg rust_size "$rust_size" \
-                '.image_sizes = {python: ($py_size | tonumber), rust: ($rust_size | tonumber)}' \
+                '.image_sizes = {python: ("$py_size" | tonumber), rust: ("$rust_size" | tonumber)}' \
                 "$output_file" > "$output_file.tmp" && mv "$output_file.tmp" "$output_file"
 
             log_info "Summary:"
@@ -164,7 +166,7 @@ run_docker_benchmark() {
 
             # Calculate size reduction
             local size_reduction
-            size_reduction=$(awk "BEGIN {printf \"%.1f\", (1 - $rust_size / $python_size) * 100}")
+            size_reduction="$(awk "BEGIN {printf \"%.1f\", (1 - $rust_size / $python_size)" * 100}")
             log_info "📦 Image size reduction: ${size_reduction}% (Rust vs Python)"
         fi
     else

@@ -76,7 +76,7 @@ get_rust_binary() {
     local example_dir="$1"
     local python_script="$2"
     local script_name
-    script_name=$(basename "$python_script" .py)
+    script_name="$(basename "$python_script" .py)"
 
     # Look for the compiled binary
     if [[ -f "$example_dir/$script_name" ]]; then
@@ -112,35 +112,35 @@ EOF
 run_benchmark() {
     local example_dir="$1"
     local example_name
-    example_name=$(basename "$example_dir")
+    example_name="$(basename "$example_dir")"
 
     log_info "Benchmarking $example_name"
     echo ""
 
     # Find Python script
     local python_script
-    python_script=$(get_python_script "$example_dir")
+    python_script="$(get_python_script "$example_dir")"
     if [[ -z "$python_script" ]]; then
         log_error "No Python script found in $example_dir"
         return 1
     fi
-    log_info "Python script: $(basename "$python_script")"
+    log_info "Python script: "$(basename "$python_script")""
 
     # Find Rust binary
     local rust_binary
-    rust_binary=$(get_rust_binary "$example_dir" "$python_script")
+    rust_binary="$(get_rust_binary "$example_dir" "$python_script")"
     if [[ -z "$rust_binary" ]]; then
         log_warning "No Rust binary found. Run 'make compile-all' first."
         log_info "Skipping comparison..."
         return 0
     fi
-    log_info "Rust binary: $(basename "$rust_binary")"
+    log_info "Rust binary: "$(basename "$rust_binary")""
     echo ""
 
     # Measure binary sizes
     local python_size rust_size
-    python_size=$(measure_binary_size "$python_script")
-    rust_size=$(measure_binary_size "$rust_binary")
+    python_size="$(measure_binary_size "$python_script")"
+    rust_size="$(measure_binary_size "$rust_binary")"
 
     log_info "Binary sizes:"
     printf "  Python: %'d bytes\n" "$python_size"
@@ -149,8 +149,9 @@ run_benchmark() {
 
     # Create temporary directory for wrapper scripts
     local temp_dir
-    temp_dir=$(mktemp -d)
-    trap "rm -rf '$temp_dir'" EXIT
+    temp_dir="$(mktemp -d)"
+    # shellcheck disable=SEC011
+    trap 'rm -rf "${temp_dir:?}"' EXIT
 
     create_wrapper_scripts "$example_dir" "$python_script" "$rust_binary" "$temp_dir"
 
@@ -168,7 +169,7 @@ run_benchmark() {
     if bashrs bench \
         --warmup "$WARMUP" \
         --iterations "$ITERATIONS" \
-        $memory_flag \
+        "$memory_flag" \
         --output "$output_file" \
         "$temp_dir/bench_python.sh" \
         "$temp_dir/bench_rust.sh"; then
