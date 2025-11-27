@@ -24,7 +24,8 @@ classifiers = [
 dependencies = [
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",
-    "pytest-xdist>=3.3.0",  # Parallel test execution
+    "pytest-xdist>=3.3.0",   # Parallel test execution
+    "pytest-timeout>=2.2.0", # Test timeouts
     "ruff>=0.1.0",           # Linting and formatting
     "pyyaml>=6.0",           # For test case definitions
     "psutil>=5.9.0",         # Memory measurement
@@ -65,9 +66,6 @@ addopts = [
     "-v",
     "--tb=short",
     "--strict-markers",
-    "--cov=.",
-    "--cov-report=term-missing",
-    "--cov-report=html",
 ]
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
@@ -114,6 +112,7 @@ select = [
 ]
 ignore = [
     "E501",  # line too long (handled by formatter)
+    "UP017", # datetime.UTC only available in Python 3.11+, use timezone.utc for compatibility
 ]
 
 [tool.ruff.format]

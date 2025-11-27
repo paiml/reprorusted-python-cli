@@ -6,7 +6,7 @@ Basic date and time operations.
 
 import argparse
 import sys
-from datetime import UTC, date, datetime, time
+from datetime import date, datetime, time, timezone
 
 
 def today() -> date:
@@ -21,7 +21,7 @@ def now() -> datetime:
 
 def utc_now() -> datetime:
     """Get current UTC datetime."""
-    return datetime.now(UTC)
+    return datetime.now(timezone.utc)
 
 
 def create_date(year: int, month: int, day: int) -> date:
@@ -129,7 +129,7 @@ def from_timestamp(ts: float) -> datetime:
 
 def from_utc_timestamp(ts: float) -> datetime:
     """Create datetime from UTC Unix timestamp."""
-    return datetime.fromtimestamp(ts, UTC)
+    return datetime.fromtimestamp(ts, timezone.utc)
 
 
 def to_timestamp(dt: datetime) -> float:
