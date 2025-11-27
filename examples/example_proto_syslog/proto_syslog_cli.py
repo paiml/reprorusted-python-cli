@@ -225,8 +225,10 @@ class SyslogParser:
         timestamp = None
         try:
             ts_str = self.data[self.pos : self.pos + 15]
-            timestamp = datetime.strptime(ts_str, "%b %d %H:%M:%S")
-            timestamp = timestamp.replace(year=datetime.now().year)
+            # Prepend current year to avoid deprecation warning for strptime without year
+            current_year = datetime.now().year
+            ts_with_year = f"{current_year} {ts_str}"
+            timestamp = datetime.strptime(ts_with_year, "%Y %b %d %H:%M:%S")
             self.pos += 15
         except (ValueError, IndexError):
             pass
