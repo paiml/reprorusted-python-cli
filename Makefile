@@ -70,6 +70,9 @@ compile-all:
 compile-status:
 	@./scripts/update_compile_status.sh
 
+compile-status-fast:
+	@./scripts/parallel_compile_status.sh
+
 io-check:
 	@echo "Checking Python vs Rust I/O equivalence..."
 	@for example_dir in examples/example_*/; do \
