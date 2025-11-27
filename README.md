@@ -79,7 +79,7 @@ renacer --transpiler-map file.sourcemap.json --source -- ./binary
 
 ```
 reprorusted-python-cli/
-├── examples/              # 11 argparse CLI examples (simple → complex)
+├── examples/              # 145 CLI examples (simple → ML frameworks)
 │   ├── example_simple/      # Trivial CLI with basic argparse
 │   ├── example_flags/       # Boolean flags and combinations
 │   ├── example_positional/  # Positional arguments (nargs)
@@ -90,7 +90,9 @@ reprorusted-python-cli/
 │   ├── example_environment/ # os.environ, os.path, sys.platform
 │   ├── example_io_streams/  # File I/O, stdin/stdout, tempfile
 │   ├── example_regex/       # re module pattern matching
-│   └── example_stdlib/      # hashlib, json, pathlib integration
+│   ├── example_stdlib/      # hashlib, json, pathlib integration
+│   ├── example_sklearn_*/   # 10 sklearn ML examples (NEW)
+│   └── example_pytorch_*/   # 10 PyTorch ML examples (NEW)
 ├── benchmarks/           # Scientific performance benchmarking
 │   ├── micro/           # Microbenchmarks (argparse overhead, startup, etc.)
 │   └── macro/           # Real-world CLI scenarios
@@ -103,7 +105,7 @@ reprorusted-python-cli/
 
 ### Depyler Single-Shot Compile Status
 
-**Latest Testing**: depyler v3.21.0 trunk (2025-11-27) - **39/105 COMPILING (37%)** | 125 total examples 🎉
+**Latest Testing**: depyler v3.21.0 trunk (2025-11-27) - **49/123 COMPILING (40%)** | 145 total examples 🎉
 
 **Single-Shot Compile**: Python → Rust binary in one command (`depyler transpile && cargo build`)
 
@@ -116,19 +118,35 @@ reprorusted-python-cli/
 | **example_complex** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
 | **example_config** | ✅ | ❌ | ❌ | 1 | HashMap vs Value type mismatch | [#104](https://github.com/paiml/depyler/issues/104) |
 | **example_environment** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_subprocess** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** ⬅️ NEW | - |
-| **example_io_streams** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** ⬅️ NEW | - |
-| **example_regex** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** ⬅️ NEW | - |
+| **example_subprocess** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_io_streams** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
+| **example_regex** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
 | **example_stdlib** | ✅ | ❌ | ❌ | 1 | Borrow checker (args.hash moved) | [#104](https://github.com/paiml/depyler/issues/104) |
-| **example_csv_filter** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** ⬅️ NEW | - |
+| **example_csv_filter** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
 | **example_log_analyzer** | ✅ | ❌ | ❌ | 28 | regex &str, parser scope, types | [#104](https://github.com/paiml/depyler/issues/104) |
 
+**ML Framework Examples (Phase 6):** 10/20 compile via flat CLI pattern
+
+| Example | Transpile | Build | Run | Details | Issue |
+|---------|-----------|-------|-----|---------|-------|
+| **sklearn_linreg** | ✅ | ✅ | ✅ | `linreg_flat.py` compiles | - |
+| **sklearn_logreg** | ✅ | ✅ | ✅ | `logreg_flat.py` compiles | - |
+| **sklearn_kmeans** | ✅ | ✅ | ✅ | `kmeans_flat.py` compiles | - |
+| **sklearn_pca** | ✅ | ✅ | ✅ | `pca_flat.py` compiles | - |
+| **sklearn_scaler** | ✅ | ✅ | ✅ | `scaler_flat.py` compiles | - |
+| **pytorch_tensor** | ✅ | ✅ | ✅ | `tensor_flat.py` compiles | - |
+| **pytorch_autograd** | ✅ | ✅ | ✅ | `autograd_flat.py` compiles | - |
+| **pytorch_linear** | ✅ | ✅ | ✅ | `linear_flat.py` compiles | - |
+| **pytorch_relu** | ✅ | ✅ | ✅ | `relu_flat.py` compiles | - |
+| **pytorch_mseloss** | ✅ | ✅ | ✅ | `mseloss_flat.py` compiles | - |
+| *10 others* | ✅ | ❌ | ❌ | JSON stdin blocked | [#122](https://github.com/paiml/depyler/issues/122) |
+
 **Progress (Expanded Test Suite):**
-- **Total Examples**: 125 (expanded from 13 with EXTREME TDD)
-- **Transpiled**: 105/125 (**84%**) - Have Cargo.toml
-- **Compiling**: 39/105 (**37%**) - Pass `cargo build`
-- **Original 13**: 10/13 (**76.9%**) - Core examples
-- **Detailed Tracking**: [depyler #104](https://github.com/paiml/depyler/issues/104)
+- **Total Examples**: 145 (expanded with 20 ML framework examples)
+- **Transpiled**: 123/145 (**85%**) - Have Cargo.toml
+- **Compiling**: 49/123 (**40%**) - Pass `cargo build`
+- **ML Examples**: 10/20 (**50%**) - Flat CLI pattern works
+- **Detailed Tracking**: [depyler #104](https://github.com/paiml/depyler/issues/104), [#122](https://github.com/paiml/depyler/issues/122)
 
 **Remaining Errors (30 total in 3 examples):**
 | Example | Errors | Root Cause |
