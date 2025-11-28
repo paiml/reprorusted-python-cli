@@ -8,6 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Architecture SVG diagram for README visualization
+- 4 new validation examples for depyler error fixes (Issue #4):
+  - `example_subcommand_simple` - validates E0609 (field access on Args)
+  - `example_walrus_operator` - validates E0425 (block scoping)
+  - `example_dict_typed` - validates E0308/E0282 (type inference)
+  - `example_argparse_minimal` - baseline CLI that must compile
+- Module mapping specification document (Issue #5):
+  - Documents 30+ stdlib modules used across examples
+  - Proposes Python-to-Rust mappings for top 10 priority modules
+  - Includes NumPy and sklearn mapping proposals
+- 81 new tests across the 4 validation examples
+- Tests and TDG badges to README
+
+### Changed
+- Total examples increased from 145 to 149
+- Updated README with new project structure and examples
+- Updated documentation section with module mapping spec reference
+
+### Added (previous)
 - Comprehensive QA testing results for all 6 examples
 - depyler v3.20.1 compatibility testing and results documentation
 - depyler v3.20.2 compatibility testing and validation

@@ -7,6 +7,12 @@
 [![Benchmarks](https://github.com/paiml/reprorusted-python-cli/workflows/Benchmarks/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Progress](https://img.shields.io/badge/Progress-100%25%20COMPLETE-brightgreen)](https://github.com/paiml/reprorusted-python-cli/blob/main/STATUS.md)
+[![Tests](https://img.shields.io/badge/tests-6745%20passing-brightgreen)](https://github.com/paiml/reprorusted-python-cli/actions)
+[![TDG](https://img.shields.io/badge/TDG-A%20(94%2F100)-brightgreen)](https://github.com/paiml/reprorusted-python-cli/blob/main/STATUS.md)
+
+## Architecture
+
+![Architecture](architecture.svg)
 
 ## Performance Overview
 
@@ -79,26 +85,31 @@ renacer --transpiler-map file.sourcemap.json --source -- ./binary
 
 ```
 reprorusted-python-cli/
-├── examples/              # 145 CLI examples (simple → ML frameworks)
-│   ├── example_simple/      # Trivial CLI with basic argparse
-│   ├── example_flags/       # Boolean flags and combinations
-│   ├── example_positional/  # Positional arguments (nargs)
-│   ├── example_subcommands/ # Git-like subcommand pattern
-│   ├── example_complex/     # Advanced argparse features (validators, types)
-│   ├── example_config/      # Configuration files and defaults
-│   ├── example_subprocess/  # subprocess.run() integration
-│   ├── example_environment/ # os.environ, os.path, sys.platform
-│   ├── example_io_streams/  # File I/O, stdin/stdout, tempfile
-│   ├── example_regex/       # re module pattern matching
-│   ├── example_stdlib/      # hashlib, json, pathlib integration
-│   ├── example_sklearn_*/   # 10 sklearn ML examples (NEW)
-│   └── example_pytorch_*/   # 10 PyTorch ML examples (NEW)
+├── examples/              # 149 CLI examples (simple → ML frameworks)
+│   ├── example_simple/           # Trivial CLI with basic argparse
+│   ├── example_flags/            # Boolean flags and combinations
+│   ├── example_positional/       # Positional arguments (nargs)
+│   ├── example_subcommands/      # Git-like subcommand pattern
+│   ├── example_subcommand_simple/# Simple subcommand (E0609 validation) NEW
+│   ├── example_walrus_operator/  # Walrus operator patterns (E0425) NEW
+│   ├── example_dict_typed/       # Typed dictionaries (E0308/E0282) NEW
+│   ├── example_argparse_minimal/ # Baseline CLI example NEW
+│   ├── example_complex/          # Advanced argparse features
+│   ├── example_config/           # Configuration files and defaults
+│   ├── example_subprocess/       # subprocess.run() integration
+│   ├── example_environment/      # os.environ, os.path, sys.platform
+│   ├── example_io_streams/       # File I/O, stdin/stdout, tempfile
+│   ├── example_regex/            # re module pattern matching
+│   ├── example_stdlib/           # hashlib, json, pathlib integration
+│   ├── example_sklearn_*/        # 10 sklearn ML examples
+│   └── example_pytorch_*/        # 10 PyTorch ML examples
 ├── benchmarks/           # Scientific performance benchmarking
 │   ├── micro/           # Microbenchmarks (argparse overhead, startup, etc.)
 │   └── macro/           # Real-world CLI scenarios
 ├── tests/               # Integration tests (Rust + Python)
 ├── scripts/             # Automation scripts
 └── docs/                # Comprehensive documentation
+    └── specifications/  # Module mapping spec, examples spec
 ```
 
 ## Examples
@@ -142,10 +153,11 @@ reprorusted-python-cli/
 | *10 others* | ✅ | ❌ | ❌ | JSON stdin blocked | [#122](https://github.com/paiml/depyler/issues/122) |
 
 **Progress (Expanded Test Suite):**
-- **Total Examples**: 145 (expanded with 20 ML framework examples)
-- **Transpiled**: 123/145 (**85%**) - Have Cargo.toml
-- **Compiling**: 49/123 (**40%**) - Pass `cargo build`
+- **Total Examples**: 149 (expanded with 20 ML + 4 validation examples)
+- **Transpiled**: 127/149 (**85%**) - Have Cargo.toml
+- **Compiling**: 53/127 (**42%**) - Pass `cargo build`
 - **ML Examples**: 10/20 (**50%**) - Flat CLI pattern works
+- **Validation Examples**: 4 NEW examples for E0609/E0425/E0308 fixes
 - **Detailed Tracking**: [depyler #104](https://github.com/paiml/depyler/issues/104), [#122](https://github.com/paiml/depyler/issues/122)
 
 **Remaining Errors (30 total in 3 examples):**
@@ -350,6 +362,7 @@ make quality-gate
 - **[Debugging Guide](DEBUGGING.md)** - Complete debugging workflow with depyler --trace/--explain and renacer v0.4.1 (1000+ lines)
 - [Tutorial](docs/examples/tutorial.md) - Comprehensive getting started guide (750+ lines)
 - [Specification](docs/specifications/argparse-depyler-compile-examples-spec.md) - Complete project specification (2,000+ lines)
+- [Module Mapping](docs/specifications/module-mapping-spec.md) - Python-to-Rust module mappings (stdlib, numpy, sklearn)
 - [CI/CD Pipeline](docs/ci-cd.md) - GitHub Actions workflow documentation (450+ lines)
 - [Rust I/O Tests](docs/rust-io-tests.md) - Integration testing methodology (550+ lines)
 - [Roadmap](roadmap.yaml) - Development roadmap with tickets
