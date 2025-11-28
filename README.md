@@ -1,33 +1,43 @@
 # reprorusted-python-cli
 
-**Argparse-to-Rust Compilation Validation Examples using Depyler**
+**CITL Training Corpus for Depyler**
 
 [![CI](https://github.com/paiml/reprorusted-python-cli/workflows/CI/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
-[![Quality Gates](https://github.com/paiml/reprorusted-python-cli/workflows/Quality%20Gates/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
-[![Benchmarks](https://github.com/paiml/reprorusted-python-cli/workflows/Benchmarks/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Progress](https://img.shields.io/badge/Progress-100%25%20COMPLETE-brightgreen)](https://github.com/paiml/reprorusted-python-cli/blob/main/STATUS.md)
 [![Tests](https://img.shields.io/badge/tests-6745%20passing-brightgreen)](https://github.com/paiml/reprorusted-python-cli/actions)
-[![TDG](https://img.shields.io/badge/TDG-A%20(94%2F100)-brightgreen)](https://github.com/paiml/reprorusted-python-cli/blob/main/STATUS.md)
-
-## Architecture
-
-![Architecture](architecture.svg)
-
-## Performance Overview
-
-![Performance Overview](performance-overview.png)
+[![Examples](https://img.shields.io/badge/examples-300+-blue)](https://github.com/paiml/reprorusted-python-cli/tree/main/examples)
 
 ## Overview
 
-This repository provides a **comprehensive validation framework** for Python-to-Rust transpilation using [`depyler`](https://github.com/paiml/depyler). It focuses on testing "single-shot" compilation of Python argparse-based CLI scripts into standalone Rust binaries, with rigorous input/output validation to ensure semantic equivalence.
+This repository provides a **Compiler-in-the-Loop (CITL) training corpus** for the [depyler](https://github.com/paiml/depyler) Python-to-Rust transpiler. It contains 300+ Python CLI examples with comprehensive test coverage, designed to train depyler's oracle model through iterative compiler feedback.
 
-**Key Features:**
-- ✅ **100% I/O Equivalence**: Python and Rust binaries produce identical output
-- ✅ **100% Test Coverage**: Comprehensive pytest + Rust integration tests
-- ✅ **Scientific Benchmarking**: Proves 9.6x average speedup with academic rigor
-- ✅ **Extreme TDD**: All code written test-first with pmat quality gates
-- ✅ **Zero Manual Makefiles**: All build files generated programmatically via bashrs
+**Purpose:**
+- Train depyler's CITL oracle model
+- Provide diverse Python patterns for transpilation learning
+- Generate compiler diagnostics for error→fix prediction
+- Export training data for downstream ML systems (OIP)
+
+## CITL Training Loop
+
+```
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│   Python     │────►│   Depyler    │────►│   Rust       │
+│   Corpus     │     │  Transpiler  │     │   Code       │
+│  (this repo) │     │              │     │              │
+└──────────────┘     └──────────────┘     └──────────────┘
+                                                │
+                                                ▼
+                                          ┌──────────────┐
+                                          │   rustc      │
+                                          │  Compiler    │
+                                          └──────────────┘
+                                                │
+                                                ▼
+                                          ┌──────────────┐
+                                          │  Diagnostic  │───► Oracle Training
+                                          │   Capture    │
+                                          └──────────────┘
+```
 
 ## Quick Start
 
@@ -37,351 +47,160 @@ git clone https://github.com/paiml/reprorusted-python-cli.git
 cd reprorusted-python-cli
 
 # Install dependencies
-make install-deps
+make install
 
-# Run quick validation
-make quick-validate
+# Validate Python examples (6745 tests)
+make test
 
-# Build all examples
-make build
+# Run CITL training loop
+make citl-improve
 
-# Run benchmarks
-make bench
+# Train oracle model
+make citl-train
 
-# Update compile status (parallel, ~21s for 125 examples)
-make compile-status-fast
+# Export corpus for OIP
+make citl-export
 ```
 
-## Debugging Guide
+## Corpus Statistics
 
-**For comprehensive debugging workflows, see [DEBUGGING.md](DEBUGGING.md)**
-
-This repository includes complete debugging documentation covering:
-
-- **Transpilation Debugging**: Using `depyler --trace` and `--explain` flags
-- **Compile-Time Analysis**: Understanding Rust compiler errors
-- **Runtime Tracing**: Using `renacer v0.4.1+` for syscall and function profiling
-- **Transpiler Source Mapping**: Python→Rust correlation with `--transpiler-map`
-- **Chaos Engineering**: Stress testing with tiered test infrastructure
-- **Reproducibility**: Creating minimal bug reports with complete trace information
-
-Quick debugging commands:
-```bash
-# Debug transpilation with full trace
-depyler transpile example.py --trace --explain > debug.log
-
-# Trace runtime syscalls with source correlation
-renacer --source -- ./binary args
-
-# Profile function execution and generate flamegraph
-renacer --function-time --source -- ./binary > profile.txt
-cat profile.txt | flamegraph.pl > flamegraph.svg
-
-# Correlate Rust code back to Python source (NEW in v0.4.1)
-renacer --transpiler-map file.sourcemap.json --source -- ./binary
-```
+| Metric | Count |
+|--------|-------|
+| Python Examples | 300+ |
+| Python Source Files | 607 |
+| Test Files | 296 |
+| Passing Tests | 6,745 |
+| Example Categories | 15+ |
 
 ## Project Structure
 
 ```
 reprorusted-python-cli/
-├── examples/              # 149 CLI examples (simple → ML frameworks)
-│   ├── example_simple/           # Trivial CLI with basic argparse
-│   ├── example_flags/            # Boolean flags and combinations
-│   ├── example_positional/       # Positional arguments (nargs)
-│   ├── example_subcommands/      # Git-like subcommand pattern
-│   ├── example_subcommand_simple/# Simple subcommand (E0609 validation) NEW
-│   ├── example_walrus_operator/  # Walrus operator patterns (E0425) NEW
-│   ├── example_dict_typed/       # Typed dictionaries (E0308/E0282) NEW
-│   ├── example_argparse_minimal/ # Baseline CLI example NEW
-│   ├── example_complex/          # Advanced argparse features
-│   ├── example_config/           # Configuration files and defaults
-│   ├── example_subprocess/       # subprocess.run() integration
-│   ├── example_environment/      # os.environ, os.path, sys.platform
-│   ├── example_io_streams/       # File I/O, stdin/stdout, tempfile
-│   ├── example_regex/            # re module pattern matching
-│   ├── example_stdlib/           # hashlib, json, pathlib integration
-│   ├── example_sklearn_*/        # 10 sklearn ML examples
-│   └── example_pytorch_*/        # 10 PyTorch ML examples
-├── benchmarks/           # Scientific performance benchmarking
-│   ├── micro/           # Microbenchmarks (argparse overhead, startup, etc.)
-│   └── macro/           # Real-world CLI scenarios
-├── tests/               # Integration tests (Rust + Python)
-├── scripts/             # Automation scripts
-└── docs/                # Comprehensive documentation
-    └── specifications/  # Module mapping spec, examples spec
+├── examples/                    # CITL Training Corpus
+│   ├── example_simple/          # Basic argparse patterns
+│   ├── example_flags/           # Boolean flags
+│   ├── example_positional/      # Positional arguments
+│   ├── example_subcommands/     # Git-like subcommands
+│   ├── example_complex/         # Advanced argparse
+│   ├── example_numpy_*/         # NumPy operations (18 examples)
+│   ├── example_sklearn_*/       # Scikit-learn patterns (10 examples)
+│   ├── example_pytorch_*/       # PyTorch patterns (10 examples)
+│   ├── example_async_*/         # Async/await patterns
+│   ├── example_datetime_*/      # Date/time handling
+│   └── ...                      # 300+ total examples
+├── scripts/                     # Automation scripts
+├── docs/                        # Documentation
+│   └── specifications/          # CITL spec, module mappings
+└── Makefile                     # CITL training commands
 ```
 
-## Examples
+## Example Categories
 
-### Depyler Single-Shot Compile Status
+| Category | Examples | Description |
+|----------|----------|-------------|
+| **Core CLI** | 20+ | argparse, flags, positional, subcommands |
+| **String Ops** | 15+ | split, join, format, replace, strip |
+| **Math** | 20+ | abs, pow, round, divmod, minmax |
+| **NumPy** | 18 | array ops, linear algebra, statistics |
+| **Sklearn** | 10 | regression, clustering, preprocessing |
+| **PyTorch** | 10 | tensors, autograd, neural layers |
+| **Async** | 5 | async/await, gather, queues |
+| **DateTime** | 6 | parsing, formatting, timezones |
+| **File I/O** | 10+ | pathlib, shutil, tempfile, csv |
+| **Other** | 100+ | regex, json, hashlib, itertools, etc. |
 
-**Latest Testing**: depyler v3.21.0 trunk (2025-11-27) - **49/123 COMPILING (40%)** | 145 total examples 🎉
+## Usage
 
-**Single-Shot Compile**: Python → Rust binary in one command (`depyler transpile && cargo build`)
-
-| Example | Transpile | Build | Run | Errors | Details | Issue |
-|---------|-----------|-------|-----|--------|---------|-------|
-| **example_simple** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_flags** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_positional** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_subcommands** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_complex** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_config** | ✅ | ❌ | ❌ | 1 | HashMap vs Value type mismatch | [#104](https://github.com/paiml/depyler/issues/104) |
-| **example_environment** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_subprocess** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_io_streams** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_regex** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_stdlib** | ✅ | ❌ | ❌ | 1 | Borrow checker (args.hash moved) | [#104](https://github.com/paiml/depyler/issues/104) |
-| **example_csv_filter** | ✅ | ✅ | ✅ | 0 | **Full single-shot support** | - |
-| **example_log_analyzer** | ✅ | ❌ | ❌ | 28 | regex &str, parser scope, types | [#104](https://github.com/paiml/depyler/issues/104) |
-
-**ML Framework Examples (Phase 6):** 10/20 compile via flat CLI pattern
-
-| Example | Transpile | Build | Run | Details | Issue |
-|---------|-----------|-------|-----|---------|-------|
-| **sklearn_linreg** | ✅ | ✅ | ✅ | `linreg_flat.py` compiles | - |
-| **sklearn_logreg** | ✅ | ✅ | ✅ | `logreg_flat.py` compiles | - |
-| **sklearn_kmeans** | ✅ | ✅ | ✅ | `kmeans_flat.py` compiles | - |
-| **sklearn_pca** | ✅ | ✅ | ✅ | `pca_flat.py` compiles | - |
-| **sklearn_scaler** | ✅ | ✅ | ✅ | `scaler_flat.py` compiles | - |
-| **pytorch_tensor** | ✅ | ✅ | ✅ | `tensor_flat.py` compiles | - |
-| **pytorch_autograd** | ✅ | ✅ | ✅ | `autograd_flat.py` compiles | - |
-| **pytorch_linear** | ✅ | ✅ | ✅ | `linear_flat.py` compiles | - |
-| **pytorch_relu** | ✅ | ✅ | ✅ | `relu_flat.py` compiles | - |
-| **pytorch_mseloss** | ✅ | ✅ | ✅ | `mseloss_flat.py` compiles | - |
-| *10 others* | ✅ | ❌ | ❌ | JSON stdin blocked | [#122](https://github.com/paiml/depyler/issues/122) |
-
-**Progress (Expanded Test Suite):**
-- **Total Examples**: 149 (expanded with 20 ML + 4 validation examples)
-- **Transpiled**: 127/149 (**85%**) - Have Cargo.toml
-- **Compiling**: 53/127 (**42%**) - Pass `cargo build`
-- **ML Examples**: 10/20 (**50%**) - Flat CLI pattern works
-- **Validation Examples**: 4 NEW examples for E0609/E0425/E0308 fixes
-- **Detailed Tracking**: [depyler #104](https://github.com/paiml/depyler/issues/104), [#122](https://github.com/paiml/depyler/issues/122)
-
-**Remaining Errors (30 total in 3 examples):**
-| Example | Errors | Root Cause |
-|---------|--------|------------|
-| config_manager | 1 | HashMap→Value type inference |
-| stdlib_integration | 1 | Borrow checker (moved value) |
-| log_analyzer | 28 | Multiple codegen issues |
-
-**Recent Wins (v3.21.0):**
-- ✅ Subprocess tuple field access fixed (`.returncode` → `.0`)
-- ✅ CalledProcessError.returncode exception handling
-- ✅ Regex Option<Match> handling improved
-- ✅ Iterator chaining and type inference improved
-
-All examples include working Rust binaries (manual implementations) with 100% I/O equivalence validation.
-
-### Example 1: Simple CLI
-
-**Python** (`examples/example_simple/trivial_cli.py`):
-```python
-import argparse
-
-def main():
-    parser = argparse.ArgumentParser(description="A trivial CLI example")
-    parser.add_argument("--name", type=str, required=True, help="Name to greet")
-    args = parser.parse_args()
-    print(f"Hello, {args.name}!")
-
-if __name__ == "__main__":
-    main()
-```
-
-**Compile to Rust:**
-```bash
-cd examples/example_simple
-depyler compile trivial_cli.py -o trivial_cli
-```
-
-**Validate Equivalence:**
-```bash
-# Python version
-python3 trivial_cli.py --name Alice
-# Output: Hello, Alice!
-
-# Rust version (51x faster!)
-./trivial_cli --name Alice
-# Output: Hello, Alice!
-```
-
-## Performance Gains
-
-Based on scientific benchmarking with `bashrs bench` (10 iterations, 3 warmup runs):
-
-| Example | Python (ms) | Rust (ms) | Speedup | Py Memory (KB) | Rs Memory (KB) |
-|---------|-------------|-----------|---------|----------------|----------------|
-| example_simple | 23.22 | 2.34 | **9.92x** | 10,982 | 3,072 |
-| example_ascii | 23.18 | 2.69 | **8.61x** | 11,020 | 2,995 |
-| example_join | 23.04 | 2.50 | **9.21x** | 10,828 | 3,072 |
-| example_minmax | 23.89 | 2.33 | **10.25x** | 10,828 | 3,072 |
-| example_round | 23.26 | 2.38 | **9.77x** | 10,944 | 3,033 |
-| example_strip | 23.73 | 2.28 | **10.40x** | 10,790 | 3,072 |
-| example_sum | 23.17 | 2.51 | **9.23x** | 10,675 | 3,033 |
-| **Average** | **23.36** | **2.43** | **9.62x** | **10,867** | **3,050** |
-
-**Run benchmarks:**
-```bash
-make bench-scientific    # Scientific benchmarking with bashrs bench
-make bench-all           # Full benchmark suite
-```
-
-**Memory Reduction:** ~72% average (10.8MB Python → 3.0MB Rust)
-
-## Quality Standards
-
-This project follows **extreme TDD** with NASA-level quality standards:
-
-- **100% test coverage** (enforced by pmat)
-- **85%+ mutation testing** score
-- **Complexity ≤10** (cyclomatic complexity per function)
-- **TDG grade: B+** or higher
-- **Zero SATD** (self-admitted technical debt)
-- **Performance regression detection** (fails CI if >5% slower)
-
-### Quality Gates Enforced
-
-All code passes through comprehensive quality gates:
+### Validate Corpus
 
 ```bash
-# Run all quality gates (format → lint → test)
-make quality
+# Run all Python tests (validates training data quality)
+make test
 
-# Individual gates
-make format      # Check code formatting (Python, Rust)
-make lint        # Lint Python, Rust, shell scripts, Makefiles, Dockerfiles
-make test        # Run all tests (37 tests, 81% coverage)
+# Run with coverage
+make coverage
+
+# Check formatting
+make format
+
+# Run linter
+make lint
 ```
 
-**Linting with bashrs:**
-- ✅ **Shell scripts** (shellcheck integration)
-- ✅ **Makefiles** (bashrs make purify for performance & best practices)
-- ✅ **Dockerfiles** (security & optimization checks)
-- ✅ **Python** (ruff)
-- ✅ **Rust** (clippy with `-D warnings`)
-
-### Pre-commit Hook
-
-Install the pre-commit hook to enforce quality gates locally:
+### CITL Training
 
 ```bash
-# Install hook (runs format + lint + test before every commit)
-./scripts/install_hooks.sh
+# Run CITL improvement loop on all examples
+# (transpiles each .py file with compiler feedback)
+make citl-improve
 
-# Target: < 30 seconds
+# Train depyler oracle from accumulated diagnostics
+make citl-train
+
+# Export training corpus as JSONL for OIP integration
+make citl-export
 ```
 
-The hook ensures:
-- Code is properly formatted
-- All linters pass
-- All tests pass
-
-Skip only when necessary: `git commit --no-verify`
-
-## Testing Strategy
-
-Multi-layer testing approach with **230 total tests** (192 Python + 38 Rust):
-
-1. **Layer 1: Python Unit Tests** (192 pytest cases + 100% coverage)
-2. **Layer 2: Transpilation Validation** (depyler compile success)
-3. **Layer 3: I/O Equivalence** (38 Rust integration tests - Python output == Rust output)
-4. **Layer 4: Integration & Regression** (cross-example validation)
+### Cleanup
 
 ```bash
-# Fast tests (< 5 min)
-make test-fast
+# Clean Python build artifacts
+make clean
 
-# Comprehensive tests
-make test-comprehensive
-
-# I/O equivalence tests
-make test-io-equivalence
+# Clean everything including generated Rust
+make clean-all
 ```
 
-## Benchmarking
+## Integration with Depyler
 
-Scientific benchmarking following DLS 2016 and PLDI 2013 methodologies:
+This corpus integrates with depyler's CITL subsystem:
 
 ```bash
-# Run all benchmarks
-make bench-all
+# Single example transpilation with CITL
+depyler compile examples/example_simple/trivial_cli.py --citl-iterations 3
 
-# Check for performance regressions
-make bench-regression
+# Batch training from corpus
+depyler oracle train --corpus ./examples --min-samples 50
 
-# Generate visualizations and reports
-make bench-visualize    # ASCII charts
-make bench-charts       # PNG charts (requires matplotlib)
-make bench-report       # Markdown report
+# Export diagnostics for OIP
+depyler oracle export-oip --input-dir ./examples --output ./training_corpus/citl.jsonl
 ```
 
-See [BENCHMARKS.md](BENCHMARKS.md) for full methodology and results.
+## Adding New Examples
 
-## Development
+1. Create example directory:
+   ```bash
+   mkdir -p examples/example_new
+   ```
 
-### Prerequisites
+2. Write test first (TDD):
+   ```bash
+   # examples/example_new/test_new_tool.py
+   ```
 
-- Python 3.11+
-- Rust 1.75+
-- depyler v3.20.2+ (latest - adds `depyler compile` command with auto-dependency detection)
-- bashrs v6.32.0+ (for Makefile generation - optional)
-- pmat (for quality enforcement - optional)
-- uv (fast Python package manager)
+3. Implement Python script:
+   ```bash
+   # examples/example_new/new_tool.py
+   ```
 
-### Workflow
-
-```bash
-# 1. Create new example
-mkdir -p examples/example_new
-
-# 2. Write tests first (TDD)
-vi examples/example_new/test_new_cli.py
-
-# 3. Implement Python script
-vi examples/example_new/new_cli.py
-
-# 4. Run tests
-cd examples/example_new
-uv run pytest test_new_cli.py -v --cov
-
-# 5. Transpile to Rust
-depyler compile new_cli.py -o new_cli
-
-# 6. Validate equivalence
-make test-io-equivalence
-
-# 7. Run quality gates
-make quality-gate
-```
-
-## Documentation
-
-- **[Debugging Guide](DEBUGGING.md)** - Complete debugging workflow with depyler --trace/--explain and renacer v0.4.1 (1000+ lines)
-- [Tutorial](docs/examples/tutorial.md) - Comprehensive getting started guide (750+ lines)
-- [Specification](docs/specifications/argparse-depyler-compile-examples-spec.md) - Complete project specification (2,000+ lines)
-- [Module Mapping](docs/specifications/module-mapping-spec.md) - Python-to-Rust module mappings (stdlib, numpy, sklearn)
-- [CI/CD Pipeline](docs/ci-cd.md) - GitHub Actions workflow documentation (450+ lines)
-- [Rust I/O Tests](docs/rust-io-tests.md) - Integration testing methodology (550+ lines)
-- [Roadmap](roadmap.yaml) - Development roadmap with tickets
-- [Status](STATUS.md) - Current progress and metrics (12/18 tickets complete)
-
-## Contributing
-
-1. All work is tracked via tickets in `roadmap.yaml`
-2. Follow extreme TDD: write tests before code
-3. All Makefiles are generated via bashrs (do not edit manually)
-4. Ensure all quality gates pass before submitting PR
+4. Validate:
+   ```bash
+   make test
+   ```
 
 ## Related Projects
 
-- [depyler](https://github.com/paiml/depyler) - Python-to-Rust transpiler
-- [bashrs](https://github.com/paiml/bashrs) - Shell transpiler and Makefile generator
-- [paiml-mcp-agent-toolkit](https://github.com/paiml/paiml-mcp-agent-toolkit) - Quality enforcement toolkit
-- [ruchy-docker](https://github.com/paiml/ruchy-docker) - Docker benchmarking framework
-- [ruchy-lambda](https://github.com/paiml/ruchy-lambda) - AWS Lambda optimization framework
+- [depyler](https://github.com/paiml/depyler) - Python-to-Rust transpiler (CITL consumer)
+- [aprender](https://github.com/paiml/aprender) - ML library with CITL support
+- [alimentar](https://github.com/paiml/alimentar) - Data loading for CITL corpus
+
+## Scientific References
+
+This corpus supports research in Compiler-in-the-Loop learning:
+
+1. Wang et al. (2022). *Compilable Neural Code Generation with Compiler Feedback.* ACL.
+2. Yasunaga & Liang (2020). *Graph-based, Self-Supervised Program Repair from Diagnostic Feedback.* ICML.
+3. Dou et al. (2024). *StepCoder: Improve Code Generation with Reinforcement Learning from Compiler Feedback.* arXiv.
 
 ## License
 
@@ -389,18 +208,11 @@ MIT License - see [LICENSE](LICENSE) for details
 
 ## Citation
 
-If you use this framework in academic work, please cite:
-
 ```bibtex
 @software{reprorusted_python_cli,
-  title = {Reprorusted Python CLI: Argparse-to-Rust Compilation Validation},
+  title = {CITL Training Corpus for Depyler},
   author = {PAIML},
   year = {2025},
   url = {https://github.com/paiml/reprorusted-python-cli}
 }
 ```
-
-## Contact
-
-- Issues: https://github.com/paiml/reprorusted-python-cli/issues
-- Website: https://paiml.com

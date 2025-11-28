@@ -5,8 +5,6 @@ import json
 import subprocess
 from pathlib import Path
 
-import pytest
-
 SCRIPT = Path(__file__).parent / "conv_tool.py"
 
 

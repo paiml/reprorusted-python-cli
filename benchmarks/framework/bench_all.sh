@@ -33,8 +33,8 @@ main() {
     # Find all example directories
     for example_dir in "$PROJECT_ROOT"/examples/example_*/; do
         if [[ -d "$example_dir" ]]; then
-            total_count=$((total_count + 1))
-            example_name=$(basename "$example_dir")
+            total_count="$((total_count + 1)")
+            example_name="$(basename "$example_dir")"
 
             echo "═══════════════════════════════════════════════════════════"
             echo " Benchmarking: $example_name"
@@ -42,7 +42,7 @@ main() {
             echo ""
 
             if "$BENCH_RUNNER" "$example_dir"; then
-                success_count=$((success_count + 1))
+                success_count="$((success_count + 1)")
             fi
 
             echo ""
@@ -67,14 +67,14 @@ generate_summary_report() {
     {
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         echo "  Benchmark Summary Report"
-        echo "  Generated: $(date)"
+        echo "  Generated: "$(date)""
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         echo ""
 
         for json_file in "$RESULTS_DIR"/*-bench.json; do
             if [[ -f "$json_file" ]]; then
                 local example_name
-                example_name=$(basename "$json_file" -bench.json)
+                example_name="$(basename "$json_file" -bench.json)"
 
                 echo "╔═══════════════════════════════════════════════════════╗"
                 echo "║  $example_name"
@@ -92,12 +92,12 @@ generate_summary_report() {
 
                 # Calculate speedup if both Python and Rust are present
                 local python_time rust_time
-                python_time=$(jq -r '.benchmarks[] | select(.name | contains("python")) | .mean_ms' "$json_file" 2>/dev/null || echo "")
-                rust_time=$(jq -r '.benchmarks[] | select(.name | contains("rust")) | .mean_ms' "$json_file" 2>/dev/null || echo "")
+                python_time="$(jq -r '.benchmarks[] | select(.name | contains("python")") | .mean_ms' "$json_file" 2>/dev/null || echo "")
+                rust_time="$(jq -r '.benchmarks[] | select(.name | contains("rust")") | .mean_ms' "$json_file" 2>/dev/null || echo "")
 
                 if [[ -n "$python_time" ]] && [[ -n "$rust_time" ]]; then
                     local speedup
-                    speedup=$(awk "BEGIN {printf \"%.2f\", $python_time / $rust_time}")
+                    speedup="$(awk "BEGIN {printf \"%.2f\", $python_time / $rust_time}")"
                     echo "  📊 Speedup: ${speedup}x faster (Rust vs Python)"
                     echo ""
                 fi

@@ -17,6 +17,7 @@ roadmap:
   subtasks: []
   estimated_effort: null
   labels: []
+  notes: null
 - id: TEST-123
   github_issue: null
   item_type: task
@@ -32,3 +33,100 @@ roadmap:
   subtasks: []
   estimated_effort: null
   labels: []
+  notes: null
+- id: TRAIN-001
+  github_issue: null
+  item_type: task
+  title: 'New task: TRAIN-001'
+  status: inprogress
+  priority: medium
+  assigned_to: null
+  created: 2025-11-27T15:51:36.061096841+00:00
+  updated: 2025-11-27T15:51:36.061096841+00:00
+  spec: null
+  acceptance_criteria: []
+  phases: []
+  subtasks: []
+  estimated_effort: null
+  labels: []
+  notes: null
+- id: GH-143
+  github_issue: 143
+  item_type: task
+  title: 'Issue #143'
+  status: inprogress
+  priority: medium
+  assigned_to: null
+  created: 2025-11-27T21:24:15.809174065+00:00
+  updated: 2025-11-27T21:24:15.809174065+00:00
+  spec: null
+  acceptance_criteria: []
+  phases: []
+  subtasks: []
+  estimated_effort: null
+  labels: []
+  notes: null
+- id: GH-145
+  github_issue: 145
+  item_type: task
+  title: 'Issue #145'
+  status: inprogress
+  priority: medium
+  assigned_to: null
+  created: 2025-11-27T21:32:45.539586558+00:00
+  updated: 2025-11-27T21:32:45.539586558+00:00
+  spec: null
+  acceptance_criteria: []
+  phases: []
+  subtasks: []
+  estimated_effort: null
+  labels: []
+  notes: null
+- id: GH-146
+  github_issue: 146
+  item_type: task
+  title: 'Issue #146'
+  status: inprogress
+  priority: medium
+  assigned_to: null
+  created: 2025-11-27T21:38:54.226847873+00:00
+  updated: 2025-11-27T21:38:54.226847873+00:00
+  spec: null
+  acceptance_criteria: []
+  phases: []
+  subtasks: []
+  estimated_effort: null
+  labels: []
+  notes: null
+- id: GH-147
+  github_issue: 147
+  item_type: task
+  title: 'Issue #147'
+  status: inprogress
+  priority: medium
+  assigned_to: null
+  created: 2025-11-27T21:44:13.188306620+00:00
+  updated: 2025-11-27T21:44:13.188306620+00:00
+  spec: null
+  acceptance_criteria: []
+  phases: []
+  subtasks: []
+  estimated_effort: null
+  labels: []
+  notes: null
+- id: GH-148
+  github_issue: 148
+  item_type: task
+  title: 'Issue #148'
+  status: inprogress
+  priority: medium
+  assigned_to: null
+  created: 2025-11-27T21:55:50.960520023+00:00
+  updated: 2025-11-27T21:55:50.960520023+00:00
+  spec: null
+  acceptance_criteria: []
+  phases: []
+  subtasks: []
+  estimated_effort: null
+  labels: []
+  notes: null

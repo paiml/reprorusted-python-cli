@@ -7,10 +7,8 @@ Following EXTREME TDD methodology with 100% coverage goal.
 """
 
 import csv
-import os
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 import pytest

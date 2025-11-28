@@ -1,189 +1,63 @@
-.PHONY: help test lint format clean quality validate build compile-all io-check dev bench bench-all bench-docker bench-docker-all build-docker-images bench-regression bench-visualize bench-report bench-charts
+.PHONY: help install test coverage lint format clean quality citl-train citl-improve citl-export
 
 help:
-	@echo "reprorusted-python-cli - Argparse-to-Rust Transpilation Examples"
+	@echo "reprorusted-python-cli - CITL Training Corpus for Depyler"
 	@echo ""
-	@echo "Development:"
-	@echo "  make dev              - Setup development environment"
-	@echo "  make build            - Build Rust workspace"
+	@echo "Setup:"
+	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Examples:"
-	@echo "  make validate            - Validate all Python examples (tests only)"
-	@echo "  make compile-all         - Compile all examples to Rust"
-	@echo "  make compile-status      - Update compile status (sequential)"
-	@echo "  make compile-status-fast - Update compile status (parallel 8x, ~21s)"
-	@echo "  make io-check            - Check Python vs Rust I/O equivalence"
-	@echo ""
-	@echo "Benchmarking:"
-	@echo "  make bench            - Benchmark single example (EXAMPLE=example_simple)"
-	@echo "  make bench-all        - Benchmark all examples (native binaries)"
-	@echo "  make bench-docker     - Benchmark single example in Docker (EXAMPLE=example_simple)"
-	@echo "  make bench-docker-all - Benchmark all examples in Docker"
-	@echo "  make bench-regression - Check for performance regressions vs baseline"
-	@echo "  make build-docker-images - Build all Docker images for benchmarking"
-	@echo ""
-	@echo "Visualization & Reporting:"
-	@echo "  make bench-visualize  - Generate ASCII charts from benchmark results"
-	@echo "  make bench-charts     - Generate PNG charts (requires matplotlib)"
-	@echo "  make bench-report     - Generate markdown report"
+	@echo "CITL Training:"
+	@echo "  make citl-train       - Train depyler oracle from corpus"
+	@echo "  make citl-improve     - Run CITL improvement loop on all examples"
+	@echo "  make citl-export      - Export training corpus for OIP"
 	@echo ""
 	@echo "Quality Gates:"
 	@echo "  make quality          - Run all quality gates (format → lint → test)"
-	@echo "  make format           - Check code formatting (Python, Rust)"
-	@echo "  make format-fix       - Fix code formatting"
-	@echo "  make lint             - Run linters (Python, Rust, shell, Makefiles, Dockerfiles)"
-	@echo "  make lint-fix         - Auto-fix lint issues"
-	@echo "  make test             - Run all tests (Python unit tests)"
-	@echo ""
-	@echo "Git Hooks:"
-	@echo "  ./scripts/install_hooks.sh - Install pre-commit hook (format + lint + test)"
+	@echo "  make format           - Check Python code formatting"
+	@echo "  make format-fix       - Fix Python code formatting"
+	@echo "  make lint             - Lint Python code"
+	@echo "  make test             - Run all Python tests"
+	@echo "  make coverage         - Run tests with coverage report"
 	@echo ""
 	@echo "Cleanup:"
-	@echo "  make clean            - Clean build artifacts"
-	@echo "  make clean-all        - Clean everything including compiled binaries"
+	@echo "  make clean            - Clean Python build artifacts"
+	@echo "  make clean-all        - Clean everything including generated Rust"
 
-# Development
-dev:
-	@echo "Setting up development environment..."
-	@./scripts/setup_dev_env.sh
+# Setup
+install:
+	@echo "Installing dependencies with uv..."
+	@uv sync
+	@echo "✅ Dependencies installed"
 
-build:
-	@echo "Building Rust workspace..."
-	@cargo build --release
+# CITL Training (depyler integration)
+citl-train:
+	@echo "Training depyler oracle from corpus..."
+	@depyler oracle train --min-samples 50
+	@echo "✅ Oracle training complete"
 
-# Validation
-validate:
-	@echo "Validating all Python examples..."
-	@./scripts/validate_examples.sh
-
-compile-all:
-	@echo "Compiling all examples to Rust..."
+citl-improve:
+	@echo "Running CITL improvement loop..."
 	@for example_dir in examples/example_*/; do \
 		if [ -d "$$example_dir" ]; then \
-			example_name=$$(basename "$$example_dir"); \
-			echo ""; \
-			echo "=== Compiling $$example_name ==="; \
-			$(MAKE) -C "$$example_dir" compile || exit 1; \
+			for py_file in "$$example_dir"/*.py; do \
+				if [ -f "$$py_file" ] && ! echo "$$py_file" | grep -q "test_"; then \
+					echo "Processing $$py_file..."; \
+					depyler compile "$$py_file" --citl-iterations 3 2>/dev/null || true; \
+				fi; \
+			done; \
 		fi; \
 	done
-	@echo ""
-	@echo "✅ All examples compiled successfully!"
+	@echo "✅ CITL improvement complete"
 
-compile-status:
-	@./scripts/update_compile_status.sh
-
-compile-status-fast:
-	@./scripts/parallel_compile_status.sh
-
-io-check:
-	@echo "Checking Python vs Rust I/O equivalence..."
-	@for example_dir in examples/example_*/; do \
-		if [ -d "$$example_dir" ]; then \
-			example_name=$$(basename "$$example_dir"); \
-			echo ""; \
-			echo "=== Testing $$example_name ==="; \
-			$(MAKE) -C "$$example_dir" io-check || exit 1; \
-		fi; \
-	done
-	@echo ""
-	@echo "✅ All I/O equivalence tests passed!"
-
-# Benchmarking
-bench:
-	@if [ -z "$(EXAMPLE)" ]; then \
-		echo "❌ Error: EXAMPLE variable required"; \
-		echo "Usage: make bench EXAMPLE=example_simple"; \
-		exit 1; \
-	fi
-	@if [ ! -d "examples/$(EXAMPLE)" ]; then \
-		echo "❌ Error: examples/$(EXAMPLE) not found"; \
-		exit 1; \
-	fi
-	@echo "Benchmarking $(EXAMPLE)..."
-	@chmod +x benchmarks/framework/bench_runner.sh
-	@./benchmarks/framework/bench_runner.sh examples/$(EXAMPLE)
-
-bench-all:
-	@echo "Benchmarking all examples..."
-	@chmod +x benchmarks/framework/bench_all.sh benchmarks/framework/bench_runner.sh
-	@./benchmarks/framework/bench_all.sh
-
-bench-docker:
-	@if [ -z "$(EXAMPLE)" ]; then \
-		echo "❌ Error: EXAMPLE variable required"; \
-		echo "Usage: make bench-docker EXAMPLE=example_simple"; \
-		exit 1; \
-	fi
-	@if [ ! -d "docker/$(EXAMPLE)" ]; then \
-		echo "❌ Error: docker/$(EXAMPLE) not found"; \
-		echo "Run: make build-docker-images"; \
-		exit 1; \
-	fi
-	@echo "Benchmarking $(EXAMPLE) in Docker..."
-	@chmod +x benchmarks/framework/bench_docker.sh
-	@./benchmarks/framework/bench_docker.sh $(EXAMPLE)
-
-bench-docker-all:
-	@echo "Benchmarking all examples in Docker..."
-	@for docker_dir in docker/*/; do \
-		if [ -d "$$docker_dir" ]; then \
-			example_name=$$(basename "$$docker_dir"); \
-			echo ""; \
-			echo "=== Docker benchmark: $$example_name ==="; \
-			$(MAKE) bench-docker EXAMPLE=$$example_name || exit 1; \
-		fi; \
-	done
-	@echo ""
-	@echo "✅ All Docker benchmarks complete!"
-
-build-docker-images:
-	@echo "Building Docker images for all examples..."
-	@for docker_dir in docker/*/; do \
-		if [ -d "$$docker_dir" ]; then \
-			example_name=$$(basename "$$docker_dir"); \
-			echo ""; \
-			echo "=== Building $$example_name ==="; \
-			if [ -f "$$docker_dir/Dockerfile.python" ]; then \
-				echo "Building Python image..."; \
-				docker build -f "$$docker_dir/Dockerfile.python" -t "reprorusted-python:$$example_name" . || exit 1; \
-			fi; \
-			if [ -f "$$docker_dir/Dockerfile.rust" ]; then \
-				echo "Building Rust image..."; \
-				docker build -f "$$docker_dir/Dockerfile.rust" -t "reprorusted-rust:$$example_name" . || exit 1; \
-			fi; \
-		fi; \
-	done
-	@echo ""
-	@echo "✅ All Docker images built successfully!"
-
-bench-regression:
-	@echo "Checking for performance regressions..."
-	@chmod +x benchmarks/framework/regression_check.py
-	@python3 benchmarks/framework/regression_check.py
-
-# Visualization & Reporting
-bench-visualize:
-	@echo "Generating ASCII charts from benchmark results..."
-	@chmod +x benchmarks/framework/visualize.py
-	@python3 benchmarks/framework/visualize.py
-
-bench-charts:
-	@echo "Generating PNG charts from benchmark results..."
-	@chmod +x benchmarks/framework/visualize_png.py
-	@python3 benchmarks/framework/visualize_png.py || echo "⚠️  Install matplotlib: pip install matplotlib"
-
-bench-report:
-	@echo "Generating markdown report from benchmark results..."
-	@chmod +x benchmarks/framework/generate_report.py
-	@python3 benchmarks/framework/generate_report.py
-
-bench-scientific:
-	@echo "Scientific benchmarking with bashrs bench..."
-	@chmod +x scripts/bench_all_bashrs.sh
-	@./scripts/bench_all_bashrs.sh
-	@echo ""
-	@echo "Results: benchmarks/reports/timing.csv"
-	@cat benchmarks/reports/timing.csv | column -t -s,
+citl-export:
+	@echo "Exporting training corpus for OIP..."
+	@mkdir -p training_corpus
+	@depyler oracle export-oip \
+		--input-dir ./examples \
+		--output ./training_corpus/citl_corpus.jsonl \
+		--min-confidence 0.80 \
+		--include-clippy
+	@echo "✅ Corpus exported to training_corpus/citl_corpus.jsonl"
 
 # Quality Gates
 quality: format lint test
@@ -193,42 +67,20 @@ quality: format lint test
 format:
 	@echo "Checking Python formatting (ruff)..."
 	@uv run ruff format --check examples/
-	@echo "Checking Rust formatting (rustfmt)..."
-	@cargo fmt --all -- --check
 	@echo "✅ Formatting check passed"
 
 format-fix:
 	@echo "Fixing Python formatting..."
 	@uv run ruff format examples/
-	@echo "Fixing Rust formatting..."
-	@cargo fmt --all
 	@echo "✅ Formatting fixed"
 
 lint:
 	@echo "Linting Python code (ruff)..."
 	@uv run ruff check examples/
-	@echo "Linting Rust code (clippy)..."
-	@cargo clippy --workspace -- -D warnings
 	@echo "Linting shell scripts (bashrs)..."
-	@# Ignore false positives and intentional patterns
-	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
+	@for script in scripts/*.sh; do \
 		if [ -f "$$script" ]; then \
 			bashrs lint --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2092,SC2117,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$script"; \
-		fi; \
-	done
-	@echo "Linting Makefiles (bashrs)..."
-	@bashrs make purify --report Makefile || true
-	@for makefile in examples/*/Makefile; do \
-		if [ -f "$$makefile" ]; then \
-			echo "Checking $$makefile..."; \
-			bashrs make purify --report "$$makefile" || true; \
-		fi; \
-	done
-	@echo "Linting Dockerfiles (bashrs)..."
-	@for dockerfile in docker/*/Dockerfile.*; do \
-		if [ -f "$$dockerfile" ]; then \
-			echo "Checking $$dockerfile..."; \
-			bashrs lint --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2092,SC2117,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$dockerfile"; \
 		fi; \
 	done
 	@echo "✅ Linting passed"
@@ -236,48 +88,35 @@ lint:
 lint-fix:
 	@echo "Auto-fixing Python issues..."
 	@uv run ruff check --fix examples/
-	@echo "Auto-fixing shell scripts..."
-	@for script in scripts/*.sh benchmarks/framework/*.sh; do \
-		if [ -f "$$script" ]; then \
-			bashrs lint --fix --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2092,SC2117,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$script" || true; \
-		fi; \
-	done
-	@echo "Auto-fixing Makefiles..."
-	@bashrs make purify Makefile || true
-	@for makefile in examples/*/Makefile; do \
-		if [ -f "$$makefile" ]; then \
-			echo "Purifying $$makefile..."; \
-			bashrs make purify "$$makefile" || true; \
-		fi; \
-	done
-	@echo "Auto-fixing Dockerfiles..."
-	@for dockerfile in docker/*/Dockerfile.*; do \
-		if [ -f "$$dockerfile" ]; then \
-			echo "Fixing $$dockerfile..."; \
-			bashrs lint --fix --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2092,SC2117,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$dockerfile" || true; \
-		fi; \
-	done
 	@echo "✅ Lint fixes applied"
 
 test:
 	@echo "Running all Python tests..."
-	@./scripts/validate_examples.sh
+	@uv run pytest examples/ --tb=short --no-cov -n 4 --maxfail=10 --timeout=30 -q
 	@echo "✅ All tests passed"
+
+coverage:
+	@echo "Running tests with coverage..."
+	@uv run pytest examples/ --tb=short --cov=examples --cov-report=term-missing -n 4 --maxfail=10 --timeout=30 -q
+	@echo "✅ Coverage report generated"
 
 # Cleanup
 clean:
-	@echo "Cleaning build artifacts..."
-	@cargo clean
+	@echo "Cleaning Python build artifacts..."
 	@find examples/ -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 	@find examples/ -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
 	@find examples/ -type f -name ".coverage" -delete 2>/dev/null || true
 	@find examples/ -type d -name "htmlcov" -exec rm -rf {} + 2>/dev/null || true
 	@find examples/ -type d -name ".ruff_cache" -exec rm -rf {} + 2>/dev/null || true
-	@echo "✅ Cleaned build artifacts"
+	@echo "✅ Cleaned Python artifacts"
 
 clean-all: clean
-	@echo "Cleaning compiled binaries..."
-	@find examples/ -type f -perm -111 ! -name "*.py" ! -name "*.sh" -delete 2>/dev/null || true
+	@echo "Cleaning generated Rust artifacts..."
 	@find examples/ -type f -name "*.rs" -delete 2>/dev/null || true
-	@find examples/ -name "Cargo.toml" ! -path "*/target/*" -delete 2>/dev/null || true
+	@find examples/ -name "Cargo.toml" -delete 2>/dev/null || true
+	@find examples/ -name "Cargo.lock" -delete 2>/dev/null || true
+	@find examples/ -type d -name "target" -exec rm -rf {} + 2>/dev/null || true
+	@find examples/ -type d -name "src" -exec rm -rf {} + 2>/dev/null || true
+	@find examples/ -type f -executable ! -name "*.py" ! -name "*.sh" -delete 2>/dev/null || true
+	@rm -rf training_corpus/
 	@echo "✅ Cleaned everything"

@@ -8,9 +8,6 @@ Tests ReLU, Sigmoid, Tanh activation functions.
 import json
 import subprocess
 from pathlib import Path
-import math
-
-import pytest
 
 SCRIPT = Path(__file__).parent / "relu_tool.py"
 

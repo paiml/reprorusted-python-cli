@@ -1,0 +1,16 @@
+.PHONY: test run compile clean io-check
+
+test:
+	cd $(dir $(lastword $(MAKEFILE_LIST))) && python -m pytest test_async_basic_cli.py -v
+
+run:
+	cd $(dir $(lastword $(MAKEFILE_LIST))) && python async_basic_cli.py fibonacci 10
+
+compile:
+	cd $(dir $(lastword $(MAKEFILE_LIST))) && depyler compile async_basic_cli.py -o async_basic
+
+clean:
+	cd $(dir $(lastword $(MAKEFILE_LIST))) && rm -f async_basic
+
+io-check:
+	@echo "I/O check not implemented for this example"
