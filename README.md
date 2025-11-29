@@ -54,6 +54,16 @@ make test       # Validate corpus (6745 tests)
 make citl-train # Train oracle from diagnostics
 ```
 
+## Corpus Extraction
+
+Extract additional training data from CPython stdlib doctests:
+
+```bash
+make extract-cpython-doctests  # Requires alimentar
+```
+
+This extracts ~1,700 doctests to `data/corpora/cpython-doctests.parquet`. See [docs/corpus-extraction.md](docs/corpus-extraction.md) for full reproducibility details.
+
 ## CITL Training Loop
 
 ```

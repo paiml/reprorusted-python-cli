@@ -1,10 +1,13 @@
-.PHONY: help install test coverage lint format clean quality citl-train citl-improve citl-export
+.PHONY: help install test coverage lint format clean quality citl-train citl-improve citl-export extract-cpython-doctests
 
 help:
 	@echo "reprorusted-python-cli - CITL Training Corpus for Depyler"
 	@echo ""
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
+	@echo ""
+	@echo "Corpus Extraction:"
+	@echo "  make extract-cpython-doctests - Extract doctests from CPython stdlib"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -58,6 +61,42 @@ citl-export:
 		--min-confidence 0.80 \
 		--include-clippy
 	@echo "✅ Corpus exported to training_corpus/citl_corpus.jsonl"
+
+# Corpus Extraction - Reproducible doctest extraction from CPython stdlib
+# Prerequisites: alimentar (https://github.com/paiml/alimentar)
+# Output: data/corpora/cpython-doctests.parquet
+CPYTHON_TMP := /tmp/cpython
+CPYTHON_LIB_CLEAN := /tmp/cpython-lib-clean
+
+extract-cpython-doctests:
+	@echo "Extracting CPython stdlib doctests (reproducible)..."
+	@echo "Prerequisites: alimentar must be installed and in PATH"
+	@echo ""
+	@# Clone CPython if not present
+	@if [ ! -d "$(CPYTHON_TMP)" ]; then \
+		echo "Cloning CPython stdlib..."; \
+		git clone --depth 1 https://github.com/python/cpython $(CPYTHON_TMP); \
+	else \
+		echo "Using cached CPython at $(CPYTHON_TMP)"; \
+		cd $(CPYTHON_TMP) && git pull --ff-only 2>/dev/null || true; \
+	fi
+	@# Filter out test directories with non-UTF-8 files
+	@echo "Filtering stdlib (excluding test/idlelib/turtledemo)..."
+	@rm -rf $(CPYTHON_LIB_CLEAN)
+	@rsync -a --exclude='test' --exclude='idlelib' --exclude='turtledemo' \
+		$(CPYTHON_TMP)/Lib/ $(CPYTHON_LIB_CLEAN)/
+	@# Extract doctests using alimentar
+	@mkdir -p data/corpora
+	@CPYTHON_SHA=$$(cd $(CPYTHON_TMP) && git rev-parse --short HEAD); \
+	echo "CPython commit: $$CPYTHON_SHA"; \
+	alimentar doctest extract $(CPYTHON_LIB_CLEAN) \
+		-o data/corpora/cpython-doctests.parquet \
+		--source cpython \
+		--version "$$CPYTHON_SHA"
+	@echo ""
+	@echo "✅ Extracted to data/corpora/cpython-doctests.parquet"
+	@echo "   (This file is gitignored - not committed to repository)"
+	@ls -lh data/corpora/cpython-doctests.parquet
 
 # Quality Gates
 quality: format lint test
