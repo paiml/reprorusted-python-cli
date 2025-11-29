@@ -66,6 +66,7 @@ addopts = [
     "-v",
     "--tb=short",
     "--strict-markers",
+    "--doctest-modules",
 ]
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
