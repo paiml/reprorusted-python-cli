@@ -1,7 +1,7 @@
 ---
 license: mit
 task_categories:
-  - text2text-generation
+  - translation
 language:
   - en
 tags:
