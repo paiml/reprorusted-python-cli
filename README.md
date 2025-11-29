@@ -1,382 +1,141 @@
-# reprorusted-python-cli
+<p align="center">
+  <img src="docs/llm-bootstrap-oracle.svg" alt="LLM Bootstrap to ML Oracle" width="800">
+</p>
 
-**CITL Training Corpus for Depyler**
+<h1 align="center">reprorusted-python-cli</h1>
 
-[![CI](https://github.com/paiml/reprorusted-python-cli/workflows/CI/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://img.shields.io/badge/tests-6745%20passing-brightgreen)](https://github.com/paiml/reprorusted-python-cli/actions)
-[![Examples](https://img.shields.io/badge/examples-298-blue)](https://github.com/paiml/reprorusted-python-cli/tree/main/examples)
+<p align="center">
+  <strong>Compiler-in-the-Loop Training Corpus for Python→Rust Transpilation</strong>
+</p>
 
-## Overview
+<p align="center">
+  <a href="https://github.com/paiml/reprorusted-python-cli/actions"><img src="https://github.com/paiml/reprorusted-python-cli/workflows/CI/badge.svg" alt="CI"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://github.com/paiml/reprorusted-python-cli/actions"><img src="https://img.shields.io/badge/tests-6745%20passing-brightgreen" alt="Tests"></a>
+  <a href="https://github.com/paiml/reprorusted-python-cli/tree/main/examples"><img src="https://img.shields.io/badge/examples-298-blue" alt="Examples"></a>
+</p>
 
-This repository provides a **Compiler-in-the-Loop (CITL) training corpus** for the [depyler](https://github.com/paiml/depyler) Python-to-Rust transpiler. It contains 298 Python CLI examples with comprehensive test coverage, designed to train depyler's oracle model through iterative compiler feedback.
+---
 
-**Purpose:**
-- Train depyler's CITL oracle model
-- Provide diverse Python patterns for transpilation learning
-- Generate compiler diagnostics for error→fix prediction
-- Export training data for downstream ML systems (OIP)
+## The Core Idea
 
-## Transpilation Status Matrix
+**Use LLMs to bootstrap traditional ML, not as a runtime dependency.**
 
-> **Last Updated:** 2025-11-29 (depyler commit ba5becce)
+This corpus captures decision traces from autonomous LLM sessions, persists them to `.apr` format, and trains a local ML oracle. After N sessions, the oracle handles common cases without API calls.
 
-### Summary
+| Phase | Model | Cost |
+|-------|-------|------|
+| Bootstrap | LLM (Claude/GPT) | $$/hour |
+| Capture | Decision traces → `.apr` | One-time |
+| Steady-state | HNSW + Tarantula | ~$0 |
 
-| Metric | Count | Rate |
-|--------|-------|------|
-| Total Examples | 298 | - |
-| Transpilation Pass | 194 | **65%** |
-| Transpilation Fail | 104 | 35% |
-| Compilation Pass | 0 | **0%** |
-| Compilation Fail | 194 | 100% |
-| Total rustc Errors | 4,583 | ~24 errors/example |
+## What This Repository Contains
 
-### Error Distribution (Top 10)
+298 Python CLI examples with 6,745 tests, designed for [depyler](https://github.com/paiml/depyler) transpiler training:
 
-| Error Code | Count | Description | Root Cause |
-|------------|-------|-------------|------------|
-| E0308 | 1,050 | Type mismatch | Type inference gaps |
-| E0433 | 706 | Failed to resolve | Missing module mappings |
-| E0599 | 543 | Method not found | Incomplete stdlib mapping |
-| E0425 | 392 | Cannot find value | Missing variable declarations |
-| E0277 | 380 | Trait bound not satisfied | Type coercion issues |
-| E0432 | 365 | Unresolved import | Missing crate dependencies |
-| E0282 | 289 | Type annotations needed | Generic type inference |
-| E0061 | 188 | Wrong number of args | Function signature mismatch |
-| E0609 | 146 | No field found | Struct field mapping |
-| E0412 | 124 | Cannot find type | Missing type definitions |
+| Metric | Value |
+|--------|-------|
+| Python Examples | 298 |
+| Test Coverage | 6,745 passing |
+| Transpilation Rate | 65% |
+| Compilation Rate | 0% (4,583 rustc errors) |
 
-### Categories Failing Transpilation (104 examples)
-
-| Category | Examples | Blocker |
-|----------|----------|---------|
-| Async Patterns | `async_context`, `async_gather`, `async_iterator`, `async_queue` | `async`/`await` not implemented |
-| Decorators | `decorator_pattern`, `retry_decorator` | Decorator transformation |
-| Dataclasses | `dataclass`, `dataclass_*` | `@dataclass` not supported |
-| Comprehensions | `dict_comprehension`, `nested_comprehension` | Complex comprehension forms |
-| Context Managers | `contextlib`, `context_error` | `with` statement transforms |
-| Event Patterns | `event_emitter`, `event_observable`, `event_saga` | Complex callback patterns |
-| Advanced Closures | `func_curry`, `func_either` | Higher-order function handling |
-| Calendar/Time | `calendar`, `datetime_basic` | Complex datetime patterns |
-
-### Blocking Issues (GitHub Tickets)
-
-| Issue | Description | Impact |
-|-------|-------------|--------|
-| [#168](https://github.com/paiml/depyler/issues/168) | pytest module mapping | Test file transpilation |
-| [#169](https://github.com/paiml/depyler/issues/169) | os module expansion | File/path operations |
-| [#170](https://github.com/paiml/depyler/issues/170) | Type inference improvement | 1,050+ E0308 errors |
-| [#171](https://github.com/paiml/depyler/issues/171) | subprocess module mapping | Process management |
-
-## CITL Training Loop
-
-```
-┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│   Python     │────►│   Depyler    │────►│   Rust       │
-│   Corpus     │     │  Transpiler  │     │   Code       │
-│  (this repo) │     │              │     │              │
-└──────────────┘     └──────────────┘     └──────────────┘
-                                               │
-                                               ▼
-                                         ┌──────────────┐
-                                         │   rustc      │
-                                         │  Compiler    │
-                                         └──────────────┘
-                                               │
-                                               ▼
-                                         ┌──────────────┐
-                                         │  Diagnostic  │───► Oracle Training
-                                         │   Capture    │
-                                         └──────────────┘
-```
+The compilation failures are the training signal—each error becomes an (error, fix) pattern for the oracle.
 
 ## Quick Start
 
 ```bash
-# Clone repository
 git clone https://github.com/paiml/reprorusted-python-cli.git
 cd reprorusted-python-cli
 
-# Install dependencies
-make install
-
-# Validate Python examples (6745 tests)
-make test
-
-# Run CITL training loop
-make citl-improve
-
-# Train oracle model
-make citl-train
-
-# Export corpus for OIP
-make citl-export
+make install    # Install dependencies
+make test       # Validate corpus (6745 tests)
+make citl-train # Train oracle from diagnostics
 ```
 
-## Corpus Statistics
-
-| Metric | Count |
-|--------|-------|
-| Python Examples | 298 |
-| Python Source Files | 607 |
-| Test Files | 296 |
-| Passing Tests | 6,745 |
-| Example Categories | 15+ |
-
-## Project Structure
+## CITL Training Loop
 
 ```
-reprorusted-python-cli/
-├── examples/                    # CITL Training Corpus
-│   ├── example_simple/          # Basic argparse patterns
-│   ├── example_flags/           # Boolean flags
-│   ├── example_positional/      # Positional arguments
-│   ├── example_subcommands/     # Git-like subcommands
-│   ├── example_complex/         # Advanced argparse
-│   ├── example_numpy_*/         # NumPy operations (18 examples)
-│   ├── example_sklearn_*/       # Scikit-learn patterns (10 examples)
-│   ├── example_pytorch_*/       # PyTorch patterns (10 examples)
-│   ├── example_async_*/         # Async/await patterns
-│   ├── example_datetime_*/      # Date/time handling
-│   └── ...                      # 298 total examples
-├── scripts/                     # Automation scripts
-├── docs/                        # Documentation
-│   └── specifications/          # CITL spec, module mappings
-└── Makefile                     # CITL training commands
+Python Corpus → Depyler → Rust Code → rustc → Diagnostics → Oracle
+     ↑                                              │
+     └──────────── patterns.apr ◄──────────────────┘
 ```
+
+Each transpilation attempt generates compiler diagnostics. These accumulate in `.apr` format, training the oracle to suggest fixes for future errors.
 
 ## Example Categories
 
-| Category | Examples | Transpiles | Compiles | Description |
-|----------|----------|------------|----------|-------------|
-| **Core CLI** | 20+ | 18 | 0 | argparse, flags, positional, subcommands |
-| **String Ops** | 15+ | 15 | 0 | split, join, format, replace, strip |
-| **Math** | 20+ | 20 | 0 | abs, pow, round, divmod, minmax |
-| **NumPy** | 18 | 18 | 0 | array ops, linear algebra, statistics |
-| **Sklearn** | 10 | 10 | 0 | regression, clustering, preprocessing |
-| **PyTorch** | 10 | 10 | 0 | tensors, autograd, neural layers |
-| **Async** | 5 | 1 | 0 | async/await, gather, queues |
-| **DateTime** | 6 | 3 | 0 | parsing, formatting, timezones |
-| **File I/O** | 10+ | 8 | 0 | pathlib, shutil, tempfile, csv |
-| **Other** | 100+ | 90+ | 0 | regex, json, hashlib, itertools, etc. |
+| Category | Count | Description |
+|----------|-------|-------------|
+| Core CLI | 20+ | argparse, flags, subcommands |
+| String Ops | 15+ | split, join, format, strip |
+| Math | 20+ | arithmetic, statistics |
+| NumPy | 18 | array ops, linear algebra |
+| Sklearn | 10 | regression, clustering |
+| PyTorch | 10 | tensors, autograd |
+| Async | 5 | async/await patterns |
+| File I/O | 10+ | pathlib, csv, json |
 
-## Usage
+## Autonomous Session Results
 
-### Validate Corpus
-
-```bash
-# Run all Python tests (validates training data quality)
-make test
-
-# Run with coverage
-make coverage
-
-# Check formatting
-make format
-
-# Run linter
-make lint
-```
-
-### CITL Training
-
-```bash
-# Run CITL improvement loop on all examples
-# (transpiles each .py file with compiler feedback)
-make citl-improve
-
-# Train depyler oracle from accumulated diagnostics
-make citl-train
-
-# Export training corpus as JSONL for OIP integration
-make citl-export
-```
-
-### Transpilation Testing
-
-```bash
-# Test single example
-depyler transpile examples/example_simple/trivial_cli.py --verify
-
-# Batch transpile all examples
-for d in examples/example_*/; do
-  py_file=$(find "$d" -maxdepth 1 -name "*.py" ! -name "test_*" | head -1)
-  [ -n "$py_file" ] && depyler transpile "$py_file" -o /tmp/out.rs
-done
-
-# Count compilation errors
-rustc --crate-type lib --deny warnings /tmp/out.rs 2>&1 | grep -c "^error\[E"
-```
-
-### Cleanup
-
-```bash
-# Clean Python build artifacts
-make clean
-
-# Clean everything including generated Rust
-make clean-all
-```
-
-## Integration with Depyler
-
-This corpus integrates with depyler's CITL subsystem:
-
-```bash
-# Single example transpilation with CITL
-depyler compile examples/example_simple/trivial_cli.py --citl-iterations 3
-
-# Batch training from corpus
-depyler oracle train --corpus ./examples --min-samples 50
-
-# Export diagnostics for OIP
-depyler oracle export-oip --input-dir ./examples --output ./training_corpus/citl.jsonl
-```
-
-## Adding New Examples
-
-1. Create example directory:
-   ```bash
-   mkdir -p examples/example_new
-   ```
-
-2. Write test first (TDD):
-   ```bash
-   # examples/example_new/test_new_tool.py
-   ```
-
-3. Implement Python script:
-   ```bash
-   # examples/example_new/new_tool.py
-   ```
-
-4. Validate:
-   ```bash
-   make test
-   ```
-
-## Roadmap to 100% Compilation
-
-### Phase 1: Critical Infrastructure (Target: 50% compilation)
-1. Fix type inference for collections (E0308)
-2. Complete os module mapping (E0433, E0432)
-3. Implement subprocess module (E0433)
-4. Add missing pytest patterns
-
-### Phase 2: Extended Coverage (Target: 80% compilation)
-1. Implement async/await transformation
-2. Add decorator support
-3. Complete datetime module mapping
-4. Handle dataclasses
-
-### Phase 3: Full Coverage (Target: 100% compilation)
-1. Advanced comprehension forms
-2. Context manager transforms
-3. Complex closure patterns
-4. Event-driven patterns
-
-## Related Projects
-
-- [depyler](https://github.com/paiml/depyler) - Python-to-Rust transpiler (CITL consumer)
-- [aprender](https://github.com/paiml/aprender) - ML library with CITL support
-- [alimentar](https://github.com/paiml/alimentar) - Data loading for CITL corpus
-
-## LLM-Native Development: A New Paradigm
-
-> *"The model is the prompt. The training is session history. The deployment is copy-paste."*
-
-This project demonstrates a paradigm shift from traditional MLOps to **LLM-native development**:
-
-### Traditional MLOps vs LLM Autonomous Sessions
-
-| Aspect | Traditional MLOps | LLM Overnight Sessions |
-|--------|------------------|------------------------|
-| **Training loop** | Epochs over static dataset | Continuous fix→compile→commit |
-| **Feedback signal** | Loss function | Compiler error codes (rustc) |
-| **Data collection** | Batch ETL pipelines | Real-time decision traces |
-| **Model update** | Retrain + deploy (hours) | Prompt refinement (seconds) |
-| **Human-in-loop** | Label data | Review commits in morning |
-| **Cold start** | GPU training (hours) | Paste prompt (seconds) |
-
-### Results: Overnight Autonomous Session (2025-11-29)
-
-We ran Claude Code unattended for 13 hours with a carefully crafted prompt:
+We ran Claude Code unattended for 13 hours:
 
 | Metric | Target | Actual |
 |--------|--------|--------|
 | Commits | 5 | **12** (240%) |
 | Duration | 6 hrs | **13 hrs** |
-| Commit rate | - | ~1/hour |
-| Tickets closed | - | DEPYLER-0616→0627 |
+| Tickets | - | DEPYLER-0616→0627 |
 
-**Key insight:** The LLM didn't just find bugs—it fixed them, wrote tests, passed clippy, and committed. No human intervention for 13 hours.
+The LLM fixed bugs, wrote tests, passed clippy, and committed—no human intervention.
 
-### The CITL Hybrid: Self-Improving LLM Sessions
+## Error Distribution
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    CITL + LLM Feedback Loop                     │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   LLM generates fix ──► rustc validates ──► trace stored        │
-│         ▲                                        │              │
-│         │                                        ▼              │
-│         └────────── retrieval augments ◄── pattern indexed      │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+Top rustc errors from transpilation attempts:
 
-The decision traces we capture during transpilation become training signal for future sessions. Each overnight run makes the next one smarter—without retraining any model.
+| Code | Count | Issue |
+|------|-------|-------|
+| E0308 | 1,050 | Type mismatch |
+| E0433 | 706 | Failed to resolve |
+| E0599 | 543 | Method not found |
+| E0425 | 392 | Cannot find value |
+| E0277 | 380 | Trait bound not satisfied |
 
-### LLM Bootstrap → Traditional ML Oracle
+Each error type becomes training data for the oracle.
 
-The end goal isn't LLM dependency—it's **LLM obsolescence**:
-
-<p align="center">
-  <img src="docs/llm-bootstrap-oracle.svg" alt="LLM Bootstrap to ML Oracle" width="800">
-</p>
-
-| Phase | Model | Cost | Duration |
-|-------|-------|------|----------|
-| **Bootstrap** | LLM (Claude/GPT) | $$/hour | N sessions |
-| **Capture** | Decision traces → `.apr` | One-time | Automatic |
-| **Steady-state** | HNSW + Tarantula | ~$0 | Forever |
-
-After enough overnight sessions, the `.apr` file contains sufficient (error, fix) patterns that the local ML oracle handles common cases without calling external LLMs.
+## Project Structure
 
 ```
-LLM session → patterns.apr → local inference (no API calls)
+reprorusted-python-cli/
+├── examples/           # 298 Python CLI examples
+│   ├── example_*/      # Individual examples with tests
+├── docs/               # Specifications and diagrams
+├── scripts/            # Automation
+└── Makefile            # CITL commands
 ```
 
-**The LLM teaches itself out of a job.**
-
-### Implications for MLOps
-
-1. **Prompt engineering is the new hyperparameter tuning**
-2. **Session logs are the new training data**
-3. **Compiler output is the new loss function**
-4. **Git commits are the new model checkpoints**
-5. **LLM is bootstrap, not runtime dependency**
-
-This isn't replacing traditional ML—it's using LLMs to *bootstrap* traditional ML. The expensive LLM handles the long tail during development; the cheap local oracle handles production.
-
-### Try It Yourself
+## Integration
 
 ```bash
-# The overnight prompt that achieved 240% of target:
-cat ../depyler/docs/processes/overnight-autonomous.md
+# Transpile single example
+depyler transpile examples/example_simple/trivial_cli.py
 
-# Run your own autonomous session:
-claude --prompt "$(cat overnight_prompt.txt)"
+# Train oracle from corpus
+depyler oracle train --corpus ./examples
 
-# Check results in the morning:
-git log --oneline --since="yesterday"
+# Export for downstream ML
+depyler oracle export-oip --output ./citl.jsonl
 ```
 
-## Scientific References
+## Related Projects
 
-This corpus supports research in Compiler-in-the-Loop learning:
+| Project | Role |
+|---------|------|
+| [depyler](https://github.com/paiml/depyler) | Python→Rust transpiler |
+| [aprender](https://github.com/paiml/aprender) | ML library, `.apr` format |
+| [entrenar](https://github.com/paiml/entrenar) | CITL pattern storage |
+| [renacer](https://github.com/paiml/renacer) | Decision trace ingestion |
+
+## References
 
 1. Wang et al. (2022). *Compilable Neural Code Generation with Compiler Feedback.* ACL.
 2. Yasunaga & Liang (2020). *Graph-based, Self-Supervised Program Repair from Diagnostic Feedback.* ICML.
@@ -384,9 +143,7 @@ This corpus supports research in Compiler-in-the-Loop learning:
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details
-
-## Citation
+MIT License - see [LICENSE](LICENSE)
 
 ```bibtex
 @software{reprorusted_python_cli,
