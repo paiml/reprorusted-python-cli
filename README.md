@@ -333,7 +333,9 @@ The decision traces we capture during transpilation become training signal for f
 
 The end goal isn't LLM dependency—it's **LLM obsolescence**:
 
-![LLM Bootstrap to ML Oracle](docs/llm-bootstrap-oracle.svg)
+<p align="center">
+  <img src="docs/llm-bootstrap-oracle.svg" alt="LLM Bootstrap to ML Oracle" width="800">
+</p>
 
 | Phase | Model | Cost | Duration |
 |-------|-------|------|----------|
