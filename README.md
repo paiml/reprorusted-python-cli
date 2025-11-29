@@ -329,14 +329,35 @@ We ran Claude Code unattended for 13 hours with a carefully crafted prompt:
 
 The decision traces we capture during transpilation become training signal for future sessions. Each overnight run makes the next one smarter—without retraining any model.
 
+### LLM Bootstrap → Traditional ML Oracle
+
+The end goal isn't LLM dependency—it's **LLM obsolescence**:
+
+![LLM Bootstrap to ML Oracle](docs/llm-bootstrap-oracle.svg)
+
+| Phase | Model | Cost | Duration |
+|-------|-------|------|----------|
+| **Bootstrap** | LLM (Claude/GPT) | $$/hour | N sessions |
+| **Capture** | Decision traces → `.apr` | One-time | Automatic |
+| **Steady-state** | HNSW + Tarantula | ~$0 | Forever |
+
+After enough overnight sessions, the `.apr` file contains sufficient (error, fix) patterns that the local ML oracle handles common cases without calling external LLMs.
+
+```
+LLM session → patterns.apr → local inference (no API calls)
+```
+
+**The LLM teaches itself out of a job.**
+
 ### Implications for MLOps
 
 1. **Prompt engineering is the new hyperparameter tuning**
 2. **Session logs are the new training data**
 3. **Compiler output is the new loss function**
 4. **Git commits are the new model checkpoints**
+5. **LLM is bootstrap, not runtime dependency**
 
-This isn't replacing traditional ML—it's augmenting it. The LLM handles the long tail of edge cases while CITL captures patterns for systematic improvement.
+This isn't replacing traditional ML—it's using LLMs to *bootstrap* traditional ML. The expensive LLM handles the long tail during development; the cheap local oracle handles production.
 
 ### Try It Yourself
 
