@@ -13,6 +13,7 @@
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://github.com/paiml/reprorusted-python-cli/actions"><img src="https://img.shields.io/badge/tests-6745%20passing-brightgreen" alt="Tests"></a>
   <a href="https://github.com/paiml/reprorusted-python-cli/tree/main/examples"><img src="https://img.shields.io/badge/examples-298-blue" alt="Examples"></a>
+  <a href="https://huggingface.co/datasets/paiml/depyler-citl"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-depyler--citl-yellow" alt="HuggingFace Dataset"></a>
 </p>
 
 ---
@@ -133,7 +134,24 @@ depyler oracle export-oip --output ./citl.jsonl
 | [depyler](https://github.com/paiml/depyler) | Python→Rust transpiler |
 | [aprender](https://github.com/paiml/aprender) | ML library, `.apr` format |
 | [entrenar](https://github.com/paiml/entrenar) | CITL pattern storage |
+| [alimentar](https://github.com/paiml/alimentar) | Dataset loading & publishing |
 | [renacer](https://github.com/paiml/renacer) | Decision trace ingestion |
+
+## HuggingFace Dataset
+
+This corpus is available on HuggingFace for ML training:
+
+```python
+from datasets import load_dataset
+
+ds = load_dataset("paiml/depyler-citl")
+
+# 606 Python→Rust pairs, 436 with successful transpilation
+for row in ds["train"]:
+    print(f"{row['python_file']}: {row['python_lines']} → {row['rust_lines']} lines")
+```
+
+📦 **Dataset:** [huggingface.co/datasets/paiml/depyler-citl](https://huggingface.co/datasets/paiml/depyler-citl)
 
 ## References
 
