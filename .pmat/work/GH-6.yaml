@@ -1,0 +1,26 @@
+id: GH-6
+title: "Add dataset quality scoring system with improvement suggestions"
+description: |
+  Implement a dataset quality scoring system for doctest corpora,
+  inspired by rust-project-score in paiml-mcp-agent-toolkit.
+  
+  Features:
+  - 100-point weighted scoring (Critical 2x, High 1.5x, Medium 1x, Low 0.5x)
+  - Letter grades: A (95+), B (85-94), C (70-84), D (50-69), F (<50)
+  - CLI: alimentar quality score <file> --suggest
+  - JSON output with actionable suggestions
+  - Badge generation for README
+github_issue: 6
+status: open
+progress: 0
+created: 2025-11-29
+labels:
+  - enhancement
+  - data-quality
+  - tooling
+acceptance_criteria:
+  - Score calculation matches 100-point checklist weights
+  - JSON output format validated
+  - CLI commands implemented in alimentar
+  - Badge URL generation
+  - Integration with make quality target
