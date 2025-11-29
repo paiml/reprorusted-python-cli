@@ -1,14 +1,18 @@
 name: Benchmarks
 
+# DISABLED: Benchmarks workflow is a placeholder - no Rust binaries or bench targets exist yet
+# Re-enable when:
+# 1. Rust workspace with Cargo.toml is committed to examples/
+# 2. Makefile has bench-all and bench-regression targets
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  workflow_dispatch:
-  schedule:
-    # Run benchmarks weekly on Sunday at 00:00 UTC
-    - cron: '0 0 * * 0'
+  workflow_dispatch:  # Manual trigger only for now
+  # Disabled triggers:
+  # push:
+  #   branches: [main]
+  # pull_request:
+  #   branches: [main]
+  # schedule:
+  #   - cron: '0 0 * * 0'
 
 jobs:
   benchmark:
