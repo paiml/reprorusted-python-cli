@@ -1,7 +1,49 @@
 #!/usr/bin/env python3
-"""Split Example - String split operations CLI."""
+"""Split Example - String split operations CLI.
+
+Examples:
+    >>> split_underscore("a_b_c")
+    ['a', 'b', 'c']
+    >>> split_dash("x-y-z")
+    ['x', 'y', 'z']
+    >>> split_dot("1.2.3")
+    ['1', '2', '3']
+"""
 
 import argparse
+
+
+def split_underscore(text: str) -> list:
+    """Split string by underscores.
+
+    >>> split_underscore("hello_world_test")
+    ['hello', 'world', 'test']
+    >>> split_underscore("a_b_c")
+    ['a', 'b', 'c']
+    """
+    return text.split("_")
+
+
+def split_dash(text: str) -> list:
+    """Split string by dashes.
+
+    >>> split_dash("foo-bar-baz")
+    ['foo', 'bar', 'baz']
+    >>> split_dash("2025-11-29")
+    ['2025', '11', '29']
+    """
+    return text.split("-")
+
+
+def split_dot(text: str) -> list:
+    """Split string by dots.
+
+    >>> split_dot("192.168.1.1")
+    ['192', '168', '1', '1']
+    >>> split_dot("a.b.c")
+    ['a', 'b', 'c']
+    """
+    return text.split(".")
 
 
 def main():
@@ -17,13 +59,13 @@ def main():
 
     args = parser.parse_args()
     if args.cmd == "underscore":
-        parts = args.text.split("_")
+        parts = split_underscore(args.text)
         print(parts[0] + " " + parts[1] + " " + parts[2])
     elif args.cmd == "dash":
-        parts = args.text.split("-")
+        parts = split_dash(args.text)
         print(parts[0] + " " + parts[1] + " " + parts[2])
     elif args.cmd == "dot":
-        parts = args.text.split(".")
+        parts = split_dot(args.text)
         print(parts[0] + " " + parts[1] + " " + parts[2])
 
 

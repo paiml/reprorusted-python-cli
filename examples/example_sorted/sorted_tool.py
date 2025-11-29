@@ -1,7 +1,85 @@
 #!/usr/bin/env python3
-"""Sorted Example - Sorting operations CLI."""
+"""Sorted Example - Sorting operations CLI.
+
+Examples:
+    >>> sort_asc([5, 2, 8, 1, 9])
+    [1, 2, 5, 8, 9]
+    >>> sort_desc([5, 2, 8, 1, 9])
+    [9, 8, 5, 2, 1]
+"""
 
 import argparse
+
+
+def sort_asc(nums: list) -> list:
+    """Sort list ascending (bubble sort).
+
+    >>> sort_asc([3, 1, 2])
+    [1, 2, 3]
+    >>> sort_asc([5, 4, 3, 2, 1])
+    [1, 2, 3, 4, 5]
+    >>> sort_asc([1, 1, 1])
+    [1, 1, 1]
+    """
+    result = nums.copy()
+    n = len(result)
+    i = 0
+    while i < n:
+        j = i + 1
+        while j < n:
+            if result[j] < result[i]:
+                tmp = result[i]
+                result[i] = result[j]
+                result[j] = tmp
+            j = j + 1
+        i = i + 1
+    return result
+
+
+def sort_desc(nums: list) -> list:
+    """Sort list descending (bubble sort).
+
+    >>> sort_desc([3, 1, 2])
+    [3, 2, 1]
+    >>> sort_desc([1, 2, 3, 4, 5])
+    [5, 4, 3, 2, 1]
+    """
+    result = nums.copy()
+    n = len(result)
+    i = 0
+    while i < n:
+        j = i + 1
+        while j < n:
+            if result[j] > result[i]:
+                tmp = result[i]
+                result[i] = result[j]
+                result[j] = tmp
+            j = j + 1
+        i = i + 1
+    return result
+
+
+def sort_alpha(words: list) -> list:
+    """Sort strings alphabetically.
+
+    >>> sort_alpha(["c", "a", "b"])
+    ['a', 'b', 'c']
+    >>> sort_alpha(["zebra", "apple", "mango"])
+    ['apple', 'mango', 'zebra']
+    """
+    result = words.copy()
+    n = len(result)
+    i = 0
+    while i < n:
+        j = i + 1
+        while j < n:
+            if result[j] < result[i]:
+                tmp = result[i]
+                result[i] = result[j]
+                result[j] = tmp
+            j = j + 1
+        i = i + 1
+    return result
 
 
 def main():
@@ -27,43 +105,13 @@ def main():
 
     args = parser.parse_args()
     if args.cmd == "asc":
-        nums = [args.a, args.b, args.c, args.d, args.e]
-        i = 0
-        while i < 5:
-            j = i + 1
-            while j < 5:
-                if nums[j] < nums[i]:
-                    tmp = nums[i]
-                    nums[i] = nums[j]
-                    nums[j] = tmp
-                j = j + 1
-            i = i + 1
+        nums = sort_asc([args.a, args.b, args.c, args.d, args.e])
         print(f"{nums[0]} {nums[1]} {nums[2]} {nums[3]} {nums[4]}")
     elif args.cmd == "desc":
-        nums = [args.a, args.b, args.c, args.d, args.e]
-        i = 0
-        while i < 5:
-            j = i + 1
-            while j < 5:
-                if nums[j] > nums[i]:
-                    tmp = nums[i]
-                    nums[i] = nums[j]
-                    nums[j] = tmp
-                j = j + 1
-            i = i + 1
+        nums = sort_desc([args.a, args.b, args.c, args.d, args.e])
         print(f"{nums[0]} {nums[1]} {nums[2]} {nums[3]} {nums[4]}")
     elif args.cmd == "alpha":
-        words = [args.a, args.b, args.c]
-        i = 0
-        while i < 3:
-            j = i + 1
-            while j < 3:
-                if words[j] < words[i]:
-                    tmp = words[i]
-                    words[i] = words[j]
-                    words[j] = tmp
-                j = j + 1
-            i = i + 1
+        words = sort_alpha([args.a, args.b, args.c])
         print(f"{words[0]} {words[1]} {words[2]}")
 
 

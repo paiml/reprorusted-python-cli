@@ -130,3 +130,24 @@ roadmap:
   estimated_effort: null
   labels: []
   notes: null
+- id: DEPYLER-0600
+  github_issue: null
+  item_type: task
+  title: 'Add doctests to Python examples for CITL training signal'
+  status: inprogress
+  priority: high
+  assigned_to: null
+  created: 2025-11-29T00:00:00+00:00
+  updated: 2025-11-29T00:00:00+00:00
+  spec: 'Add >>> doctest examples to Python files in examples/ to provide semantic validation signal for depyler CITL training'
+  acceptance_criteria:
+    - All Python examples have at least one doctest
+    - Doctests pass with python -m doctest
+    - Doctests demonstrate key function behavior
+  phases: []
+  subtasks: []
+  estimated_effort: medium
+  labels:
+    - citl
+    - training-data
+  notes: 'Supports doctest-transpilation-citl-spec.md'

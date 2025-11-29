@@ -1,7 +1,56 @@
 #!/usr/bin/env python3
-"""Sum Example - Summation operations CLI."""
+"""Sum Example - Summation operations CLI.
+
+Examples:
+    >>> sum_five(1, 2, 3, 4, 5)
+    15
+    >>> product_three(2, 3, 4)
+    24
+    >>> average_three(3, 6, 9)
+    6.0
+"""
 
 import argparse
+
+
+def sum_five(a: int, b: int, c: int, d: int, e: int) -> int:
+    """Sum of five integers.
+
+    >>> sum_five(1, 1, 1, 1, 1)
+    5
+    >>> sum_five(0, 0, 0, 0, 0)
+    0
+    >>> sum_five(10, 20, 30, 40, 50)
+    150
+    """
+    return a + b + c + d + e
+
+
+def product_three(a: int, b: int, c: int) -> int:
+    """Product of three integers.
+
+    >>> product_three(1, 2, 3)
+    6
+    >>> product_three(0, 5, 5)
+    0
+    >>> product_three(2, 2, 2)
+    8
+    """
+    return a * b * c
+
+
+def average_three(a: int, b: int, c: int) -> float:
+    """Average of three integers.
+
+    >>> average_three(1, 2, 3)
+    2.0
+    >>> average_three(10, 20, 30)
+    20.0
+    >>> average_three(0, 0, 0)
+    0.0
+    """
+    total = a + b + c
+    return total / 3
 
 
 def main():
@@ -25,12 +74,11 @@ def main():
 
     args = parser.parse_args()
     if args.cmd == "add":
-        print(args.a + args.b + args.c + args.d + args.e)
+        print(sum_five(args.a, args.b, args.c, args.d, args.e))
     elif args.cmd == "product":
-        print(args.a * args.b * args.c)
+        print(product_three(args.a, args.b, args.c))
     elif args.cmd == "average":
-        total = args.a + args.b + args.c
-        print(total / 3)
+        print(average_three(args.a, args.b, args.c))
 
 
 if __name__ == "__main__":

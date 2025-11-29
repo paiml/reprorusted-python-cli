@@ -1,7 +1,60 @@
 #!/usr/bin/env python3
-"""Pow Example - Power operations CLI."""
+"""Pow Example - Power operations CLI.
+
+Examples:
+    >>> square(5)
+    25
+    >>> cube(3)
+    27
+    >>> power(2, 10)
+    1024
+"""
 
 import argparse
+
+
+def square(x: int) -> int:
+    """Compute square of integer.
+
+    >>> square(0)
+    0
+    >>> square(4)
+    16
+    >>> square(-3)
+    9
+    """
+    return x * x
+
+
+def cube(x: int) -> int:
+    """Compute cube of integer.
+
+    >>> cube(0)
+    0
+    >>> cube(2)
+    8
+    >>> cube(-2)
+    -8
+    """
+    return x * x * x
+
+
+def power(base: int, exp: int) -> int:
+    """Compute base raised to exp.
+
+    >>> power(2, 0)
+    1
+    >>> power(2, 3)
+    8
+    >>> power(3, 4)
+    81
+    """
+    result = 1
+    i = 0
+    while i < exp:
+        result = result * base
+        i = i + 1
+    return result
 
 
 def main():
@@ -18,16 +71,11 @@ def main():
 
     args = parser.parse_args()
     if args.cmd == "square":
-        print(args.x * args.x)
+        print(square(args.x))
     elif args.cmd == "cube":
-        print(args.x * args.x * args.x)
+        print(cube(args.x))
     elif args.cmd == "power":
-        result = 1
-        i = 0
-        while i < args.exp:
-            result = result * args.base
-            i = i + 1
-        print(result)
+        print(power(args.base, args.exp))
 
 
 if __name__ == "__main__":

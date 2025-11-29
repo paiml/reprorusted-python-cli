@@ -1,7 +1,55 @@
 #!/usr/bin/env python3
-"""Bool Example - Boolean operations CLI."""
+"""Bool Example - Boolean operations CLI.
+
+Examples:
+    >>> bool_and(1, 1)
+    True
+    >>> bool_or(0, 1)
+    True
+    >>> bool_not(0)
+    True
+"""
 
 import argparse
+
+
+def bool_and(x: int, y: int) -> bool:
+    """Logical AND of two integers as booleans.
+
+    >>> bool_and(1, 1)
+    True
+    >>> bool_and(1, 0)
+    False
+    >>> bool_and(0, 0)
+    False
+    """
+    return x != 0 and y != 0
+
+
+def bool_or(x: int, y: int) -> bool:
+    """Logical OR of two integers as booleans.
+
+    >>> bool_or(1, 0)
+    True
+    >>> bool_or(0, 1)
+    True
+    >>> bool_or(0, 0)
+    False
+    """
+    return x != 0 or y != 0
+
+
+def bool_not(x: int) -> bool:
+    """Logical NOT of integer as boolean.
+
+    >>> bool_not(0)
+    True
+    >>> bool_not(1)
+    False
+    >>> bool_not(5)
+    False
+    """
+    return x == 0
 
 
 def main():
@@ -19,20 +67,11 @@ def main():
 
     args = parser.parse_args()
     if args.cmd == "and":
-        if args.x != 0 and args.y != 0:
-            print("true")
-        else:
-            print("false")
+        print("true" if bool_and(args.x, args.y) else "false")
     elif args.cmd == "or":
-        if args.x != 0 or args.y != 0:
-            print("true")
-        else:
-            print("false")
+        print("true" if bool_or(args.x, args.y) else "false")
     elif args.cmd == "not":
-        if args.x == 0:
-            print("true")
-        else:
-            print("false")
+        print("true" if bool_not(args.x) else "false")
 
 
 if __name__ == "__main__":

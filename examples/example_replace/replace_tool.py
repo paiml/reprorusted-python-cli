@@ -1,7 +1,45 @@
 #!/usr/bin/env python3
-"""Replace Example - String replace operations CLI."""
+"""Replace Example - String replace operations CLI.
+
+Examples:
+    >>> replace_char("hello", "l", "x")
+    'hexxo'
+    >>> replace_all("abc", "X")
+    'XXX'
+"""
 
 import argparse
+
+
+def replace_char(text: str, old: str, new: str) -> str:
+    """Replace all occurrences of old with new.
+
+    >>> replace_char("hello", "l", "x")
+    'hexxo'
+    >>> replace_char("banana", "a", "o")
+    'bonono'
+    >>> replace_char("test", "x", "y")
+    'test'
+    """
+    return text.replace(old, new)
+
+
+def replace_all(text: str, new: str) -> str:
+    """Replace each character with new.
+
+    >>> replace_all("abc", "X")
+    'XXX'
+    >>> replace_all("", "X")
+    ''
+    >>> replace_all("hello", "*")
+    '*****'
+    """
+    result = ""
+    i = 0
+    while i < len(text):
+        result = result + new
+        i = i + 1
+    return result
 
 
 def main():
@@ -21,7 +59,7 @@ def main():
 
     args = parser.parse_args()
     if args.cmd == "char":
-        print(args.text.replace(args.old, args.new))
+        print(replace_char(args.text, args.old, args.new))
     elif args.cmd == "first":
         result = ""
         found = False
@@ -35,12 +73,7 @@ def main():
             i = i + 1
         print(result)
     elif args.cmd == "all":
-        result = ""
-        i = 0
-        while i < len(args.text):
-            result = result + args.new
-            i = i + 1
-        print(result)
+        print(replace_all(args.text, args.new))
 
 
 if __name__ == "__main__":

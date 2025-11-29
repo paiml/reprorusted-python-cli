@@ -32,7 +32,8 @@ class TestKmeansFit:
         data = json.dumps({
             "X": [[1, 1], [1, 2], [2, 1], [2, 2],
                   [8, 8], [8, 9], [9, 8], [9, 9]],
-            "n_clusters": 2
+            "n_clusters": 2,
+            "random_state": 42
         })
         stdout, stderr, code = run(["fit"], data)
         assert code == 0
@@ -52,7 +53,8 @@ class TestKmeansFit:
             "X": [[0, 0], [0, 1], [1, 0],
                   [5, 5], [5, 6], [6, 5],
                   [10, 0], [10, 1], [11, 0]],
-            "n_clusters": 3
+            "n_clusters": 3,
+            "random_state": 42
         })
         stdout, stderr, code = run(["fit"], data)
         assert code == 0
@@ -116,7 +118,8 @@ class TestKmeansCentroids:
         data = json.dumps({
             "X": [[0, 0], [2, 0], [0, 2], [2, 2],  # Mean: [1, 1]
                   [10, 10], [12, 10], [10, 12], [12, 12]],  # Mean: [11, 11]
-            "n_clusters": 2
+            "n_clusters": 2,
+            "random_state": 42
         })
         stdout, stderr, code = run(["fit"], data)
         assert code == 0
@@ -137,7 +140,8 @@ class TestKmeansInertia:
         """Test that inertia is returned."""
         data = json.dumps({
             "X": [[0, 0], [1, 0], [10, 0], [11, 0]],
-            "n_clusters": 2
+            "n_clusters": 2,
+            "random_state": 42
         })
         stdout, stderr, code = run(["fit"], data)
         assert code == 0
@@ -149,7 +153,8 @@ class TestKmeansInertia:
         """Test inertia = 0 when points are exactly at centroids."""
         data = json.dumps({
             "X": [[0, 0], [0, 0], [10, 10], [10, 10]],
-            "n_clusters": 2
+            "n_clusters": 2,
+            "random_state": 42
         })
         stdout, stderr, code = run(["fit"], data)
         assert code == 0
@@ -185,7 +190,8 @@ class TestKmeansEdgeCases:
         """Test that k > n fails."""
         data = json.dumps({
             "X": [[1, 1], [2, 2]],
-            "n_clusters": 5
+            "n_clusters": 5,
+            "random_state": 42
         })
         stdout, stderr, code = run(["fit"], data)
         assert code == 1
@@ -194,7 +200,8 @@ class TestKmeansEdgeCases:
         """Test with single point."""
         data = json.dumps({
             "X": [[1, 1]],
-            "n_clusters": 1
+            "n_clusters": 1,
+            "random_state": 42
         })
         stdout, stderr, code = run(["fit"], data)
         assert code == 0
