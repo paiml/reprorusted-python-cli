@@ -282,6 +282,75 @@ depyler oracle export-oip --input-dir ./examples --output ./training_corpus/citl
 - [aprender](https://github.com/paiml/aprender) - ML library with CITL support
 - [alimentar](https://github.com/paiml/alimentar) - Data loading for CITL corpus
 
+## LLM-Native Development: A New Paradigm
+
+> *"The model is the prompt. The training is session history. The deployment is copy-paste."*
+
+This project demonstrates a paradigm shift from traditional MLOps to **LLM-native development**:
+
+### Traditional MLOps vs LLM Autonomous Sessions
+
+| Aspect | Traditional MLOps | LLM Overnight Sessions |
+|--------|------------------|------------------------|
+| **Training loop** | Epochs over static dataset | Continuous fix→compile→commit |
+| **Feedback signal** | Loss function | Compiler error codes (rustc) |
+| **Data collection** | Batch ETL pipelines | Real-time decision traces |
+| **Model update** | Retrain + deploy (hours) | Prompt refinement (seconds) |
+| **Human-in-loop** | Label data | Review commits in morning |
+| **Cold start** | GPU training (hours) | Paste prompt (seconds) |
+
+### Results: Overnight Autonomous Session (2025-11-29)
+
+We ran Claude Code unattended for 13 hours with a carefully crafted prompt:
+
+| Metric | Target | Actual |
+|--------|--------|--------|
+| Commits | 5 | **12** (240%) |
+| Duration | 6 hrs | **13 hrs** |
+| Commit rate | - | ~1/hour |
+| Tickets closed | - | DEPYLER-0616→0627 |
+
+**Key insight:** The LLM didn't just find bugs—it fixed them, wrote tests, passed clippy, and committed. No human intervention for 13 hours.
+
+### The CITL Hybrid: Self-Improving LLM Sessions
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    CITL + LLM Feedback Loop                     │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   LLM generates fix ──► rustc validates ──► trace stored        │
+│         ▲                                        │              │
+│         │                                        ▼              │
+│         └────────── retrieval augments ◄── pattern indexed      │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+The decision traces we capture during transpilation become training signal for future sessions. Each overnight run makes the next one smarter—without retraining any model.
+
+### Implications for MLOps
+
+1. **Prompt engineering is the new hyperparameter tuning**
+2. **Session logs are the new training data**
+3. **Compiler output is the new loss function**
+4. **Git commits are the new model checkpoints**
+
+This isn't replacing traditional ML—it's augmenting it. The LLM handles the long tail of edge cases while CITL captures patterns for systematic improvement.
+
+### Try It Yourself
+
+```bash
+# The overnight prompt that achieved 240% of target:
+cat ../depyler/docs/processes/overnight-autonomous.md
+
+# Run your own autonomous session:
+claude --prompt "$(cat overnight_prompt.txt)"
+
+# Check results in the morning:
+git log --oneline --since="yesterday"
+```
+
 ## Scientific References
 
 This corpus supports research in Compiler-in-the-Loop learning:
