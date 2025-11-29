@@ -5,17 +5,69 @@
 [![CI](https://github.com/paiml/reprorusted-python-cli/workflows/CI/badge.svg)](https://github.com/paiml/reprorusted-python-cli/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://img.shields.io/badge/tests-6745%20passing-brightgreen)](https://github.com/paiml/reprorusted-python-cli/actions)
-[![Examples](https://img.shields.io/badge/examples-300+-blue)](https://github.com/paiml/reprorusted-python-cli/tree/main/examples)
+[![Examples](https://img.shields.io/badge/examples-298-blue)](https://github.com/paiml/reprorusted-python-cli/tree/main/examples)
 
 ## Overview
 
-This repository provides a **Compiler-in-the-Loop (CITL) training corpus** for the [depyler](https://github.com/paiml/depyler) Python-to-Rust transpiler. It contains 300+ Python CLI examples with comprehensive test coverage, designed to train depyler's oracle model through iterative compiler feedback.
+This repository provides a **Compiler-in-the-Loop (CITL) training corpus** for the [depyler](https://github.com/paiml/depyler) Python-to-Rust transpiler. It contains 298 Python CLI examples with comprehensive test coverage, designed to train depyler's oracle model through iterative compiler feedback.
 
 **Purpose:**
 - Train depyler's CITL oracle model
 - Provide diverse Python patterns for transpilation learning
 - Generate compiler diagnostics for error→fix prediction
 - Export training data for downstream ML systems (OIP)
+
+## Transpilation Status Matrix
+
+> **Last Updated:** 2025-11-29 (depyler commit ba5becce)
+
+### Summary
+
+| Metric | Count | Rate |
+|--------|-------|------|
+| Total Examples | 298 | - |
+| Transpilation Pass | 194 | **65%** |
+| Transpilation Fail | 104 | 35% |
+| Compilation Pass | 0 | **0%** |
+| Compilation Fail | 194 | 100% |
+| Total rustc Errors | 4,583 | ~24 errors/example |
+
+### Error Distribution (Top 10)
+
+| Error Code | Count | Description | Root Cause |
+|------------|-------|-------------|------------|
+| E0308 | 1,050 | Type mismatch | Type inference gaps |
+| E0433 | 706 | Failed to resolve | Missing module mappings |
+| E0599 | 543 | Method not found | Incomplete stdlib mapping |
+| E0425 | 392 | Cannot find value | Missing variable declarations |
+| E0277 | 380 | Trait bound not satisfied | Type coercion issues |
+| E0432 | 365 | Unresolved import | Missing crate dependencies |
+| E0282 | 289 | Type annotations needed | Generic type inference |
+| E0061 | 188 | Wrong number of args | Function signature mismatch |
+| E0609 | 146 | No field found | Struct field mapping |
+| E0412 | 124 | Cannot find type | Missing type definitions |
+
+### Categories Failing Transpilation (104 examples)
+
+| Category | Examples | Blocker |
+|----------|----------|---------|
+| Async Patterns | `async_context`, `async_gather`, `async_iterator`, `async_queue` | `async`/`await` not implemented |
+| Decorators | `decorator_pattern`, `retry_decorator` | Decorator transformation |
+| Dataclasses | `dataclass`, `dataclass_*` | `@dataclass` not supported |
+| Comprehensions | `dict_comprehension`, `nested_comprehension` | Complex comprehension forms |
+| Context Managers | `contextlib`, `context_error` | `with` statement transforms |
+| Event Patterns | `event_emitter`, `event_observable`, `event_saga` | Complex callback patterns |
+| Advanced Closures | `func_curry`, `func_either` | Higher-order function handling |
+| Calendar/Time | `calendar`, `datetime_basic` | Complex datetime patterns |
+
+### Blocking Issues (GitHub Tickets)
+
+| Issue | Description | Impact |
+|-------|-------------|--------|
+| [#168](https://github.com/paiml/depyler/issues/168) | pytest module mapping | Test file transpilation |
+| [#169](https://github.com/paiml/depyler/issues/169) | os module expansion | File/path operations |
+| [#170](https://github.com/paiml/depyler/issues/170) | Type inference improvement | 1,050+ E0308 errors |
+| [#171](https://github.com/paiml/depyler/issues/171) | subprocess module mapping | Process management |
 
 ## CITL Training Loop
 
@@ -25,18 +77,18 @@ This repository provides a **Compiler-in-the-Loop (CITL) training corpus** for t
 │   Corpus     │     │  Transpiler  │     │   Code       │
 │  (this repo) │     │              │     │              │
 └──────────────┘     └──────────────┘     └──────────────┘
-                                                │
-                                                ▼
-                                          ┌──────────────┐
-                                          │   rustc      │
-                                          │  Compiler    │
-                                          └──────────────┘
-                                                │
-                                                ▼
-                                          ┌──────────────┐
-                                          │  Diagnostic  │───► Oracle Training
-                                          │   Capture    │
-                                          └──────────────┘
+                                               │
+                                               ▼
+                                         ┌──────────────┐
+                                         │   rustc      │
+                                         │  Compiler    │
+                                         └──────────────┘
+                                               │
+                                               ▼
+                                         ┌──────────────┐
+                                         │  Diagnostic  │───► Oracle Training
+                                         │   Capture    │
+                                         └──────────────┘
 ```
 
 ## Quick Start
@@ -66,7 +118,7 @@ make citl-export
 
 | Metric | Count |
 |--------|-------|
-| Python Examples | 300+ |
+| Python Examples | 298 |
 | Python Source Files | 607 |
 | Test Files | 296 |
 | Passing Tests | 6,745 |
@@ -87,7 +139,7 @@ reprorusted-python-cli/
 │   ├── example_pytorch_*/       # PyTorch patterns (10 examples)
 │   ├── example_async_*/         # Async/await patterns
 │   ├── example_datetime_*/      # Date/time handling
-│   └── ...                      # 300+ total examples
+│   └── ...                      # 298 total examples
 ├── scripts/                     # Automation scripts
 ├── docs/                        # Documentation
 │   └── specifications/          # CITL spec, module mappings
@@ -96,18 +148,18 @@ reprorusted-python-cli/
 
 ## Example Categories
 
-| Category | Examples | Description |
-|----------|----------|-------------|
-| **Core CLI** | 20+ | argparse, flags, positional, subcommands |
-| **String Ops** | 15+ | split, join, format, replace, strip |
-| **Math** | 20+ | abs, pow, round, divmod, minmax |
-| **NumPy** | 18 | array ops, linear algebra, statistics |
-| **Sklearn** | 10 | regression, clustering, preprocessing |
-| **PyTorch** | 10 | tensors, autograd, neural layers |
-| **Async** | 5 | async/await, gather, queues |
-| **DateTime** | 6 | parsing, formatting, timezones |
-| **File I/O** | 10+ | pathlib, shutil, tempfile, csv |
-| **Other** | 100+ | regex, json, hashlib, itertools, etc. |
+| Category | Examples | Transpiles | Compiles | Description |
+|----------|----------|------------|----------|-------------|
+| **Core CLI** | 20+ | 18 | 0 | argparse, flags, positional, subcommands |
+| **String Ops** | 15+ | 15 | 0 | split, join, format, replace, strip |
+| **Math** | 20+ | 20 | 0 | abs, pow, round, divmod, minmax |
+| **NumPy** | 18 | 18 | 0 | array ops, linear algebra, statistics |
+| **Sklearn** | 10 | 10 | 0 | regression, clustering, preprocessing |
+| **PyTorch** | 10 | 10 | 0 | tensors, autograd, neural layers |
+| **Async** | 5 | 1 | 0 | async/await, gather, queues |
+| **DateTime** | 6 | 3 | 0 | parsing, formatting, timezones |
+| **File I/O** | 10+ | 8 | 0 | pathlib, shutil, tempfile, csv |
+| **Other** | 100+ | 90+ | 0 | regex, json, hashlib, itertools, etc. |
 
 ## Usage
 
@@ -139,6 +191,22 @@ make citl-train
 
 # Export training corpus as JSONL for OIP integration
 make citl-export
+```
+
+### Transpilation Testing
+
+```bash
+# Test single example
+depyler transpile examples/example_simple/trivial_cli.py --verify
+
+# Batch transpile all examples
+for d in examples/example_*/; do
+  py_file=$(find "$d" -maxdepth 1 -name "*.py" ! -name "test_*" | head -1)
+  [ -n "$py_file" ] && depyler transpile "$py_file" -o /tmp/out.rs
+done
+
+# Count compilation errors
+rustc --crate-type lib --deny warnings /tmp/out.rs 2>&1 | grep -c "^error\[E"
 ```
 
 ### Cleanup
@@ -187,6 +255,26 @@ depyler oracle export-oip --input-dir ./examples --output ./training_corpus/citl
    ```bash
    make test
    ```
+
+## Roadmap to 100% Compilation
+
+### Phase 1: Critical Infrastructure (Target: 50% compilation)
+1. Fix type inference for collections (E0308)
+2. Complete os module mapping (E0433, E0432)
+3. Implement subprocess module (E0433)
+4. Add missing pytest patterns
+
+### Phase 2: Extended Coverage (Target: 80% compilation)
+1. Implement async/await transformation
+2. Add decorator support
+3. Complete datetime module mapping
+4. Handle dataclasses
+
+### Phase 3: Full Coverage (Target: 100% compilation)
+1. Advanced comprehension forms
+2. Context manager transforms
+3. Complex closure patterns
+4. Event-driven patterns
 
 ## Related Projects
 
