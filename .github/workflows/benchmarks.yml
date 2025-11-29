@@ -42,7 +42,7 @@ jobs:
         run: |
           # Build the Rust workspace which contains all manual Rust implementations
           # These are guaranteed to work, unlike depyler-generated code
-          cargo build --release
+          cd examples && cargo build --release
 
       - name: Run benchmarks
         run: |

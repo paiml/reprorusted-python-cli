@@ -2,7 +2,6 @@
 """Export CITL corpus to HuggingFace-compatible parquet format."""
 
 import json
-import os
 from pathlib import Path
 
 import pyarrow as pa
@@ -14,34 +13,35 @@ def find_pairs(examples_dir: Path) -> list[dict]:
     pairs = []
 
     for example_dir in sorted(examples_dir.iterdir()):
-        if not example_dir.is_dir() or example_dir.name.startswith('.'):
+        if not example_dir.is_dir() or example_dir.name.startswith("."):
             continue
 
         # Find Python files
         py_files = list(example_dir.glob("*.py"))
-        rs_files = list(example_dir.glob("*.rs"))
 
         for py_file in py_files:
-            python_code = py_file.read_text(errors='ignore')
+            python_code = py_file.read_text(errors="ignore")
 
             # Look for corresponding Rust file
             rs_name = py_file.stem + ".rs"
             rs_file = example_dir / rs_name
-            rust_code = rs_file.read_text(errors='ignore') if rs_file.exists() else ""
+            rust_code = rs_file.read_text(errors="ignore") if rs_file.exists() else ""
 
             # Extract category from directory name
             category = example_dir.name.replace("example_", "")
 
-            pairs.append({
-                "example_name": example_dir.name,
-                "python_file": py_file.name,
-                "python_code": python_code,
-                "rust_code": rust_code,
-                "has_rust": bool(rust_code),
-                "category": category,
-                "python_lines": len(python_code.splitlines()),
-                "rust_lines": len(rust_code.splitlines()) if rust_code else 0,
-            })
+            pairs.append(
+                {
+                    "example_name": example_dir.name,
+                    "python_file": py_file.name,
+                    "python_code": python_code,
+                    "rust_code": rust_code,
+                    "has_rust": bool(rust_code),
+                    "category": category,
+                    "python_lines": len(python_code.splitlines()),
+                    "rust_lines": len(rust_code.splitlines()) if rust_code else 0,
+                }
+            )
 
     return pairs
 
@@ -52,7 +52,7 @@ def export_parquet(pairs: list[dict], output_path: Path):
     table = pa.Table.from_pylist(pairs)
 
     # Write parquet
-    pq.write_table(table, output_path, compression='zstd')
+    pq.write_table(table, output_path, compression="zstd")
     print(f"Exported {len(pairs)} pairs to {output_path}")
     print(f"File size: {output_path.stat().st_size / 1024:.1f} KB")
 
@@ -75,11 +75,15 @@ def main():
 
     # Also export JSON for inspection
     with open(output_dir / "corpus_stats.json", "w") as f:
-        json.dump({
-            "total_pairs": len(pairs),
-            "with_rust": with_rust,
-            "categories": list(set(p["category"] for p in pairs)),
-        }, f, indent=2)
+        json.dump(
+            {
+                "total_pairs": len(pairs),
+                "with_rust": with_rust,
+                "categories": list({p["category"] for p in pairs}),
+            },
+            f,
+            indent=2,
+        )
 
 
 if __name__ == "__main__":
