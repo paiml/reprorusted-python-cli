@@ -1,0 +1,345 @@
+{
+  "total_zero_success": 28,
+  "by_group": {
+    "async": 3,
+    "other": 14,
+    "func": 2,
+    "typed": 2,
+    "mem": 2,
+    "serial": 2,
+    "state": 2,
+    "thread": 1
+  },
+  "analyses": [
+    {
+      "category": "async_iterator",
+      "group": "async",
+      "blocking_features": [
+        "generator",
+        "exception_handling",
+        "context_manager",
+        "class_definition",
+        "async_await"
+      ],
+      "impact_score": 3.71,
+      "recommendation": "Implement 'async_await' support to unblock this category"
+    },
+    {
+      "category": "async_queue",
+      "group": "async",
+      "blocking_features": [
+        "lambda",
+        "comprehension",
+        "exception_handling",
+        "class_definition",
+        "async_await"
+      ],
+      "impact_score": 3.42,
+      "recommendation": "Implement 'async_await' support to unblock this category"
+    },
+    {
+      "category": "json_basic",
+      "group": "other",
+      "blocking_features": [
+        "lambda",
+        "comprehension",
+        "exception_handling",
+        "context_manager",
+        "class_definition"
+      ],
+      "impact_score": 3.12,
+      "recommendation": "Implement 'lambda' support to unblock this category"
+    },
+    {
+      "category": "log_parser",
+      "group": "other",
+      "blocking_features": [
+        "lambda",
+        "comprehension",
+        "exception_handling",
+        "context_manager",
+        "class_definition"
+      ],
+      "impact_score": 3.12,
+      "recommendation": "Implement 'lambda' support to unblock this category"
+    },
+    {
+      "category": "func_curry",
+      "group": "func",
+      "blocking_features": [
+        "lambda",
+        "comprehension",
+        "context_manager",
+        "decorator",
+        "class_definition"
+      ],
+      "impact_score": 3.05,
+      "recommendation": "Implement 'lambda' support to unblock this category"
+    },
+    {
+      "category": "func_pipeline",
+      "group": "func",
+      "blocking_features": [
+        "lambda",
+        "comprehension",
+        "context_manager",
+        "decorator",
+        "class_definition"
+      ],
+      "impact_score": 3.05,
+      "recommendation": "Implement 'lambda' support to unblock this category"
+    },
+    {
+      "category": "num_fft",
+      "group": "other",
+      "blocking_features": [
+        "lambda",
+        "comprehension",
+        "context_manager",
+        "decorator",
+        "class_definition"
+      ],
+      "impact_score": 3.05,
+      "recommendation": "Implement 'lambda' support to unblock this category"
+    },
+    {
+      "category": "async_context",
+      "group": "async",
+      "blocking_features": [
+        "async_await",
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "impact_score": 2.79,
+      "recommendation": "Implement 'async_await' support to unblock this category"
+    },
+    {
+      "category": "crc32_tool",
+      "group": "other",
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "walrus_operator",
+        "exception_handling"
+      ],
+      "impact_score": 2.69,
+      "recommendation": "Implement 'walrus_operator' support to unblock this category"
+    },
+    {
+      "category": "generator_expr",
+      "group": "other",
+      "blocking_features": [
+        "comprehension",
+        "context_manager",
+        "generator",
+        "class_definition"
+      ],
+      "impact_score": 2.69,
+      "recommendation": "Implement 'generator' support to unblock this category"
+    },
+    {
+      "category": "event_emitter",
+      "group": "other",
+      "blocking_features": [
+        "context_manager",
+        "decorator",
+        "lambda",
+        "class_definition"
+      ],
+      "impact_score": 2.55,
+      "recommendation": "Implement 'lambda' support to unblock this category"
+    },
+    {
+      "category": "typed_dict",
+      "group": "typed",
+      "blocking_features": [
+        "comprehension",
+        "context_manager",
+        "lambda",
+        "class_definition"
+      ],
+      "impact_score": 2.55,
+      "recommendation": "Implement 'lambda' support to unblock this category"
+    },
+    {
+      "category": "binary_codec",
+      "group": "other",
+      "blocking_features": [
+        "comprehension",
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "impact_score": 2.34,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "mem_arena",
+      "group": "mem",
+      "blocking_features": [
+        "context_manager",
+        "decorator",
+        "class_definition",
+        "exception_handling"
+      ],
+      "impact_score": 2.34,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "mem_slab",
+      "group": "mem",
+      "blocking_features": [
+        "context_manager",
+        "decorator",
+        "class_definition",
+        "exception_handling"
+      ],
+      "impact_score": 2.34,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "serial_json",
+      "group": "serial",
+      "blocking_features": [
+        "context_manager",
+        "decorator",
+        "class_definition",
+        "exception_handling"
+      ],
+      "impact_score": 2.34,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "batch_processor",
+      "group": "other",
+      "blocking_features": [
+        "comprehension",
+        "context_manager",
+        "decorator",
+        "class_definition"
+      ],
+      "impact_score": 2.26,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "retry_logic",
+      "group": "other",
+      "blocking_features": [
+        "comprehension",
+        "context_manager",
+        "decorator",
+        "class_definition"
+      ],
+      "impact_score": 2.26,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "schema_checker",
+      "group": "other",
+      "blocking_features": [
+        "comprehension",
+        "context_manager",
+        "decorator",
+        "class_definition"
+      ],
+      "impact_score": 2.26,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "state_machine",
+      "group": "state",
+      "blocking_features": [
+        "decorator",
+        "lambda",
+        "class_definition"
+      ],
+      "impact_score": 1.9,
+      "recommendation": "Implement 'lambda' support to unblock this category"
+    },
+    {
+      "category": "typed_tuple",
+      "group": "typed",
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "impact_score": 1.84,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "heap_queue",
+      "group": "other",
+      "blocking_features": [
+        "comprehension",
+        "context_manager",
+        "class_definition"
+      ],
+      "impact_score": 1.76,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "stdlib_random",
+      "group": "other",
+      "blocking_features": [
+        "comprehension",
+        "context_manager",
+        "class_definition"
+      ],
+      "impact_score": 1.76,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "string_format",
+      "group": "other",
+      "blocking_features": [
+        "comprehension",
+        "context_manager",
+        "class_definition"
+      ],
+      "impact_score": 1.76,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "thread_atomic",
+      "group": "thread",
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "impact_score": 1.26,
+      "recommendation": "Implement 'context_manager' support to unblock this category"
+    },
+    {
+      "category": "datetime_calendar",
+      "group": "other",
+      "blocking_features": [
+        "comprehension",
+        "class_definition"
+      ],
+      "impact_score": 1.11,
+      "recommendation": "Implement 'class_definition' support to unblock this category"
+    },
+    {
+      "category": "serial_toml",
+      "group": "serial",
+      "blocking_features": [
+        "decorator",
+        "class_definition"
+      ],
+      "impact_score": 1.11,
+      "recommendation": "Implement 'class_definition' support to unblock this category"
+    },
+    {
+      "category": "state_fsm",
+      "group": "state",
+      "blocking_features": [
+        "decorator",
+        "class_definition"
+      ],
+      "impact_score": 1.11,
+      "recommendation": "Implement 'class_definition' support to unblock this category"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+id: GH-12
+title: "Zero-Success Category Analyzer for Depyler Prioritization"
+description: |
+  Analyze the 28 zero-success categories to identify blocking patterns
+  and generate prioritized recommendations for the depyler team.
+
+  ## Book Reference (entrenar)
+  - **Book**: Entrenar - Training & Optimization Library
+  - **Chapter**: [CITL - Tarantula Fault Localization](../entrenar/book/src/advanced/citl.md)
+  - **Concept**: Statistical analysis of failure patterns
+
+  ## Zero-Success Categories (28)
+  - async_*: async_context, async_iterator, async_queue
+  - func_*: func_curry, func_pipeline
+  - state_*: state_fsm, state_machine
+  - mem_*: mem_arena, mem_slab
+  - serial_*: serial_json, serial_toml
+  - typed_*: typed_dict, typed_tuple
+  - Others: generator_expr, event_emitter, retry_logic, etc.
+
+  ## CLI Usage
+  ```bash
+  # Analyze zero-success categories
+  python scripts/zero_success_analyzer.py data/labeled_corpus.parquet \
+    --output reports/zero_success_analysis.json
+
+  # Generate depyler recommendations
+  python scripts/zero_success_analyzer.py corpus.parquet --for-depyler
+
+  # Focus on specific pattern group
+  python scripts/zero_success_analyzer.py corpus.parquet --group async
+  ```
+
+  ## Output
+  - Grouped analysis by pattern type
+  - Blocking feature identification per category
+  - Effort vs impact prioritization matrix
+  - Specific code examples for each blocker
+github_issue: 12
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - analysis
+  - depyler
+  - prioritization
+acceptance_criteria:
+  - Analyze all 28 zero-success categories
+  - Group by pattern type (async, func, state, etc.)
+  - Identify blocking features per category
+  - Generate prioritized recommendations
+  - 95%+ test coverage
