@@ -107,6 +107,47 @@ Analysis of examples with no successful transpilation reveals depyler feature ga
 | Generator expressions | 1 | HIGH |
 | Complex I/O | 3 | MEDIUM |
 
+## Tarantula Fault Localization
+
+Using [entrenar](https://github.com/paiml/entrenar) DecisionCITL with the Tarantula algorithm, we computed suspiciousness scores for Python features. Higher scores indicate stronger correlation with transpilation failures.
+
+### Suspiciousness Scores
+
+| Feature | Suspiciousness | Interpretation |
+|---------|----------------|----------------|
+| async_await | 0.946 | Almost always causes failure |
+| generator | 0.927 | Almost always causes failure |
+| walrus_operator | 0.850 | Very likely to cause failure |
+| lambda | 0.783 | Likely to cause failure |
+| context_manager | 0.652 | Moderate failure correlation |
+| class_definition | 0.612 | Moderate failure correlation |
+| exception_handling | 0.577 | Some failure correlation |
+| stdin_usage | 0.566 | Some failure correlation |
+| list_comprehension | 0.538 | Weak failure correlation |
+
+### How Tarantula Works
+
+The Tarantula algorithm computes suspiciousness as:
+
+```
+suspiciousness(feature) = (failed_with_feature / total_failed) /
+                          ((failed_with_feature / total_failed) + (passed_with_feature / total_passed))
+```
+
+A score of 1.0 means the feature appears only in failing cases. A score of 0.5 means the feature appears equally in passing and failing cases.
+
+### Insights File
+
+Full analysis available in `data/corpus_insights.json`:
+
+```bash
+# Regenerate insights
+python3 scripts/generate_insights.py
+
+# View priority features
+jq '.priority_features_to_implement[:5]' data/corpus_insights.json
+```
+
 ## Recommendations
 
 ### Immediate Actions (1-2 days)

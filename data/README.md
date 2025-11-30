@@ -40,6 +40,36 @@ Python→Rust transpilation pairs for Compiler-in-the-Loop training.
 - rust_lines: int        # Line count
 ```
 
+## Tarantula Fault Localization
+
+The `corpus_insights.json` file contains fault localization analysis using the Tarantula algorithm from [entrenar](https://github.com/paiml/entrenar) CITL.
+
+### Priority Features (by suspiciousness score)
+
+| Feature | Score | Categories Affected | Priority |
+|---------|-------|---------------------|----------|
+| async_await | 0.946 | 4 | P0 |
+| generator | 0.927 | 14 | P0 |
+| walrus_operator | 0.850 | 2 | P1 |
+| lambda | 0.783 | 29 | P1 |
+| context_manager | 0.652 | 94 | P2 |
+
+Higher suspiciousness = more correlated with transpilation failures.
+
+### Insights File Structure
+
+```json
+{
+  "summary": { "total_pairs": 606, "success_rate": 71.9 },
+  "tarantula_fault_localization": { "scores": {...} },
+  "priority_features_to_implement": [...],
+  "zero_success_categories": [...],
+  "category_insights": {...}
+}
+```
+
+Regenerate with: `python3 scripts/generate_insights.py`
+
 ## Usage
 
 ```python
