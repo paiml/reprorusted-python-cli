@@ -26,6 +26,7 @@ help:
 	@echo "  make corpus-dashboard - Show unified status dashboard"
 	@echo "  make corpus-ci - Run CI validation (fails on regression)"
 	@echo "  make corpus-ci-baseline - Save current as CI baseline"
+	@echo "  make corpus-e2e-rate - Measure single-shot compile rate"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -348,3 +349,25 @@ corpus-ci-baseline:
 	@./scripts/ci_runner.sh --no-fail > /dev/null
 	@uv run python3 -c "import json, pyarrow.parquet as pq; df=pq.read_table('data/labeled_corpus.parquet').to_pandas(); print(json.dumps({'total':len(df),'success':int(df['has_rust'].sum()),'failing':len(df)-int(df['has_rust'].sum()),'rate':round(df['has_rust'].sum()*100/len(df),1)}))" > data/ci_baseline.json
 	@echo "✅ Baseline saved → data/ci_baseline.json"
+
+# Single-shot compile rate (Refs depyler#193)
+corpus-e2e-rate:
+	@echo "Measuring single-shot compile rate..."
+	@success=0; total=0; \
+	for dir in examples/example_*/; do \
+		if [ -f "$$dir/Cargo.toml" ]; then \
+			bin=$$(grep -A1 '^\[\[bin\]\]' "$$dir/Cargo.toml" 2>/dev/null | grep 'name' | head -1 | grep -v 'test_' | cut -d'"' -f2); \
+			if [ -n "$$bin" ]; then \
+				total=$$((total + 1)); \
+				if cargo check --manifest-path "$$dir/Cargo.toml" --bin "$$bin" 2>/dev/null; then \
+					success=$$((success + 1)); \
+				fi; \
+			fi; \
+		fi; \
+	done; \
+	pct=$$((success * 100 / total)); \
+	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	echo "SINGLE-SHOT COMPILE RATE"; \
+	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	echo "Compiles: $$success / $$total ($$pct%)"; \
+	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
