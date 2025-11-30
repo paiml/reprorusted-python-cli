@@ -1,0 +1,79 @@
+{
+  "generated": "2025-11-30T16:56:51.427513",
+  "corpus_version": "2.0",
+  "metrics": {
+    "total_samples": 606,
+    "success_rate": 72.4,
+    "successful_count": 439,
+    "risk_distribution": {
+      "LOW_RISK": 450,
+      "MEDIUM_RISK": 133,
+      "HIGH_RISK": 23
+    },
+    "avg_confidence": 0.988
+  },
+  "blocking_patterns": [
+    {
+      "pattern": "async_await",
+      "suspiciousness": 0.946,
+      "affected_count": 157
+    },
+    {
+      "pattern": "generator",
+      "suspiciousness": 0.927,
+      "affected_count": 154
+    },
+    {
+      "pattern": "walrus_operator",
+      "suspiciousness": 0.85,
+      "affected_count": 141
+    },
+    {
+      "pattern": "lambda",
+      "suspiciousness": 0.783,
+      "affected_count": 130
+    },
+    {
+      "pattern": "context_manager",
+      "suspiciousness": 0.652,
+      "affected_count": 108
+    },
+    {
+      "pattern": "class_definition",
+      "suspiciousness": 0.612,
+      "affected_count": 102
+    },
+    {
+      "pattern": "exception_handling",
+      "suspiciousness": 0.577,
+      "affected_count": 96
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "action": "Improve success rate from 72.4% to 80%+",
+      "impact": "Major corpus quality improvement"
+    },
+    {
+      "priority": "MEDIUM",
+      "action": "Increase HIGH_RISK examples from 3.8% to 20%+",
+      "impact": "Better training data balance"
+    },
+    {
+      "priority": "HIGH",
+      "action": "Add depyler support for 'async_await' (suspiciousness: 0.946)",
+      "impact": "Reduces failure correlation by 95%"
+    },
+    {
+      "priority": "HIGH",
+      "action": "Add depyler support for 'generator' (suspiciousness: 0.927)",
+      "impact": "Reduces failure correlation by 93%"
+    },
+    {
+      "priority": "HIGH",
+      "action": "Add depyler support for 'walrus_operator' (suspiciousness: 0.85)",
+      "impact": "Reduces failure correlation by 85%"
+    }
+  ]
+}

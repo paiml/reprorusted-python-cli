@@ -1,0 +1,71 @@
+id: GH-11
+title: "Corpus Quality Report Generator"
+description: |
+  Generate comprehensive quality reports for tracking corpus health and
+  depyler improvement progress over time.
+
+  ## Book Reference (aprender)
+  - **Book**: EXTREME TDD - The Aprender Guide
+  - **Chapter**: Quality Gates / Technical Debt Gradient
+  - **Concept**: Continuous quality measurement and tracking
+
+  ## Implementation Goals
+  1. Generate JSON quality report with key metrics
+  2. Compare current vs previous reports (delta tracking)
+  3. Identify top blocking patterns for depyler
+  4. Output markdown summary for documentation
+  5. CI/CD integration ready
+
+  ## CLI Usage
+  ```bash
+  # Generate quality report
+  python scripts/corpus_quality_report.py data/labeled_corpus.parquet \
+    --output reports/quality_report.json
+
+  # Compare with previous report
+  python scripts/corpus_quality_report.py corpus.parquet \
+    --compare reports/previous_report.json
+
+  # Generate markdown summary
+  python scripts/corpus_quality_report.py corpus.parquet --markdown
+  ```
+
+  ## Report Schema
+  ```json
+  {
+    "generated": "2025-11-30T15:00:00Z",
+    "corpus_version": "2.0",
+    "metrics": {
+      "total_samples": 606,
+      "success_rate": 72.4,
+      "zero_success_categories": 28,
+      "high_risk_count": 23,
+      "coverage": 100.0
+    },
+    "blocking_patterns": [...],
+    "category_breakdown": {...},
+    "recommendations": [...]
+  }
+  ```
+
+  ## Key Metrics
+  - Success rate (% with valid Rust)
+  - Risk label distribution
+  - Zero-success category count
+  - Top blocking features by Tarantula score
+  - Progress delta vs previous report
+github_issue: 11
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - corpus
+  - quality
+  - reporting
+acceptance_criteria:
+  - JSON report with all key metrics
+  - Delta comparison with previous reports
+  - Markdown summary generation
+  - Top 5 recommendations for depyler
+  - 95%+ test coverage
