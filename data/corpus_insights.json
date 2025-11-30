@@ -1,0 +1,3852 @@
+{
+  "generated": "2025-11-30",
+  "corpus_version": "1.0",
+  "summary": {
+    "total_pairs": 606,
+    "with_rust": 436,
+    "success_rate": 71.9,
+    "total_categories": 298,
+    "zero_success_categories": 30
+  },
+  "tarantula_fault_localization": {
+    "description": "Suspiciousness scores from Tarantula algorithm - higher means more correlated with failures",
+    "scores": {
+      "async_await": 0.946,
+      "generator": 0.927,
+      "lambda": 0.783,
+      "context_manager": 0.652,
+      "class_definition": 0.612,
+      "exception_handling": 0.577,
+      "stdin_usage": 0.566,
+      "list_comprehension": 0.538,
+      "import_statement": 0.5,
+      "function_definition": 0.5,
+      "walrus_operator": 0.85,
+      "generator_expression": 0.89
+    }
+  },
+  "priority_features_to_implement": [
+    {
+      "feature": "async_await",
+      "suspiciousness": 0.946,
+      "affected_categories": 4,
+      "categories": [
+        "async_context",
+        "async_gather",
+        "async_iterator",
+        "async_queue"
+      ],
+      "priority": "HIGH"
+    },
+    {
+      "feature": "generator",
+      "suspiciousness": 0.927,
+      "affected_categories": 14,
+      "categories": [
+        "async_iterator",
+        "backup_tool",
+        "context_error",
+        "dedup_finder",
+        "event_stream"
+      ],
+      "priority": "HIGH"
+    },
+    {
+      "feature": "walrus_operator",
+      "suspiciousness": 0.85,
+      "affected_categories": 2,
+      "categories": [
+        "crc32_tool",
+        "walrus_operator"
+      ],
+      "priority": "HIGH"
+    },
+    {
+      "feature": "lambda",
+      "suspiciousness": 0.783,
+      "affected_categories": 29,
+      "categories": [
+        "async_queue",
+        "callback_pattern",
+        "event_bus",
+        "event_emitter",
+        "event_observable"
+      ],
+      "priority": "HIGH"
+    },
+    {
+      "feature": "context_manager",
+      "suspiciousness": 0.652,
+      "affected_categories": 94,
+      "categories": [
+        "argparse_minimal",
+        "async_context",
+        "async_gather",
+        "async_iterator",
+        "backup_tool"
+      ],
+      "priority": "MEDIUM"
+    },
+    {
+      "feature": "class_definition",
+      "suspiciousness": 0.612,
+      "affected_categories": 108,
+      "categories": [
+        "argparse_minimal",
+        "async_context",
+        "async_iterator",
+        "async_queue",
+        "backup_tool"
+      ],
+      "priority": "MEDIUM"
+    },
+    {
+      "feature": "exception_handling",
+      "suspiciousness": 0.577,
+      "affected_categories": 45,
+      "categories": [
+        "async_context",
+        "async_gather",
+        "async_iterator",
+        "async_queue",
+        "binary_codec"
+      ],
+      "priority": "MEDIUM"
+    },
+    {
+      "feature": "stdin_usage",
+      "suspiciousness": 0.566,
+      "affected_categories": 21,
+      "categories": [
+        "argparse_minimal",
+        "batch_processor",
+        "crc32_tool",
+        "csv_dialect",
+        "csv_filter"
+      ],
+      "priority": "MEDIUM"
+    },
+    {
+      "feature": "decorator",
+      "suspiciousness": 0.5,
+      "affected_categories": 68,
+      "categories": [
+        "argparse_minimal",
+        "backup_tool",
+        "batch_processor",
+        "byte_buffer",
+        "config_validator"
+      ],
+      "priority": "MEDIUM"
+    },
+    {
+      "feature": "multiprocessing",
+      "suspiciousness": 0.5,
+      "affected_categories": 14,
+      "categories": [
+        "async_context",
+        "async_gather",
+        "batch_processor",
+        "callback_pattern",
+        "decorator_pattern"
+      ],
+      "priority": "MEDIUM"
+    }
+  ],
+  "zero_success_categories": [
+    "async_context",
+    "async_iterator",
+    "async_queue",
+    "batch_processor",
+    "binary_codec",
+    "crc32_tool",
+    "datetime_calendar",
+    "event_emitter",
+    "func_curry",
+    "func_pipeline",
+    "generator_expr",
+    "heap_queue",
+    "json_basic",
+    "log_parser",
+    "matrix_ops",
+    "mem_arena",
+    "mem_slab",
+    "num_fft",
+    "retry_logic",
+    "schema_checker",
+    "serial_json",
+    "serial_toml",
+    "state_fsm",
+    "state_machine",
+    "stdlib_random",
+    "string_format",
+    "thread_atomic",
+    "typed_dict",
+    "typed_tuple",
+    "walrus_operator"
+  ],
+  "category_insights": {
+    "abs": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "age_calculator": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "any_all": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "argparse_minimal": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    },
+    "array": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "ascii": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "async_basic": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "async_await",
+        "class_definition",
+        "functools",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "async_context": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "async_await",
+        "class_definition",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "async_await",
+        "class_definition",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 0.0
+    },
+    "async_gather": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "async_await",
+        "class_definition",
+        "multiprocessing",
+        "functools",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "async_await",
+        "multiprocessing",
+        "functools",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 50.0
+    },
+    "async_iterator": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "async_await",
+        "class_definition",
+        "generator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "async_await",
+        "class_definition",
+        "generator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 0.0
+    },
+    "async_queue": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "async_await",
+        "class_definition",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "async_await",
+        "class_definition",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 0.0
+    },
+    "backup_tool": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "generator",
+        "walrus_operator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 50.0
+    },
+    "base64": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "batch_processor": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "multiprocessing",
+        "context_manager"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "multiprocessing",
+        "context_manager"
+      ],
+      "success_rate": 0.0
+    },
+    "bencode_codec": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "bin": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "binary_codec": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 0.0
+    },
+    "binary_search": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "bisect": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "bitwise_ops": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager"
+      ],
+      "success_rate": 50.0
+    },
+    "bool": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "byte_buffer": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "calc_parser": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "calendar": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "callback_pattern": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "multiprocessing",
+        "functools",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "multiprocessing",
+        "functools",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "choices": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "multiprocessing"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "closure_capture": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "lambda"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "cmath": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "colorsys": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "complex": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "config": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "config_validator": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "configparser": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "context_error": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "generator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "generator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 50.0
+    },
+    "contextlib": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "multiprocessing"
+      ],
+      "blocking_features": [
+        "context_manager"
+      ],
+      "success_rate": 50.0
+    },
+    "copy": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "count": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "counter": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "stdin_usage",
+        "multiprocessing"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "crc32_tool": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage",
+        "walrus_operator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "stdin_usage",
+        "walrus_operator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 0.0
+    },
+    "cron_validator": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "csv": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "csv_basic": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "csv_dialect": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    },
+    "csv_filter": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 50.0
+    },
+    "custom_exception": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "custom_types": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "dataclass": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "multiprocessing"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "datetime": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "multiprocessing",
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "datetime_basic": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "datetime_calendar": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 0.0
+    },
+    "datetime_delta": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "datetime_format": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "datetime_tz": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "decimal": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "decorator_pattern": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "exception_handling",
+        "multiprocessing"
+      ],
+      "success_rate": 50.0
+    },
+    "dedup_finder": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "generator",
+        "decorator",
+        "walrus_operator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 50.0
+    },
+    "dict_comprehension": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "context_manager"
+      ],
+      "success_rate": 50.0
+    },
+    "dict_typed": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "difflib": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "context_manager"
+      ],
+      "success_rate": 50.0
+    },
+    "divmod": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "dns_parser": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "dotenv_parser": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "walrus_operator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "enum": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "enumerate": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "env_manager": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "environment": {
+      "total_examples": 1,
+      "with_rust": 1,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "event_bus": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "event_emitter": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "lambda"
+      ],
+      "success_rate": 0.0
+    },
+    "event_observable": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "event_saga": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "event_stream": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "generator",
+        "functools",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "generator",
+        "functools",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "exception_chain": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "multiprocessing"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "multiprocessing"
+      ],
+      "success_rate": 50.0
+    },
+    "expression_eval": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "file_read": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "generator",
+        "decorator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "file_sync": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "generator",
+        "decorator",
+        "walrus_operator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 50.0
+    },
+    "file_text": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "blocking_features": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 50.0
+    },
+    "file_write": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "generator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "filter": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "find": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "flags": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "format": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "fractions": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "func_curry": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "functools",
+        "context_manager",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "functools",
+        "context_manager",
+        "lambda"
+      ],
+      "success_rate": 0.0
+    },
+    "func_either": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "decorator",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "exception_handling",
+        "decorator",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "func_lens": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "func_maybe": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "func_pipeline": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "functools",
+        "context_manager",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "functools",
+        "context_manager",
+        "lambda"
+      ],
+      "success_rate": 0.0
+    },
+    "functools": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "functools",
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "functools_ops": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "functools",
+        "context_manager",
+        "lambda"
+      ],
+      "blocking_features": [
+        "functools",
+        "context_manager",
+        "decorator",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "futures": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "lambda",
+        "multiprocessing"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "generator_expr": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "functools",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "blocking_features": [
+        "functools",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 0.0
+    },
+    "generic_builder": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "generic_container": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "generic_iterator": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "generic_result": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "generic_visitor": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "eval_exec",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "exception_handling",
+        "decorator",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "graph_bfs": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "graph_dijkstra": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "graph_topo": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "graph_traversal": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "graph_trie": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "graph_unionfind": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "groups": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "gzip": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "hash2": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "hashlib": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    },
+    "heap_queue": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "stdin_usage"
+      ],
+      "success_rate": 0.0
+    },
+    "heapq": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "hex_dump": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "hex_oct": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "html": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    },
+    "http_parser": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "ini_parser": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "int_float": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "io": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "io_streams": {
+      "total_examples": 1,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "isdigit": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "itertools": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "join": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "json_basic": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 0.0
+    },
+    "json_path": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "json_simple": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "len": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "locale": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "log_analyzer": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "blocking_features": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 50.0
+    },
+    "log_parser": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 0.0
+    },
+    "lru_cache": {
+      "total_examples": 4,
+      "with_rust": 3,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "multiprocessing",
+        "functools",
+        "context_manager",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "success_rate": 75.0
+    },
+    "markdown_parser": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "math": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "math_constants": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "math_special": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "matrix_ops": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "success_rate": 0.0
+    },
+    "mem_arena": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 0.0
+    },
+    "mem_lru": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "mem_pool": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "generator",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "generator",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "mem_ring": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "decorator",
+        "class_definition",
+        "generator",
+        "functools"
+      ],
+      "blocking_features": [
+        "decorator",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 50.0
+    },
+    "mem_slab": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 0.0
+    },
+    "memoryview_ops": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "merge_sort": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "functools",
+        "context_manager",
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    },
+    "minmax": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "msgpack_lite": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "stdin_usage",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 50.0
+    },
+    "mutually_exclusive": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "multiprocessing",
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "namedtuple": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "multiprocessing",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "nargs_special": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "multiprocessing",
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "nested_comprehension": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "eval_exec"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "eval_exec"
+      ],
+      "success_rate": 50.0
+    },
+    "nested_function": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "multiprocessing"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "nested_subs": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "num_fft": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "success_rate": 0.0
+    },
+    "num_integrate": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "num_interp": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "num_matrix": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "num_roots": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_abs": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_add": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_argmax": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_argmin": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_clip": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_cos": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_cosine": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_distance": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_dot": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_exp": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_log": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_max": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_mean": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_min": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_minmax": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_mul": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_norm": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_normalize": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_scale": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_sin": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_sqrt": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_std": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_sum": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_var": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "numpy_zscore": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "operator": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "ord_chr": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "os": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "pathlib": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "pathlib_basic": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager"
+      ],
+      "success_rate": 50.0
+    },
+    "pathlib_ops": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "generator",
+        "decorator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 50.0
+    },
+    "percent_encode": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "multiprocessing",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "polynomial": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "positional": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "pow": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "prime_factors": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "proto_http": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "proto_memcached": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "proto_mqtt": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "proto_redis": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "proto_syslog": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "pytorch_adam": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "context_manager",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "pytorch_autograd": {
+      "total_examples": 3,
+      "with_rust": 3,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "pytorch_batchnorm": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "pytorch_conv": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "pytorch_dropout": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "pytorch_linear": {
+      "total_examples": 3,
+      "with_rust": 3,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "pytorch_mseloss": {
+      "total_examples": 3,
+      "with_rust": 3,
+      "features_detected": [
+        "class_definition",
+        "context_manager",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "pytorch_relu": {
+      "total_examples": 3,
+      "with_rust": 3,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "pytorch_sequential": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "pytorch_tensor": {
+      "total_examples": 3,
+      "with_rust": 3,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "queue": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "random": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "range": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "rate_limiter": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "re": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "redis_protocol": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "regex": {
+      "total_examples": 1,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "regex_basic": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "exception_handling",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "regex_matcher": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    },
+    "rename_batch": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "generator",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 50.0
+    },
+    "replace": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "repr": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "result_mapping": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "retry_logic": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 0.0
+    },
+    "reversed": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "round": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "schedule_parser": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "schema_checker": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 0.0
+    },
+    "secrets": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "serial_csv": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "serial_ini": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "serial_json": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 0.0
+    },
+    "serial_msgpack": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "decorator",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "exception_handling",
+        "decorator",
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    },
+    "serial_toml": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "stdin_usage"
+      ],
+      "success_rate": 0.0
+    },
+    "set_comprehension": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "settings_loader": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "shutil": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "signal": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "simple": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "multiprocessing"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "multiprocessing"
+      ],
+      "success_rate": 50.0
+    },
+    "sklearn_dtree": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "sklearn_kfold": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "sklearn_kmeans": {
+      "total_examples": 3,
+      "with_rust": 3,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "sklearn_linreg": {
+      "total_examples": 5,
+      "with_rust": 4,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage",
+        "functools",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "decorator",
+        "stdin_usage",
+        "functools",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 80.0
+    },
+    "sklearn_logreg": {
+      "total_examples": 3,
+      "with_rust": 3,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "sklearn_metrics": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage",
+        "functools",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "sklearn_pca": {
+      "total_examples": 3,
+      "with_rust": 3,
+      "features_detected": [
+        "functools",
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "sklearn_rf": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "sklearn_scaler": {
+      "total_examples": 3,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 66.7
+    },
+    "sklearn_tsne": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "smtp_client": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "multiprocessing",
+        "context_manager",
+        "exception_handling"
+      ],
+      "success_rate": 50.0
+    },
+    "sorted": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "split": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "startswith": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "state_fsm": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "multiprocessing",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "multiprocessing",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 0.0
+    },
+    "state_lexer": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    },
+    "state_machine": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "multiprocessing",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "blocking_features": [
+        "multiprocessing",
+        "class_definition",
+        "decorator",
+        "lambda"
+      ],
+      "success_rate": 0.0
+    },
+    "state_parser": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "eval_exec",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "state_regex": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "statistics": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "statistics_calc": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "stdlib": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "walrus_operator",
+        "context_manager",
+        "exception_handling",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "success_rate": 50.0
+    },
+    "stdlib_math": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager"
+      ],
+      "success_rate": 50.0
+    },
+    "stdlib_random": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 0.0
+    },
+    "stdlib_statistics": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "string": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "string_format": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 0.0
+    },
+    "strip": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "struct": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "struct_pack": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "subcommand_simple": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "success_rate": 50.0
+    },
+    "subcommands": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "subprocess": {
+      "total_examples": 1,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "exception_handling",
+        "multiprocessing"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "sum": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "task_queue": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "success_rate": 50.0
+    },
+    "tempfile": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager"
+      ],
+      "success_rate": 50.0
+    },
+    "template_engine": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "decorator",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "text_parse": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "textwrap": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    },
+    "thread_atomic": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 0.0
+    },
+    "thread_event": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "functools",
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "thread_lock": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "thread_queue": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "lambda"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "thread_semaphore": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "multiprocessing"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "time": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "timeout_handler": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "decorator",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "timestamp_diff": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "timezone_converter": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "toml_reader": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "tree_walker": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "generator",
+        "decorator",
+        "context_manager",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "decorator",
+        "context_manager",
+        "class_definition",
+        "generator"
+      ],
+      "success_rate": 50.0
+    },
+    "try_except": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "context_manager",
+        "exception_handling",
+        "stdin_usage"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "tuple_unpack_comp": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "eval_exec"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "eval_exec"
+      ],
+      "success_rate": 50.0
+    },
+    "typed_dict": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "lambda"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "lambda"
+      ],
+      "success_rate": 0.0
+    },
+    "typed_list": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "typed_optional": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition",
+        "context_manager",
+        "exception_handling",
+        "lambda"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "typed_set": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "typed_tuple": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "success_rate": 0.0
+    },
+    "typing": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "urlparse": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "uuid": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition"
+      ],
+      "blocking_features": [],
+      "success_rate": 50.0
+    },
+    "vector_math": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "walrus_operator": {
+      "total_examples": 2,
+      "with_rust": 0,
+      "features_detected": [
+        "walrus_operator",
+        "context_manager",
+        "class_definition"
+      ],
+      "blocking_features": [
+        "walrus_operator",
+        "context_manager",
+        "class_definition"
+      ],
+      "success_rate": 0.0
+    },
+    "websocket_frame": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "multiprocessing",
+        "class_definition",
+        "exception_handling",
+        "decorator"
+      ],
+      "blocking_features": [
+        "class_definition"
+      ],
+      "success_rate": 50.0
+    },
+    "zip": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "zipfile": {
+      "total_examples": 2,
+      "with_rust": 2,
+      "features_detected": [
+        "context_manager",
+        "class_definition",
+        "exception_handling"
+      ],
+      "blocking_features": [],
+      "success_rate": 100.0
+    },
+    "zlib": {
+      "total_examples": 2,
+      "with_rust": 1,
+      "features_detected": [
+        "class_definition",
+        "stdin_usage"
+      ],
+      "blocking_features": [
+        "stdin_usage"
+      ],
+      "success_rate": 50.0
+    }
+  }
+}
