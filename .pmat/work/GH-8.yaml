@@ -1,0 +1,70 @@
+id: GH-8
+title: "Weak Supervision Labeling for Training Data"
+description: |
+  Implement weak supervision labeling system using programmatic labeling
+  functions (LFs). This follows the Weak Supervision chapter from
+  "Machine Learning for Software Engineering" (MLSE Book Ch. 9).
+
+  ## Book Reference (entrenar)
+  - **Book**: Entrenar - Training & Optimization Library
+  - **Chapter**: [Compiler-in-the-Loop (CITL)](../entrenar/book/src/advanced/citl.md)
+  - **API**: `entrenar::citl::{DecisionCITL, DecisionPatternStore, TarantulaScorer}`
+  - **Concept**: Statistical fault localization with Tarantula suspiciousness scores
+  - **Reference**: Jones, Harrold, Stasko (2002) - Tarantula: Visualization of Test Information
+
+  ## Cargo Example (entrenar)
+  ```bash
+  # Run the CITL example with Tarantula scoring
+  cd ../entrenar && cargo run --example citl --features citl
+
+  # Run with custom corpus
+  cargo run --example citl --features citl -- --corpus ../reprorusted-python-cli/data/depyler_citl_corpus_v2.parquet
+  ```
+
+  ## Cross-Reference
+  - **Snorkel Framework**: Ratner et al. (2017) - Data Programming
+  - **Weak Supervision Theory**: LF voting with confidence aggregation
+
+  ## Implementation
+  Uses Tarantula suspiciousness scores as labeling function weights:
+  - LF_async_pattern: Labels code with async/await as HIGH_RISK (weight: 0.946)
+  - LF_generator_pattern: Labels generator code as HIGH_RISK (weight: 0.927)
+  - LF_lambda_pattern: Labels lambda usage as MEDIUM_RISK (weight: 0.783)
+  - LF_context_manager: Labels with statements as MEDIUM_RISK (weight: 0.652)
+
+  ## CLI Usage
+  ```bash
+  # Apply weak supervision labels
+  cargo run -- label data/corpus.parquet --output labeled.parquet
+
+  # Show labeling function statistics
+  cargo run -- label corpus.parquet --stats
+
+  # Use specific labeling functions
+  cargo run -- label corpus.parquet --lfs async_pattern,generator_pattern
+
+  # Adjust confidence threshold
+  cargo run -- label corpus.parquet --threshold 0.7
+  ```
+
+  ## Features
+  - Programmatic labeling functions with Tarantula-derived weights
+  - Label model combining multiple LF outputs
+  - Confidence scores per label
+  - Abstain option when LFs disagree
+  - Label coverage and conflict metrics
+github_issue: 8
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - weak-supervision
+  - labeling
+  - mlse-book
+acceptance_criteria:
+  - Labeling functions match Tarantula suspiciousness scores
+  - Label model aggregates LF outputs correctly
+  - Confidence thresholding filters low-quality labels
+  - Statistics show coverage, conflicts, and abstentions
+  - 95%+ test coverage with mutation tests

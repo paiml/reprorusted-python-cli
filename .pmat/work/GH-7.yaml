@@ -1,0 +1,62 @@
+id: GH-7
+title: "Synthetic Error Augmentation for Corpus Enhancement"
+description: |
+  Implement synthetic error augmentation to expand the training corpus with
+  artificially generated error cases. This follows the Data Augmentation
+  chapter from "Machine Learning for Software Engineering" (MLSE Book Ch. 8).
+
+  ## Book Reference (aprender)
+  - **Book**: EXTREME TDD - The Aprender Guide to Zero-Defect Machine Learning
+  - **Chapter**: [Case Study: Code-Aware EDA](../aprender/book/src/examples/code-eda.md)
+  - **API**: `aprender::synthetic::{SyntheticGenerator, CodeEda, CodeEdaConfig}`
+  - **Concept**: Syntax-aware data augmentation preserving semantic validity
+  - **Reference**: Wei & Zou (2019) - EDA: Easy Data Augmentation
+
+  ## Cargo Example (aprender)
+  ```bash
+  # Run the synthetic data generation example
+  cd ../aprender && cargo run --example synthetic_data_generation
+
+  # Code EDA with custom config
+  cargo run --example code_eda -- --language rust --augment-ratio 2.0
+  ```
+
+  ## Implementation
+  Uses Tarantula fault localization scores to target HIGH suspiciousness features:
+  - async_await (0.946) - Generate async/await error patterns
+  - generator (0.927) - Generate yield-related error cases
+  - walrus_operator (0.85) - Generate := assignment errors
+  - lambda (0.783) - Generate lambda expression failures
+
+  ## CLI Usage
+  ```bash
+  # Generate augmented corpus
+  cargo run -- augment data/depyler_citl_corpus_v2.parquet --output augmented.parquet
+
+  # With specific mutation strategy
+  cargo run -- augment corpus.parquet --strategy tarantula --mutations 5
+
+  # Preview mutations without saving
+  cargo run -- augment corpus.parquet --dry-run --verbose
+  ```
+
+  ## Features
+  - Mutation-based augmentation targeting HIGH suspiciousness features
+  - Preserves original corpus while adding synthetic examples
+  - Metadata tracking for synthetic vs original entries
+  - Configurable mutation count per example
+github_issue: 7
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - data-augmentation
+  - corpus
+  - mlse-book
+acceptance_criteria:
+  - Mutations target Tarantula HIGH priority features
+  - Generated examples are valid Python with expected errors
+  - Augmented corpus maintains parquet schema compatibility
+  - CLI commands work with --dry-run and --verbose
+  - 95%+ test coverage with property-based tests
