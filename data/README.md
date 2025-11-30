@@ -25,19 +25,22 @@ Python→Rust transpilation pairs for Compiler-in-the-Loop training.
 
 | Split | Examples | With Rust | Size |
 |-------|----------|-----------|------|
-| train | 606 | 436 (72%) | 1.1 MB |
+| train | 606 | 439 (72.4%) | 957 KB |
 
 ## Schema
 
 ```
-- example_name: str      # Directory name (e.g., "example_fibonacci")
-- python_file: str       # Python filename
-- python_code: str       # Full Python source
-- rust_code: str         # Corresponding Rust (empty if not transpiled)
-- has_rust: bool         # Whether Rust translation exists
-- category: str          # Extracted category
-- python_lines: int      # Line count
-- rust_lines: int        # Line count
+- example_name: str           # Directory name (e.g., "example_fibonacci")
+- python_file: str            # Python filename
+- python_code: str            # Full Python source
+- rust_code: str              # Corresponding Rust (empty if not transpiled)
+- has_rust: bool              # Whether Rust translation exists
+- category: str               # Extracted category
+- python_lines: int           # Line count
+- rust_lines: int             # Line count
+- blocking_features: [str]    # Detected Python features (v2)
+- suspiciousness: float       # Tarantula score 0-1 (v2)
+- error: str                  # Transpilation error if failed (v2)
 ```
 
 ## Tarantula Fault Localization
@@ -50,9 +53,9 @@ The `corpus_insights.json` file contains fault localization analysis using the T
 |---------|-------|---------------------|----------|
 | async_await | 0.946 | 4 | P0 |
 | generator | 0.927 | 14 | P0 |
-| walrus_operator | 0.850 | 2 | P1 |
+| walrus_operator | 0.850 | 1 | P1 |
 | lambda | 0.783 | 29 | P1 |
-| context_manager | 0.652 | 94 | P2 |
+| context_manager | 0.652 | 93 | P2 |
 
 Higher suspiciousness = more correlated with transpilation failures.
 

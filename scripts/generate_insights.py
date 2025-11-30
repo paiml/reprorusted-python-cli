@@ -6,8 +6,8 @@ import pyarrow.parquet as pq
 from pathlib import Path
 
 def main():
-    # Load the corpus
-    corpus_path = Path(__file__).parent.parent / "data" / "depyler_citl_corpus_uncompressed.parquet"
+    # Load the enriched corpus (v2)
+    corpus_path = Path(__file__).parent.parent / "data" / "depyler_citl_corpus_v2.parquet"
     df = pq.read_table(corpus_path).to_pandas()
 
     # Tarantula suspiciousness scores from our analysis
