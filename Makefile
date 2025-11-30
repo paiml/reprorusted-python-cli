@@ -6,7 +6,7 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Corpus Pipeline (GH-7 through GH-18):"
+	@echo "Corpus Pipeline (GH-7 through GH-19):"
 	@echo "  make corpus-pipeline  - Run full pipeline (label → augment → report)"
 	@echo "  make corpus-label     - Apply weak supervision labels"
 	@echo "  make corpus-augment   - Generate augmented corpus"
@@ -20,6 +20,8 @@ help:
 	@echo "  make corpus-verify-rust - Verify transpiled Rust compiles"
 	@echo "  make corpus-compile-report - Generate Rust compilation JSON report"
 	@echo "  make corpus-error-analysis - Categorize compilation errors"
+	@echo "  make corpus-record-progress - Record current success rate"
+	@echo "  make corpus-progress-history - Show progress over time"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -301,3 +303,14 @@ corpus-compile-report:
 corpus-error-analysis:
 	@echo "Analyzing Rust compilation errors..."
 	@./scripts/analyze_rust_errors.sh --summary
+
+# ============================================================================
+# Progress Tracking (GH-19) - Track success rate over time
+# ============================================================================
+.PHONY: corpus-record-progress corpus-progress-history
+
+corpus-record-progress:
+	@./scripts/progress_tracker.sh --record
+
+corpus-progress-history:
+	@./scripts/progress_tracker.sh --history

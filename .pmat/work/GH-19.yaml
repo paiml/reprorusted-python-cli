@@ -1,0 +1,55 @@
+id: GH-19
+title: "Historical Progress Tracking"
+description: |
+  Track corpus success rate over time to visualize depyler improvements.
+
+  ## Use Case
+  After each depyler release, record success metrics to show progress:
+  - Success rate trend over time
+  - Category improvements
+  - Depyler version correlation
+
+  ## CLI Usage
+  ```bash
+  # Record current metrics with depyler version
+  make corpus-record-progress
+
+  # Show progress history
+  ./scripts/progress_tracker.sh --history
+
+  # Show progress as sparkline
+  ./scripts/progress_tracker.sh --sparkline
+  ```
+
+  ## Output
+  ```
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  CORPUS PROGRESS HISTORY
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Date       Version    Success  Change
+  2025-11-28 3.20.0     44.2%    -
+  2025-11-29 3.21.0     69.8%    +25.6%
+  2025-11-30 3.22.0     76.4%    +6.6%
+
+  Trend: ▁▅█ (improving)
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ```
+
+  ## Data Storage
+  - JSONL file: data/progress_history.jsonl
+  - One record per measurement
+  - Git-tracked for reproducibility
+github_issue: 19
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - tooling
+  - tracking
+  - sovereign-stack
+acceptance_criteria:
+  - Record success rate with timestamp and depyler version
+  - JSONL storage for easy append
+  - Show history with trend indicator
+  - Makefile target for recording
