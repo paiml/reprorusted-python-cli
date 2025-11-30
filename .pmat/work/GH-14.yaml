@@ -1,0 +1,49 @@
+id: GH-14
+title: "Corpus Diff Tool (Shell + jq)"
+description: |
+  Track progress after depyler fixes by comparing quality reports.
+  Uses shell + jq for JSON diffing (sovereign stack approach).
+
+  ## Use Case
+  When depyler team pushes a fix:
+  1. Save current report as baseline
+  2. Run retranspile + pipeline
+  3. Compare new report with baseline
+  4. Show improvement metrics
+
+  ## CLI Usage
+  ```bash
+  # Save current report as baseline
+  make corpus-baseline
+
+  # After depyler update, compare
+  make corpus-diff
+
+  # Or directly with script
+  ./scripts/corpus_diff.sh reports/baseline.json reports/quality_report.json
+  ```
+
+  ## Output
+  ```
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  CORPUS IMPROVEMENT REPORT
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Success Rate: 72.4% → 78.2% (+5.8%)
+  Zero-Success: 28 → 24 (-4 categories)
+  HIGH_RISK:    23 → 19 (-4 samples)
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ```
+github_issue: 14
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - tooling
+  - shell
+  - sovereign-stack
+acceptance_criteria:
+  - Shell script using jq for JSON diffing
+  - Makefile targets: corpus-baseline, corpus-diff
+  - Shows delta for key metrics
+  - Exit code 0 if improved, 1 if regressed

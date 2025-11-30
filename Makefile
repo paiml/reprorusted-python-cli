@@ -6,12 +6,14 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Corpus Pipeline (GH-7 through GH-13):"
+	@echo "Corpus Pipeline (GH-7 through GH-14):"
 	@echo "  make corpus-pipeline  - Run full pipeline (label → augment → report)"
 	@echo "  make corpus-label     - Apply weak supervision labels"
 	@echo "  make corpus-augment   - Generate augmented corpus"
 	@echo "  make corpus-report    - Generate quality report"
 	@echo "  make corpus-analyze   - Analyze zero-success categories"
+	@echo "  make corpus-baseline  - Save current report as baseline"
+	@echo "  make corpus-diff      - Compare current vs baseline"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -205,3 +207,14 @@ corpus-pipeline: corpus-label corpus-augment corpus-report corpus-analyze
 	@echo "  - reports/zero_success_analysis.json"
 	@echo ""
 	@uv run python scripts/corpus_quality_report.py $(LABELED_CORPUS) --markdown | head -20
+
+# Corpus Diff (GH-14) - Track progress after depyler fixes
+.PHONY: corpus-baseline corpus-diff
+
+corpus-baseline: reports/quality_report.json
+	@echo "Saving baseline report..."
+	@cp reports/quality_report.json reports/baseline.json
+	@echo "✅ Baseline saved → reports/baseline.json"
+
+corpus-diff: reports/baseline.json reports/quality_report.json
+	@./scripts/corpus_diff.sh reports/baseline.json reports/quality_report.json
