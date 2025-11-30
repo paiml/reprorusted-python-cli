@@ -1,0 +1,53 @@
+id: GH-17
+title: "Rust Compilation Verification for Transpiled Examples"
+description: |
+  Verify that transpiled Rust code actually compiles with cargo check.
+
+  ## Use Case
+  After depyler transpiles Python → Rust, we need to verify:
+  - Generated Rust compiles without errors
+  - No clippy warnings (idiomatic Rust)
+  - Track compilation success rate over time
+
+  ## CLI Usage
+  ```bash
+  # Check all transpiled examples
+  make corpus-verify-rust
+
+  # Generate compilation report
+  make corpus-compile-report
+  ```
+
+  ## Output
+  ```
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  RUST COMPILATION VERIFICATION
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Total examples with Rust: 156
+  Compiles successfully: 142 (91.0%)
+  Clippy clean: 128 (82.1%)
+
+  ❌ Compilation failures:
+     - example_async_basic: E0432 unresolved import
+     - example_generator: E0599 no method named `next`
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ```
+
+  ## Implementation
+  - Shell script using cargo check/clippy
+  - JSON report for CI integration
+  - Track per-example compile status
+github_issue: 17
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - tooling
+  - verification
+  - sovereign-stack
+acceptance_criteria:
+  - Verify Rust compilation with cargo check
+  - Run clippy for idiomatic Rust verification
+  - Generate JSON report of results
+  - Makefile targets for easy invocation

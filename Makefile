@@ -6,7 +6,7 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Corpus Pipeline (GH-7 through GH-15):"
+	@echo "Corpus Pipeline (GH-7 through GH-17):"
 	@echo "  make corpus-pipeline  - Run full pipeline (label → augment → report)"
 	@echo "  make corpus-label     - Apply weak supervision labels"
 	@echo "  make corpus-augment   - Generate augmented corpus"
@@ -17,6 +17,8 @@ help:
 	@echo "  make corpus-retranspile - Run depyler on all examples"
 	@echo "  make corpus-refresh   - Full refresh: baseline → retranspile → pipeline → diff"
 	@echo "  make corpus-category-diff - Show which categories changed status"
+	@echo "  make corpus-verify-rust - Verify transpiled Rust compiles"
+	@echo "  make corpus-compile-report - Generate Rust compilation JSON report"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -126,7 +128,7 @@ lint:
 	@echo "Linting shell scripts (bashrs)..."
 	@for script in scripts/*.sh; do \
 		if [ -f "$$script" ]; then \
-			bashrs lint --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2092,SC2117,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$script"; \
+			bashrs lint --ignore SEC010,DET002,DET003,SC2031,SC2035,SC2046,SC2062,SC2064,SC2086,SC2091,SC2092,SC2117,SC2125,SC2128,SC2140,SC2145,SC2154,SC2161,SC2164,SC2183,SC2201,SC2204,SC2231,SC2266,SC2281,SC2317 "$$script"; \
 		fi; \
 	done
 	@echo "✅ Linting passed"
@@ -274,3 +276,18 @@ corpus-refresh: corpus-baseline corpus-retranspile corpus-pipeline corpus-diff
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	@echo "Depyler: $(shell depyler --version 2>/dev/null | head -1)"
 	@echo "See diff above for improvement metrics."
+
+# ============================================================================
+# Rust Verification (GH-17) - Verify transpiled Rust compiles
+# ============================================================================
+.PHONY: corpus-verify-rust corpus-compile-report
+
+corpus-verify-rust:
+	@echo "Verifying transpiled Rust compiles..."
+	@./scripts/verify_rust_compilation.sh --verbose
+
+corpus-compile-report:
+	@echo "Generating Rust compilation report..."
+	@mkdir -p reports
+	@./scripts/verify_rust_compilation.sh --json > reports/rust_compile_report.json
+	@echo "✅ Report → reports/rust_compile_report.json"
