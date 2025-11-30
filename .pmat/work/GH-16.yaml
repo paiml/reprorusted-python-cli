@@ -1,0 +1,47 @@
+id: GH-16
+title: "Category-Level Success Tracking in Corpus Diff"
+description: |
+  Enhance corpus_diff.sh to show which specific categories changed
+  status (failing → passing or passing → failing) after depyler fixes.
+
+  ## Use Case
+  When depyler fixes a feature (e.g., walrus_operator), we want to see:
+  - Which categories now pass that previously failed
+  - Which categories regressed (if any)
+  - Net category improvement count
+
+  ## Enhanced Output
+  ```
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  CATEGORY CHANGES
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ NOW PASSING (3):
+     - example_walrus_basic
+     - example_pathlib_ops
+     - example_lambda_simple
+
+  ❌ REGRESSED (0):
+     (none)
+
+  Net: +3 categories
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ```
+
+  ## Implementation
+  - Add Python helper script to compare parquet category success
+  - Call from corpus_diff.sh
+  - Show specific category names that changed
+github_issue: 16
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - tooling
+  - tracking
+  - sovereign-stack
+acceptance_criteria:
+  - Shows categories that went failing → passing
+  - Shows categories that regressed
+  - Integrates with existing corpus_diff.sh
+  - Net category change count

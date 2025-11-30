@@ -16,6 +16,7 @@ help:
 	@echo "  make corpus-diff      - Compare current vs baseline"
 	@echo "  make corpus-retranspile - Run depyler on all examples"
 	@echo "  make corpus-refresh   - Full refresh: baseline → retranspile → pipeline → diff"
+	@echo "  make corpus-category-diff - Show which categories changed status"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -220,6 +221,43 @@ corpus-baseline: reports/quality_report.json
 
 corpus-diff: reports/baseline.json reports/quality_report.json
 	@./scripts/corpus_diff.sh reports/baseline.json reports/quality_report.json
+
+# Category Diff (GH-16) - Show which categories changed
+.PHONY: corpus-category-diff
+
+corpus-category-diff: data/baseline_corpus.parquet $(LABELED_CORPUS)
+	@echo ""
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "CATEGORY CHANGES"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@uv run python scripts/category_diff.py data/baseline_corpus.parquet $(LABELED_CORPUS) | \
+		while IFS=: read -r key val; do \
+			case "$$key" in \
+				NOW_PASSING) \
+					if [ -n "$$val" ]; then \
+						printf "\033[0;32m✅ NOW PASSING:\033[0m\n"; \
+						echo "$$val" | tr ',' '\n' | sed 's/^/   - /'; \
+					else \
+						printf "\033[0;32m✅ NOW PASSING: (none)\033[0m\n"; \
+					fi ;; \
+				REGRESSED) \
+					if [ -n "$$val" ]; then \
+						printf "\033[0;31m❌ REGRESSED:\033[0m\n"; \
+						echo "$$val" | tr ',' '\n' | sed 's/^/   - /'; \
+					else \
+						printf "\033[0;32m❌ REGRESSED: (none)\033[0m\n"; \
+					fi ;; \
+				NET_CHANGE) \
+					echo ""; \
+					echo "Net: $$val categories" ;; \
+			esac; \
+		done
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+data/baseline_corpus.parquet: $(LABELED_CORPUS)
+	@echo "Saving baseline corpus..."
+	@cp $(LABELED_CORPUS) data/baseline_corpus.parquet
+	@echo "✅ Baseline corpus saved → data/baseline_corpus.parquet"
 
 # Retranspile & Refresh (GH-15) - Run latest depyler on corpus
 .PHONY: corpus-retranspile corpus-refresh
