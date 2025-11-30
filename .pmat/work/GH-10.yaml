@@ -1,0 +1,59 @@
+id: GH-10
+title: "Generate Augmented Corpus with Synthetic Examples"
+description: |
+  Apply synthetic error augmentation to expand the CITL corpus with
+  artificially generated high-risk patterns. Uses GH-7's SyntheticAugmenter.
+
+  ## Book Reference (aprender)
+  - **Book**: EXTREME TDD - The Aprender Guide
+  - **Chapter**: [Case Study: Code-Aware EDA](../aprender/book/src/examples/code-eda.md)
+  - **Concept**: Expand training data with targeted mutations
+
+  ## Implementation Goals
+  1. Load labeled corpus from GH-9
+  2. Generate synthetic mutations for LOW_RISK examples
+  3. Target HIGH suspiciousness patterns (async, lambda, context_manager)
+  4. Create augmented_corpus.parquet with synthetic + original
+  5. Track synthetic vs original with `is_synthetic` column
+
+  ## CLI Usage
+  ```bash
+  # Generate augmented corpus
+  python scripts/augment_corpus.py data/labeled_corpus.parquet \
+    --output data/augmented_corpus.parquet --multiplier 2
+
+  # Target specific patterns
+  python scripts/augment_corpus.py corpus.parquet \
+    --patterns async_await,lambda,context_manager
+
+  # Dry run to preview
+  python scripts/augment_corpus.py corpus.parquet --dry-run --verbose
+  ```
+
+  ## Expected Output
+  | Metric | Before | After |
+  |--------|--------|-------|
+  | Total samples | 606 | ~1200 |
+  | HIGH_RISK % | 3.8% | ~20% |
+  | Synthetic samples | 0 | ~600 |
+
+  ## Augmentation Strategy
+  Priority mutations based on Tarantula scores:
+  - async_await (0.946) - inject async/await patterns
+  - lambda (0.783) - inject lambda expressions
+  - context_manager (0.652) - inject with statements
+github_issue: 10
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - corpus
+  - data-augmentation
+  - mlse-book
+acceptance_criteria:
+  - Augmented corpus 2x original size
+  - is_synthetic column tracks origin
+  - HIGH_RISK representation increased
+  - Original examples preserved unchanged
+  - 95%+ test coverage
