@@ -6,7 +6,7 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Corpus Pipeline (GH-7 through GH-14):"
+	@echo "Corpus Pipeline (GH-7 through GH-15):"
 	@echo "  make corpus-pipeline  - Run full pipeline (label → augment → report)"
 	@echo "  make corpus-label     - Apply weak supervision labels"
 	@echo "  make corpus-augment   - Generate augmented corpus"
@@ -14,6 +14,8 @@ help:
 	@echo "  make corpus-analyze   - Analyze zero-success categories"
 	@echo "  make corpus-baseline  - Save current report as baseline"
 	@echo "  make corpus-diff      - Compare current vs baseline"
+	@echo "  make corpus-retranspile - Run depyler on all examples"
+	@echo "  make corpus-refresh   - Full refresh: baseline → retranspile → pipeline → diff"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -218,3 +220,19 @@ corpus-baseline: reports/quality_report.json
 
 corpus-diff: reports/baseline.json reports/quality_report.json
 	@./scripts/corpus_diff.sh reports/baseline.json reports/quality_report.json
+
+# Retranspile & Refresh (GH-15) - Run latest depyler on corpus
+.PHONY: corpus-retranspile corpus-refresh
+
+corpus-retranspile:
+	@echo "Retranspiling corpus with depyler $(shell depyler --version 2>/dev/null | head -1)..."
+	@uv run python scripts/retranspile_corpus.py
+	@echo "✅ Retranspile complete"
+
+corpus-refresh: corpus-baseline corpus-retranspile corpus-pipeline corpus-diff
+	@echo ""
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "✅ Corpus Refresh Complete!"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "Depyler: $(shell depyler --version 2>/dev/null | head -1)"
+	@echo "See diff above for improvement metrics."

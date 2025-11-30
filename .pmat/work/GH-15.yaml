@@ -1,0 +1,46 @@
+id: GH-15
+title: "Retranspile & Refresh Corpus Target"
+description: |
+  Run latest depyler on all Python examples to refresh transpilation
+  results and regenerate quality reports.
+
+  ## Workflow
+  1. Save current report as baseline
+  2. Run depyler on all examples
+  3. Regenerate corpus parquet
+  4. Run full pipeline (label → augment → report)
+  5. Show diff from baseline
+
+  ## CLI Usage
+  ```bash
+  # Full refresh with latest depyler
+  make corpus-refresh
+
+  # Just retranspile (no pipeline)
+  make corpus-retranspile
+  ```
+
+  ## Output
+  ```
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  CORPUS REFRESH COMPLETE
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Depyler version: 3.21.0
+  Examples processed: 212
+  Success Rate: 72.4% → 78.2% (+5.8%)
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ```
+github_issue: 15
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - tooling
+  - depyler
+  - sovereign-stack
+acceptance_criteria:
+  - Makefile targets: corpus-retranspile, corpus-refresh
+  - Uses existing retranspile_corpus.py script
+  - Automatically saves baseline before refresh
+  - Shows improvement diff after refresh
