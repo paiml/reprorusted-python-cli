@@ -6,8 +6,12 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Corpus Extraction:"
-	@echo "  make extract-cpython-doctests - Extract doctests from CPython stdlib"
+	@echo "Corpus Pipeline (GH-7 through GH-13):"
+	@echo "  make corpus-pipeline  - Run full pipeline (label → augment → report)"
+	@echo "  make corpus-label     - Apply weak supervision labels"
+	@echo "  make corpus-augment   - Generate augmented corpus"
+	@echo "  make corpus-report    - Generate quality report"
+	@echo "  make corpus-analyze   - Analyze zero-success categories"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -17,10 +21,8 @@ help:
 	@echo "Quality Gates:"
 	@echo "  make quality          - Run all quality gates (format → lint → test)"
 	@echo "  make format           - Check Python code formatting"
-	@echo "  make format-fix       - Fix Python code formatting"
 	@echo "  make lint             - Lint Python code"
 	@echo "  make test             - Run all Python tests"
-	@echo "  make coverage         - Run tests with coverage report"
 	@echo ""
 	@echo "Cleanup:"
 	@echo "  make clean            - Clean Python build artifacts"
@@ -159,3 +161,47 @@ clean-all: clean
 	@find examples/ -type f -executable ! -name "*.py" ! -name "*.sh" -delete 2>/dev/null || true
 	@rm -rf training_corpus/
 	@echo "✅ Cleaned everything"
+
+# ============================================================================
+# Corpus Pipeline (GH-13) - Tarantula/Weak Supervision/Augmentation
+# ============================================================================
+.PHONY: corpus-label corpus-augment corpus-report corpus-analyze corpus-pipeline
+
+CORPUS_INPUT ?= data/depyler_citl_corpus_v2.parquet
+LABELED_CORPUS = data/labeled_corpus.parquet
+AUGMENTED_CORPUS = data/augmented_corpus.parquet
+
+corpus-label: $(CORPUS_INPUT)
+	@echo "Applying weak supervision labels..."
+	@uv run python scripts/label_corpus.py $(CORPUS_INPUT) -o $(LABELED_CORPUS)
+	@echo "✅ Labels applied → $(LABELED_CORPUS)"
+
+corpus-augment: $(LABELED_CORPUS)
+	@echo "Generating augmented corpus..."
+	@uv run python scripts/augment_corpus.py $(LABELED_CORPUS) -o $(AUGMENTED_CORPUS) -m 2
+	@echo "✅ Augmented → $(AUGMENTED_CORPUS)"
+
+corpus-report: $(LABELED_CORPUS)
+	@echo "Generating quality report..."
+	@mkdir -p reports
+	@uv run python scripts/corpus_quality_report.py $(LABELED_CORPUS) -o reports/quality_report.json
+	@echo "✅ Report → reports/quality_report.json"
+
+corpus-analyze: $(LABELED_CORPUS)
+	@echo "Analyzing zero-success categories..."
+	@mkdir -p reports
+	@uv run python scripts/zero_success_analyzer.py $(LABELED_CORPUS) -o reports/zero_success_analysis.json
+	@echo "✅ Analysis → reports/zero_success_analysis.json"
+
+corpus-pipeline: corpus-label corpus-augment corpus-report corpus-analyze
+	@echo ""
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "✅ Corpus Pipeline Complete!"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "Outputs:"
+	@echo "  - $(LABELED_CORPUS)"
+	@echo "  - $(AUGMENTED_CORPUS)"
+	@echo "  - reports/quality_report.json"
+	@echo "  - reports/zero_success_analysis.json"
+	@echo ""
+	@uv run python scripts/corpus_quality_report.py $(LABELED_CORPUS) --markdown | head -20

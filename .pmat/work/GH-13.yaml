@@ -1,0 +1,44 @@
+id: GH-13
+title: "Corpus Pipeline via Makefile (Sovereign Stack)"
+description: |
+  Orchestrate corpus processing via Makefile targets using sovereign stack.
+  Minimal Python - only for pandas/parquet operations that require it.
+
+  ## Makefile Targets
+  ```makefile
+  make corpus-label      # Apply weak supervision labels
+  make corpus-augment    # Generate augmented corpus
+  make corpus-report     # Generate quality report
+  make corpus-analyze    # Analyze zero-success categories
+  make corpus-pipeline   # Run full pipeline
+  ```
+
+  ## Output Structure
+  ```
+  data/
+    ├── labeled_corpus.parquet
+    └── augmented_corpus.parquet
+  reports/
+    ├── quality_report.json
+    └── zero_success_analysis.json
+  ```
+
+  ## CI/CD Integration
+  - `make corpus-pipeline` runs everything
+  - Exit codes for CI/CD
+  - Integrates with pmat quality gates
+github_issue: 13
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - pipeline
+  - ci-cd
+  - automation
+acceptance_criteria:
+  - Single command runs entire pipeline
+  - All intermediate files generated
+  - Pipeline summary with metrics
+  - Exit codes for CI/CD
+  - 95%+ test coverage
