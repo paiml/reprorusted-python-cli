@@ -1,0 +1,61 @@
+id: GH-9
+title: "Apply Weak Supervision Labels to CITL Corpus"
+description: |
+  Apply weak supervision labeling to the CITL corpus to create training-ready
+  labeled data for ML models. This builds on GH-8's WeakSupervisionLabeler.
+
+  ## Book Reference (entrenar)
+  - **Book**: Entrenar - Training & Optimization Library
+  - **Chapter**: [Compiler-in-the-Loop (CITL)](../entrenar/book/src/advanced/citl.md)
+  - **Concept**: Programmatic labeling with Tarantula-weighted LFs
+
+  ## Implementation Goals
+  1. Load `depyler_citl_corpus_v2.parquet`
+  2. Apply WeakSupervisionLabeler to each Python code sample
+  3. Add label columns: `risk_label`, `confidence`, `lf_votes`
+  4. Generate statistics report
+  5. Save `labeled_corpus.parquet`
+
+  ## CLI Usage
+  ```bash
+  # Apply labels and save
+  python scripts/label_corpus.py data/depyler_citl_corpus_v2.parquet \
+    --output data/labeled_corpus.parquet
+
+  # Show statistics only
+  python scripts/label_corpus.py data/depyler_citl_corpus_v2.parquet --stats
+
+  # Filter by confidence threshold
+  python scripts/label_corpus.py corpus.parquet --threshold 0.7 --output filtered.parquet
+  ```
+
+  ## Expected Output Schema
+  | Column | Type | Description |
+  |--------|------|-------------|
+  | python_code | str | Original Python source |
+  | rust_code | str | Transpiled Rust (if available) |
+  | has_rust | bool | Transpilation success |
+  | category | str | Example category |
+  | risk_label | str | HIGH_RISK, MEDIUM_RISK, LOW_RISK |
+  | confidence | float | Label confidence [0-1] |
+  | lf_votes | str | JSON of LF voting results |
+
+  ## Statistics Report
+  - Label distribution (HIGH/MEDIUM/LOW/ABSTAIN)
+  - Coverage rate (% labeled)
+  - Conflict rate (LF disagreements)
+  - Correlation: risk_label vs has_rust
+github_issue: 9
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - corpus
+  - weak-supervision
+  - mlse-book
+acceptance_criteria:
+  - Parquet output with label columns
+  - Statistics report shows coverage > 80%
+  - Labels correlate with transpilation failures
+  - 95%+ test coverage
