@@ -1,0 +1,51 @@
+id: GH-21
+title: "Unified Corpus Dashboard"
+description: |
+  Single command to show all key corpus metrics at a glance.
+
+  ## Use Case
+  Quick status check combining all analytics:
+  - Current success rate
+  - Progress trend
+  - Top failing categories
+  - Recent improvements
+
+  ## CLI Usage
+  ```bash
+  # Show dashboard
+  make corpus-dashboard
+  ```
+
+  ## Output
+  ```
+  ╔══════════════════════════════════════════════════╗
+  ║          DEPYLER CORPUS DASHBOARD                ║
+  ╠══════════════════════════════════════════════════╣
+  ║ Success Rate: 76.4% (463/606)    Trend: ▁▅█      ║
+  ║ Depyler: 3.21.0                                  ║
+  ╠══════════════════════════════════════════════════╣
+  ║ Risk Distribution:                               ║
+  ║   LOW: 450  MEDIUM: 133  HIGH: 23                ║
+  ╠══════════════════════════════════════════════════╣
+  ║ Top Failures: async_context(2) binary_codec(2)   ║
+  ╚══════════════════════════════════════════════════╝
+  ```
+
+  ## Implementation
+  - Pure shell script combining existing tools
+  - Box-drawing characters for visual appeal
+  - Single-screen summary
+github_issue: 21
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - tooling
+  - dashboard
+  - sovereign-stack
+acceptance_criteria:
+  - Shows success rate and trend
+  - Shows risk distribution
+  - Shows top failing categories
+  - Single Makefile target

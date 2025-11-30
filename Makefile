@@ -6,7 +6,7 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Corpus Pipeline (GH-7 through GH-20):"
+	@echo "Corpus Pipeline (GH-7 through GH-21):"
 	@echo "  make corpus-pipeline  - Run full pipeline (label → augment → report)"
 	@echo "  make corpus-label     - Apply weak supervision labels"
 	@echo "  make corpus-augment   - Generate augmented corpus"
@@ -23,6 +23,7 @@ help:
 	@echo "  make corpus-record-progress - Record current success rate"
 	@echo "  make corpus-progress-history - Show progress over time"
 	@echo "  make corpus-recommendations - Generate fix recommendations"
+	@echo "  make corpus-dashboard - Show unified status dashboard"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -323,3 +324,11 @@ corpus-progress-history:
 
 corpus-recommendations:
 	@./scripts/generate_recommendations.sh
+
+# ============================================================================
+# Dashboard (GH-21) - Unified corpus status view
+# ============================================================================
+.PHONY: corpus-dashboard
+
+corpus-dashboard:
+	@./scripts/corpus_dashboard.sh
