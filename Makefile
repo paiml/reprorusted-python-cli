@@ -6,7 +6,7 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Corpus Pipeline (GH-7 through GH-21):"
+	@echo "Corpus Pipeline (GH-7 through GH-22):"
 	@echo "  make corpus-pipeline  - Run full pipeline (label → augment → report)"
 	@echo "  make corpus-label     - Apply weak supervision labels"
 	@echo "  make corpus-augment   - Generate augmented corpus"
@@ -24,6 +24,8 @@ help:
 	@echo "  make corpus-progress-history - Show progress over time"
 	@echo "  make corpus-recommendations - Generate fix recommendations"
 	@echo "  make corpus-dashboard - Show unified status dashboard"
+	@echo "  make corpus-ci - Run CI validation (fails on regression)"
+	@echo "  make corpus-ci-baseline - Save current as CI baseline"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -332,3 +334,17 @@ corpus-recommendations:
 
 corpus-dashboard:
 	@./scripts/corpus_dashboard.sh
+
+# ============================================================================
+# CI Integration (GH-22) - Automated corpus validation
+# ============================================================================
+.PHONY: corpus-ci corpus-ci-baseline
+
+corpus-ci:
+	@./scripts/ci_runner.sh
+
+corpus-ci-baseline:
+	@echo "Saving CI baseline..."
+	@./scripts/ci_runner.sh --no-fail > /dev/null
+	@uv run python3 -c "import json, pyarrow.parquet as pq; df=pq.read_table('data/labeled_corpus.parquet').to_pandas(); print(json.dumps({'total':len(df),'success':int(df['has_rust'].sum()),'failing':len(df)-int(df['has_rust'].sum()),'rate':round(df['has_rust'].sum()*100/len(df),1)}))" > data/ci_baseline.json
+	@echo "✅ Baseline saved → data/ci_baseline.json"

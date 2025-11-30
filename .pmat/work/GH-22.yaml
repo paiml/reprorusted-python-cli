@@ -1,0 +1,54 @@
+id: GH-22
+title: "GitHub Actions CI Integration"
+description: |
+  Automate corpus validation in CI to track depyler impact.
+
+  ## Use Case
+  On every PR or push:
+  - Run corpus pipeline
+  - Compare against baseline
+  - Report success rate changes
+  - Fail CI if regression detected
+
+  ## Workflow
+  ```yaml
+  name: Corpus Validation
+  on: [push, pull_request]
+  jobs:
+    validate:
+      - Checkout
+      - Install depyler
+      - Run corpus-retranspile
+      - Run corpus-pipeline
+      - Compare to baseline
+      - Post results as PR comment
+  ```
+
+  ## Output
+  PR comment showing:
+  ```
+  ## Corpus Validation Results
+  | Metric | Before | After | Change |
+  |--------|--------|-------|--------|
+  | Success Rate | 76.4% | 78.2% | +1.8% ✅ |
+  | Failing Files | 143 | 132 | -11 |
+  ```
+
+  ## Implementation
+  - .github/workflows/corpus-validation.yml
+  - Shell script for CI runner
+  - Baseline stored in repo
+github_issue: 22
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - ci
+  - automation
+  - sovereign-stack
+acceptance_criteria:
+  - GitHub Actions workflow file
+  - Runs on push and PR
+  - Compares against baseline
+  - Reports changes in PR

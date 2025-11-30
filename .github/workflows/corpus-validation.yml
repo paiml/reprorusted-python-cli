@@ -1,0 +1,71 @@
+name: Corpus Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+
+      - name: Install depyler
+        run: cargo install depyler || echo "Using cached depyler"
+
+      - name: Run corpus validation
+        id: validate
+        run: |
+          # Run the CI validation
+          ./scripts/ci_runner.sh --ci --no-fail > validation_report.md
+          cat validation_report.md
+
+          # Extract metrics for summary
+          RATE=$(uv run python3 -c "
+          import pyarrow.parquet as pq
+          df = pq.read_table('data/labeled_corpus.parquet').to_pandas()
+          print(round(df['has_rust'].sum() * 100 / len(df), 1))
+          ")
+          echo "rate=$RATE" >> $GITHUB_OUTPUT
+
+      - name: Post PR Comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('validation_report.md', 'utf8');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+
+      - name: Update Job Summary
+        run: |
+          cat validation_report.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Check for regression
+        run: |
+          # This will exit 1 if regression detected
+          ./scripts/ci_runner.sh --ci
