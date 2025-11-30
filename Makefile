@@ -6,7 +6,7 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Corpus Pipeline (GH-7 through GH-19):"
+	@echo "Corpus Pipeline (GH-7 through GH-20):"
 	@echo "  make corpus-pipeline  - Run full pipeline (label → augment → report)"
 	@echo "  make corpus-label     - Apply weak supervision labels"
 	@echo "  make corpus-augment   - Generate augmented corpus"
@@ -22,6 +22,7 @@ help:
 	@echo "  make corpus-error-analysis - Categorize compilation errors"
 	@echo "  make corpus-record-progress - Record current success rate"
 	@echo "  make corpus-progress-history - Show progress over time"
+	@echo "  make corpus-recommendations - Generate fix recommendations"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -314,3 +315,11 @@ corpus-record-progress:
 
 corpus-progress-history:
 	@./scripts/progress_tracker.sh --history
+
+# ============================================================================
+# Recommendations (GH-20) - Generate fix recommendations for depyler
+# ============================================================================
+.PHONY: corpus-recommendations
+
+corpus-recommendations:
+	@./scripts/generate_recommendations.sh

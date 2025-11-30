@@ -1,0 +1,59 @@
+id: GH-20
+title: "Automated Fix Recommendations for Depyler"
+description: |
+  Analyze failures and generate prioritized recommendations for depyler team.
+
+  ## Use Case
+  After corpus analysis, generate actionable recommendations:
+  - High-impact fixes (most files affected)
+  - Pattern-based grouping (async, stdlib, etc.)
+  - Estimated improvement per fix
+
+  ## CLI Usage
+  ```bash
+  # Generate recommendations
+  make corpus-recommendations
+
+  # Show top 5 recommendations
+  ./scripts/generate_recommendations.sh --top 5
+  ```
+
+  ## Output
+  ```
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  DEPYLER FIX RECOMMENDATIONS
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Based on 143 failing files:
+
+  1. [HIGH] async context managers (12 files)
+     Pattern: async with / __aenter__ / __aexit__
+     Impact: +2.0% success rate
+
+  2. [HIGH] time.time() support (8 files)
+     Pattern: time.time() call
+     Impact: +1.3% success rate
+
+  3. [MED] heapq operations (6 files)
+     Pattern: heapq.heappush/heappop
+     Impact: +1.0% success rate
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ```
+
+  ## Implementation
+  - Analyze failing categories and patterns
+  - Group by root cause
+  - Estimate impact based on file count
+github_issue: 20
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - tooling
+  - analysis
+  - sovereign-stack
+acceptance_criteria:
+  - Analyze failing files for common patterns
+  - Group by fix category
+  - Estimate impact (% improvement)
+  - Prioritize by file count
