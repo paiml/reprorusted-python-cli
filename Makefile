@@ -6,7 +6,7 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install dependencies with uv"
 	@echo ""
-	@echo "Corpus Pipeline (GH-7 through GH-17):"
+	@echo "Corpus Pipeline (GH-7 through GH-18):"
 	@echo "  make corpus-pipeline  - Run full pipeline (label → augment → report)"
 	@echo "  make corpus-label     - Apply weak supervision labels"
 	@echo "  make corpus-augment   - Generate augmented corpus"
@@ -19,6 +19,7 @@ help:
 	@echo "  make corpus-category-diff - Show which categories changed status"
 	@echo "  make corpus-verify-rust - Verify transpiled Rust compiles"
 	@echo "  make corpus-compile-report - Generate Rust compilation JSON report"
+	@echo "  make corpus-error-analysis - Categorize compilation errors"
 	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
@@ -291,3 +292,12 @@ corpus-compile-report:
 	@mkdir -p reports
 	@./scripts/verify_rust_compilation.sh --json > reports/rust_compile_report.json
 	@echo "✅ Report → reports/rust_compile_report.json"
+
+# ============================================================================
+# Error Analysis (GH-18) - Categorize compilation errors
+# ============================================================================
+.PHONY: corpus-error-analysis
+
+corpus-error-analysis:
+	@echo "Analyzing Rust compilation errors..."
+	@./scripts/analyze_rust_errors.sh --summary

@@ -1,0 +1,60 @@
+id: GH-18
+title: "Rust Compilation Error Categorization"
+description: |
+  Categorize Rust compilation errors to help depyler team prioritize fixes.
+
+  ## Use Case
+  When cargo check fails, extract and categorize error codes:
+  - E0432: Unresolved import (missing crate/module)
+  - E0599: No method named X (trait not implemented)
+  - E0425: Cannot find value (undefined variable)
+  - E0308: Mismatched types
+  - E0277: Trait not satisfied
+
+  ## CLI Usage
+  ```bash
+  # Analyze compilation errors
+  make corpus-error-analysis
+
+  # Show error distribution
+  ./scripts/analyze_rust_errors.sh --summary
+  ```
+
+  ## Output
+  ```
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  RUST COMPILATION ERROR ANALYSIS
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Total errors: 47
+
+  By Category:
+    E0432 (unresolved import):  18 (38.3%)
+    E0599 (no method):          12 (25.5%)
+    E0425 (undefined value):     9 (19.1%)
+    E0308 (type mismatch):       5 (10.6%)
+    Other:                       3 (6.4%)
+
+  Top affected examples:
+    - example_async_basic: 5 errors
+    - example_generator: 4 errors
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ```
+
+  ## Implementation
+  - Shell script parsing cargo check output
+  - Regex extraction of error codes (E0XXX)
+  - JSON report for CI integration
+github_issue: 18
+status: completed
+progress: 100
+created: 2025-11-30
+labels:
+  - enhancement
+  - tooling
+  - analysis
+  - sovereign-stack
+acceptance_criteria:
+  - Extract error codes from cargo check output
+  - Categorize by error type
+  - Show distribution and top affected examples
+  - JSON output for CI integration
