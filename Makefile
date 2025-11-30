@@ -351,23 +351,12 @@ corpus-ci-baseline:
 	@echo "✅ Baseline saved → data/ci_baseline.json"
 
 # Single-shot compile rate (Refs depyler#193)
+# Measures both [[bin]] and [lib] crates that compile with cargo check
 corpus-e2e-rate:
-	@echo "Measuring single-shot compile rate..."
-	@success=0; total=0; \
-	for dir in examples/example_*/; do \
-		if [ -f "$$dir/Cargo.toml" ]; then \
-			bin=$$(grep -A1 '^\[\[bin\]\]' "$$dir/Cargo.toml" 2>/dev/null | grep 'name' | head -1 | grep -v 'test_' | cut -d'"' -f2); \
-			if [ -n "$$bin" ]; then \
-				total=$$((total + 1)); \
-				if cargo check --manifest-path "$$dir/Cargo.toml" --bin "$$bin" 2>/dev/null; then \
-					success=$$((success + 1)); \
-				fi; \
-			fi; \
-		fi; \
-	done; \
-	pct=$$((success * 100 / total)); \
-	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
-	echo "SINGLE-SHOT COMPILE RATE"; \
-	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
-	echo "Compiles: $$success / $$total ($$pct%)"; \
-	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@uv run python scripts/measure_compile_rate.py
+
+corpus-e2e-rate-json:
+	@uv run python scripts/measure_compile_rate.py --json
+
+corpus-e2e-rate-verbose:
+	@uv run python scripts/measure_compile_rate.py --verbose
