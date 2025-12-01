@@ -1,0 +1,56 @@
+id: GH-23
+title: "Golden Traces: Curate 50 Human-Verified Fix Patterns"
+description: |
+  Manually curate a set of 50 "Golden Traces" covering the most frequent
+  error codes (E0308, E0433, E0599, E0425, E0277) to solve the Cold Start Problem.
+
+  ## Book Reference (entrenar)
+  - **Book**: Entrenar - Training & Optimization Library
+  - **Chapter**: [CITL - Tarantula Fault Localization](../entrenar/book/src/advanced/citl.md)
+  - **Concept**: High-quality seed patterns for oracle generalization
+
+  ## Rationale (from corpus-quality-review.md Section 6.2)
+  The oracle needs a critical mass of *successful* fixes to learn. These golden
+  traces provide human-verified fix patterns that break the initial failure loop.
+
+  ## Target Error Codes (from README)
+  | Code | Count | Issue |
+  |------|-------|-------|
+  | E0308 | 1,050 | Type mismatch |
+  | E0433 | 706 | Failed to resolve |
+  | E0599 | 543 | Method not found |
+  | E0425 | 392 | Cannot find value |
+  | E0277 | 380 | Trait bound not satisfied |
+
+  ## Implementation
+  1. Analyze failing examples by error code
+  2. Select 10 examples per error code (50 total)
+  3. Create golden_traces.json with verified (error → fix) patterns
+  4. Document each trace with rationale
+  5. Integration with depyler oracle training
+
+  ## Output Structure
+  ```
+  data/
+    └── golden_traces.json
+  ```
+
+  ## CLI Usage
+  ```bash
+  make corpus-golden-analyze   # Analyze failures by error code
+  make corpus-golden-export    # Export golden traces
+  ```
+github_issue: 23
+status: completed
+progress: 100
+created: 2025-12-01
+labels:
+  - enhancement
+  - citl
+  - oracle-training
+  - quality-review-action
+acceptance_criteria:
+  - 50 golden traces covering top 5 error codes
+  - Human-verified fix patterns
+  - JSON export for oracle training
+  - Documentation of each pattern's rationale

@@ -1,0 +1,58 @@
+id: GH-25
+title: "Human-in-the-Loop (HITL) Quarterly Review Process"
+description: |
+  Establish a quarterly review process where Senior Rust Engineers
+  review a random 5% sample of the corpus for quality assurance.
+
+  ## Book Reference (aprender)
+  - **Book**: EXTREME TDD - The Aprender Guide
+  - **Chapter**: The Toyota Way / Genchi Genbutsu (Go and See)
+  - **Concept**: Human verification of automated outputs
+
+  ## Rationale (from corpus-quality-review.md Section 6.3)
+  Automated tests cannot catch all anti-patterns. Human review identifies:
+  - Unnecessary `unsafe` blocks
+  - Excessive cloning
+  - Non-idiomatic patterns that compile but violate Rust conventions
+
+  ## Implementation
+  1. Create `make corpus-hitl-sample` to generate review sample
+  2. Random 5% selection with stratified sampling by category
+  3. Generate markdown review checklist
+  4. Track review findings in `data/hitl_reviews/`
+  5. Document review process in `docs/hitl-review-guide.md`
+
+  ## Review Checklist
+  - [ ] No unnecessary `unsafe` blocks
+  - [ ] Minimal cloning (prefer borrowing)
+  - [ ] Idiomatic error handling (Result/Option)
+  - [ ] Appropriate use of iterators
+  - [ ] No Python-isms (Arc<Mutex<>> overuse)
+
+  ## CLI Usage
+  ```bash
+  make corpus-hitl-sample      # Generate 5% sample for review
+  make corpus-hitl-report      # Summarize review findings
+  ```
+
+  ## Output Structure
+  ```
+  data/hitl_reviews/
+    └── 2025-Q4-review.json
+  docs/
+    └── hitl-review-guide.md
+  ```
+github_issue: 25
+status: completed
+progress: 100
+created: 2025-12-01
+labels:
+  - enhancement
+  - process
+  - quality-assurance
+  - quality-review-action
+acceptance_criteria:
+  - make corpus-hitl-sample generates stratified sample
+  - Review guide documentation
+  - JSON format for tracking findings
+  - Integration with quarterly planning

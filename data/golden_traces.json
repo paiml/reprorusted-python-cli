@@ -1,0 +1,524 @@
+{
+  "version": "1.0.0",
+  "generated": "2025-12-01T07:49:32.745533",
+  "description": "Golden traces for CITL oracle training (GH-23)",
+  "target_codes": [
+    "E0308",
+    "E0433",
+    "E0599",
+    "E0425",
+    "E0277"
+  ],
+  "traces": [
+    {
+      "example": "example_nested_function",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "nested_function_cli.rs",
+      "line": 46,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_file_read",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "file_read_cli.rs",
+      "line": 233,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_enumerate",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "enumerate_tool.rs",
+      "line": 43,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_text_parse",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "text_parse_cli.rs",
+      "line": 596,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_datetime_delta",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "datetime_delta_cli.rs",
+      "line": 191,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_event_observable",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "event_observable_cli.rs",
+      "line": 146,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_async_basic",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "async_basic_cli.rs",
+      "line": 58,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_vector_math",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "vector_cli.rs",
+      "line": 65,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_namedtuple",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "test_record_tool.rs",
+      "line": 19,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_csv_basic",
+      "error_code": "E0308",
+      "error_message": "mismatched types",
+      "file": "csv_basic_cli.rs",
+      "line": 73,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_event_observable",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of undeclared type `TypeVar`",
+      "file": "event_observable_cli.rs",
+      "line": 5,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_state_machine",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of undeclared type `TypeVar`",
+      "file": "state_machine_cli.rs",
+      "line": 5,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_rename_batch",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of unresolved module or unlinked crate `walkdir`",
+      "file": "rename_cli.rs",
+      "line": 405,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_decorator_pattern",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of undeclared type `TypeVar`",
+      "file": "decorator_pattern_cli.rs",
+      "line": 5,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_func_either",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of undeclared type `TypeVar`",
+      "file": "func_either_cli.rs",
+      "line": 5,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_generic_result",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of undeclared type `TypeVar`",
+      "file": "generic_result_cli.rs",
+      "line": 5,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_async_queue",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of undeclared type `TypeVar`",
+      "file": "async_queue_cli.rs",
+      "line": 3,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_futures",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of undeclared type `ThreadPoolExecutor`",
+      "file": "parallel_tool.rs",
+      "line": 31,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_urlparse",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of unresolved module or unlinked crate `url`",
+      "file": "url_tool.rs",
+      "line": 3,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_thread_lock",
+      "error_code": "E0433",
+      "error_message": "failed to resolve: use of undeclared type `TypeVar`",
+      "file": "thread_lock_cli.rs",
+      "line": 4,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_nested_function",
+      "error_code": "E0599",
+      "error_message": "no method named `iter` found for type `i64` in the current scope",
+      "file": "nested_function_cli.rs",
+      "line": 536,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_file_read",
+      "error_code": "E0599",
+      "error_message": "no method named `iter` found for struct `File` in the current scope",
+      "file": "file_read_cli.rs",
+      "line": 121,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_re",
+      "error_code": "E0599",
+      "error_message": "the method `count` exists for struct `Matches<'_, std::string::String>`, but its trait bounds were not satisfied",
+      "file": "re_tool.rs",
+      "line": 35,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_text_parse",
+      "error_code": "E0599",
+      "error_message": "the method `into_iter` exists for struct `std::string::String`, but its trait bounds were not satisfied",
+      "file": "/home/noah/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/string.rs",
+      "line": 360,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_datetime_delta",
+      "error_code": "E0599",
+      "error_message": "no method named `total_seconds` found for reference `&TimeDelta` in the current scope",
+      "file": "datetime_delta_cli.rs",
+      "line": 137,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_event_observable",
+      "error_code": "E0599",
+      "error_message": "no method named `_unsubscribe` found for mutable reference `&mut Subscription` in the current scope",
+      "file": "event_observable_cli.rs",
+      "line": 51,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_numpy_log",
+      "error_code": "E0599",
+      "error_message": "no method named `unwrap` found for type `f64` in the current scope",
+      "file": "numpy_log_tool.rs",
+      "line": 62,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_vector_math",
+      "error_code": "E0599",
+      "error_message": "no method named `len` found for reference `&'a Vector` in the current scope",
+      "file": "vector_cli.rs",
+      "line": 92,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_namedtuple",
+      "error_code": "E0599",
+      "error_message": "no method named `get` found for struct `std::str::RSplit<'a, P>` in the current scope",
+      "file": "test_record_tool.rs",
+      "line": 76,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_csv_basic",
+      "error_code": "E0599",
+      "error_message": "no method named `writerows` found for struct `Writer<W>` in the current scope",
+      "file": "csv_basic_cli.rs",
+      "line": 94,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_nested_function",
+      "error_code": "E0425",
+      "error_message": "cannot find value `result` in this scope",
+      "file": "nested_function_cli.rs",
+      "line": 89,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_datetime_delta",
+      "error_code": "E0425",
+      "error_message": "cannot find value `datetime` in this scope",
+      "file": "datetime_delta_cli.rs",
+      "line": 261,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_event_observable",
+      "error_code": "E0425",
+      "error_message": "cannot find value `subscribe_fn` in this scope",
+      "file": "event_observable_cli.rs",
+      "line": 110,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_async_basic",
+      "error_code": "E0425",
+      "error_message": "cannot find value `asyncio` in this scope",
+      "file": "async_basic_cli.rs",
+      "line": 47,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_vector_math",
+      "error_code": "E0425",
+      "error_message": "cannot find value `ratio` in this scope",
+      "file": "vector_cli.rs",
+      "line": 356,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_csv_basic",
+      "error_code": "E0425",
+      "error_message": "cannot find value `data` in this scope",
+      "file": "csv_basic_cli.rs",
+      "line": 282,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_rename_batch",
+      "error_code": "E0425",
+      "error_message": "cannot find value `args` in this scope",
+      "file": "rename_cli.rs",
+      "line": 476,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_decorator_pattern",
+      "error_code": "E0425",
+      "error_message": "cannot find value `kwargs` in this scope",
+      "file": "decorator_pattern_cli.rs",
+      "line": 93,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_serial_json",
+      "error_code": "E0425",
+      "error_message": "cannot find value `int` in this scope",
+      "file": "serial_json_cli.rs",
+      "line": 81,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_thread_semaphore",
+      "error_code": "E0425",
+      "error_message": "cannot find value `threading` in this scope",
+      "file": "thread_semaphore_cli.rs",
+      "line": 271,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_nested_function",
+      "error_code": "E0277",
+      "error_message": "cannot divide `i64` by `i32`",
+      "file": "nested_function_cli.rs",
+      "line": 46,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_re",
+      "error_code": "E0277",
+      "error_message": "the type `str` cannot be indexed by `&&std::string::String`",
+      "file": "re_tool.rs",
+      "line": 24,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_event_observable",
+      "error_code": "E0277",
+      "error_message": "the trait bound `dyn std::error::Error: Clone` is not satisfied",
+      "file": "event_observable_cli.rs",
+      "line": 127,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_async_basic",
+      "error_code": "E0277",
+      "error_message": "cannot divide `i32` by `{float}`",
+      "file": "async_basic_cli.rs",
+      "line": 47,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_vector_math",
+      "error_code": "E0277",
+      "error_message": "cannot multiply `{integer}` by `f64`",
+      "file": "vector_cli.rs",
+      "line": 264,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_namedtuple",
+      "error_code": "E0277",
+      "error_message": "the trait bound `std::string::String: Pattern` is not satisfied",
+      "file": "test_record_tool.rs",
+      "line": 77,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_csv_basic",
+      "error_code": "E0277",
+      "error_message": "the trait bound `Vec<std::string::String>: Copy` is not satisfied",
+      "file": "csv_basic_cli.rs",
+      "line": 204,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_startswith",
+      "error_code": "E0277",
+      "error_message": "the type `str` cannot be indexed by `usize`",
+      "file": "startswith_tool.rs",
+      "line": 61,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_sklearn_kfold",
+      "error_code": "E0277",
+      "error_message": "the type `[i32]` cannot be indexed by `&i32`",
+      "file": "kfold_tool.rs",
+      "line": 104,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    },
+    {
+      "example": "example_context_error",
+      "error_code": "E0277",
+      "error_message": "the trait bound `dyn std::error::Error: Clone` is not satisfied",
+      "file": "context_error_cli.rs",
+      "line": 138,
+      "status": "pending",
+      "fix_pattern": null,
+      "rationale": null
+    }
+  ],
+  "stats": {
+    "total": 50,
+    "by_code": {
+      "E0308": 10,
+      "E0433": 10,
+      "E0599": 10,
+      "E0425": 10,
+      "E0277": 10
+    }
+  }
+}

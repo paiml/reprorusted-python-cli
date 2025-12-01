@@ -1,0 +1,329 @@
+{
+  "version": "1.0.0",
+  "generated": "2025-12-01T07:54:42.583026",
+  "sample_pct": 5,
+  "checklist": [
+    {
+      "id": "no_unsafe",
+      "description": "No unnecessary `unsafe` blocks",
+      "severity": "critical"
+    },
+    {
+      "id": "minimal_cloning",
+      "description": "Minimal cloning (prefer borrowing)",
+      "severity": "high"
+    },
+    {
+      "id": "idiomatic_error_handling",
+      "description": "Idiomatic error handling (Result/Option, no unwrap in lib code)",
+      "severity": "high"
+    },
+    {
+      "id": "iterator_usage",
+      "description": "Appropriate use of iterators (no explicit loops where iter works)",
+      "severity": "medium"
+    },
+    {
+      "id": "no_pythonisms",
+      "description": "No Python-isms (Arc<Mutex<>> overuse, String everywhere)",
+      "severity": "medium"
+    },
+    {
+      "id": "proper_lifetimes",
+      "description": "Proper lifetime annotations where needed",
+      "severity": "medium"
+    },
+    {
+      "id": "no_magic_numbers",
+      "description": "No magic numbers (use constants)",
+      "severity": "low"
+    },
+    {
+      "id": "documentation",
+      "description": "Public APIs have doc comments",
+      "severity": "low"
+    }
+  ],
+  "sample": [
+    {
+      "example": "example_typed_optional",
+      "category": "file_io",
+      "rust_file": "typed_optional_cli.rs",
+      "python_file": "typed_optional_cli.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_minmax",
+      "category": "other",
+      "rust_file": "minmax_tool.rs",
+      "python_file": "minmax_tool.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_backup_tool",
+      "category": "other",
+      "rust_file": "backup_cli.rs",
+      "python_file": "test_backup_cli.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_find",
+      "category": "other",
+      "rust_file": "test_find_tool.rs",
+      "python_file": "find_tool.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_abs",
+      "category": "other",
+      "rust_file": "abs_tool.rs",
+      "python_file": "test_abs_tool.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_hash2",
+      "category": "other",
+      "rust_file": "test_hash2_tool.rs",
+      "python_file": "hash2_tool.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_mem_ring",
+      "category": "other",
+      "rust_file": "test_mem_ring_cli.rs",
+      "python_file": "mem_ring_cli.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_replace",
+      "category": "other",
+      "rust_file": "replace_tool.rs",
+      "python_file": "test_replace_tool.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_rename_batch",
+      "category": "other",
+      "rust_file": "rename_cli.rs",
+      "python_file": "rename_cli.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_statistics",
+      "category": "math",
+      "rust_file": "test_stats_tool.rs",
+      "python_file": "stats_tool.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_cmath",
+      "category": "math",
+      "rust_file": "test_cmath_tool.rs",
+      "python_file": "test_cmath_tool.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_http_parser",
+      "category": "string_ops",
+      "rust_file": "test_http_cli.rs",
+      "python_file": "test_http_cli.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_timezone_converter",
+      "category": "datetime",
+      "rust_file": "test_tz_cli.rs",
+      "python_file": "tz_cli.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "example": "example_typed_set",
+      "category": "data_structures",
+      "rust_file": "test_typed_set_cli.rs",
+      "python_file": "test_typed_set_cli.py",
+      "review_status": "pending",
+      "checklist": {
+        "no_unsafe": null,
+        "minimal_cloning": null,
+        "idiomatic_error_handling": null,
+        "iterator_usage": null,
+        "no_pythonisms": null,
+        "proper_lifetimes": null,
+        "no_magic_numbers": null,
+        "documentation": null
+      },
+      "notes": "",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ]
+}

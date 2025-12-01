@@ -1,0 +1,50 @@
+id: GH-24
+title: "Clippy as Blocking CI Gate"
+description: |
+  Strengthen clippy integration to be a blocking quality gate in CI.
+  Currently GH-17 runs clippy but doesn't block on warnings.
+
+  ## Book Reference (aprender)
+  - **Book**: EXTREME TDD - The Aprender Guide
+  - **Chapter**: Quality Gates / Built-in Quality (Jidoka)
+  - **Concept**: Fail fast on quality violations
+
+  ## Rationale (from corpus-quality-review.md Section 6.1)
+  Transpiled code should not just compile—it should be idiomatic Rust.
+  Target: `cargo clippy --pedantic` without warnings.
+
+  ## Current State
+  - GH-17: Runs clippy verification (completed)
+  - CI: Reports clippy results but doesn't fail
+
+  ## Implementation
+  1. Add `make corpus-clippy-check` target
+  2. Run clippy with `--deny warnings`
+  3. Integrate into `make corpus-ci` pipeline
+  4. Track clippy-clean rate alongside compile rate
+  5. Update CI baseline to include clippy metrics
+
+  ## CLI Usage
+  ```bash
+  make corpus-clippy-check     # Run clippy, fail on warnings
+  make corpus-clippy-report    # Generate clippy report JSON
+  ```
+
+  ## Success Metrics
+  - Clippy warnings treated as errors in CI
+  - Track clippy-clean rate in baseline
+  - Progressive improvement toward 100% clippy-clean
+github_issue: 24
+status: completed
+progress: 100
+created: 2025-12-01
+labels:
+  - enhancement
+  - ci
+  - quality-gate
+  - quality-review-action
+acceptance_criteria:
+  - make corpus-clippy-check target exists
+  - CI fails on clippy warnings
+  - Clippy metrics in ci_baseline.json
+  - Documentation updated

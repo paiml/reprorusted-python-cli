@@ -28,6 +28,14 @@ help:
 	@echo "  make corpus-ci-baseline - Save current as CI baseline"
 	@echo "  make corpus-e2e-rate - Measure single-shot compile rate"
 	@echo ""
+	@echo "Quality Assurance (GH-23 through GH-25):"
+	@echo "  make corpus-golden-analyze - Analyze golden trace candidates"
+	@echo "  make corpus-golden-export  - Export 50 golden traces to JSON"
+	@echo "  make corpus-clippy-check   - Run clippy (soft mode)"
+	@echo "  make corpus-clippy-strict  - Run clippy (blocking mode)"
+	@echo "  make corpus-hitl-sample    - Generate 5% HITL review sample"
+	@echo "  make corpus-hitl-report    - Summarize HITL review findings"
+	@echo ""
 	@echo "CITL Training:"
 	@echo "  make citl-train       - Train depyler oracle from corpus"
 	@echo "  make citl-improve     - Run CITL improvement loop on all examples"
@@ -364,3 +372,55 @@ corpus-e2e-rate-json:
 
 corpus-e2e-rate-verbose:
 	@uv run python scripts/measure_compile_rate.py --verbose
+
+# ============================================================================
+# Golden Traces (GH-23) - Human-verified fix patterns for oracle training
+# ============================================================================
+.PHONY: corpus-golden-analyze corpus-golden-export corpus-golden-dry-run
+
+corpus-golden-analyze:
+	@echo "Analyzing compilation errors for golden trace candidates..."
+	@uv run python scripts/golden_traces_analyzer.py --dry-run
+
+corpus-golden-export:
+	@echo "Generating golden traces..."
+	@uv run python scripts/golden_traces_analyzer.py --per-code 10
+	@echo "✅ Golden traces exported → data/golden_traces.json"
+
+corpus-golden-json:
+	@uv run python scripts/golden_traces_analyzer.py --json
+
+# ============================================================================
+# Clippy Gate (GH-24) - Blocking quality gate for idiomatic Rust
+# ============================================================================
+.PHONY: corpus-clippy-check corpus-clippy-report
+
+corpus-clippy-check:
+	@echo "Running clippy on all examples..."
+	@uv run python scripts/clippy_gate.py --soft
+	@echo "✅ Clippy check complete (soft mode - informational only)"
+
+corpus-clippy-strict:
+	@echo "Running clippy with strict mode (fails on warnings)..."
+	@uv run python scripts/clippy_gate.py --strict
+	@echo "✅ Clippy strict check passed"
+
+corpus-clippy-report:
+	@echo "Generating clippy report..."
+	@mkdir -p reports
+	@uv run python scripts/clippy_gate.py --json > reports/clippy_report.json
+	@echo "✅ Report → reports/clippy_report.json"
+
+# ============================================================================
+# HITL Review (GH-25) - Human-in-the-loop quality assurance
+# ============================================================================
+.PHONY: corpus-hitl-sample corpus-hitl-report
+
+corpus-hitl-sample:
+	@echo "Generating HITL review sample (5% stratified)..."
+	@uv run python scripts/hitl_sampler.py --sample-pct 5
+	@echo "✅ Sample generated → data/hitl_reviews/"
+
+corpus-hitl-report:
+	@echo "Summarizing HITL review findings..."
+	@uv run python scripts/hitl_sampler.py --report

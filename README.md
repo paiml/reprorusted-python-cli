@@ -38,10 +38,11 @@ This corpus captures decision traces from autonomous LLM sessions, persists them
 |--------|-------|
 | Python Examples | 298 |
 | Test Coverage | 6,745 passing |
-| Transpilation Rate | 65% |
-| Compilation Rate | 0% (4,583 rustc errors) |
+| Transpilation Rate | 78.5% (476/606) |
+| Clippy Clean | 0.4% (progressive) |
+| Golden Traces | 50 patterns |
 
-The compilation failures are the training signal—each error becomes an (error, fix) pattern for the oracle.
+The remaining compilation failures are training signal—each error becomes an (error, fix) pattern for the oracle.
 
 ## Quick Start
 
@@ -112,6 +113,31 @@ Top rustc errors from transpilation attempts:
 | E0277 | 380 | Trait bound not satisfied |
 
 Each error type becomes training data for the oracle.
+
+## Quality Assurance (Toyota Way)
+
+The corpus implements quality gates inspired by Lean/Toyota principles:
+
+| Gate | Tool | Purpose |
+|------|------|---------|
+| Golden Traces | `make corpus-golden-export` | 50 human-verified fix patterns |
+| Clippy Gate | `make corpus-clippy-check` | Idiomatic Rust verification |
+| HITL Review | `make corpus-hitl-sample` | Quarterly expert review (5% sample) |
+
+See [docs/specifications/corpus-quality-review.md](docs/specifications/corpus-quality-review.md) for the full Toyota Way design review.
+
+### Quick Commands
+
+```bash
+# Analyze golden trace candidates
+make corpus-golden-analyze
+
+# Run clippy quality gate
+make corpus-clippy-check
+
+# Generate HITL review sample
+make corpus-hitl-sample
+```
 
 ## Project Structure
 
