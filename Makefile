@@ -343,6 +343,10 @@ corpus-dashboard:
 
 corpus-ci:
 	@./scripts/ci_runner.sh
+	@uv run python scripts/check_test_lib_crates.py
+
+corpus-check-test-libs:
+	@uv run python scripts/check_test_lib_crates.py
 
 corpus-ci-baseline:
 	@echo "Saving CI baseline..."
